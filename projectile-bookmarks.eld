@@ -1,0 +1,1 @@
+("/usr/local/" "~/workspace/analytics/skywalker_proj/skywalker/" "~/workspace/analytics/skywalker_proj/skywalker-design/" "~/.emacs.d/" "~/workspace/tasks/")

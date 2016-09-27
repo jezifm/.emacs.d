@@ -91,7 +91,9 @@
  ;; If there is more than one, they won't work right.
  '(helm-mode t)
  '(markdown-command "/usr/local/bin/pandoc")
- '(org-agenda-files (quote ("/Users/jez/workspace/tasks/tasks.org")))
+ '(org-agenda-files
+   (quote
+    ("~/organizer.org" "/Users/jez/workspace/tasks/tasks.org")))
  '(projectile-global-mode t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
@@ -113,7 +115,10 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
-   (http . t)))
+   (http . t)
+   (python . t)
+   (sh . t)
+   ))
 
 ;; Home Directory
 (global-set-key (kbd "C-c o")
@@ -159,3 +164,6 @@
 (global-set-key (kbd "C-c C-l") 'windmove-up)
 (global-set-key (kbd "C-c C-;") 'windmove-right)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Trump mode
+(setq tramp-default-method "ssh")

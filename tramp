@@ -1,12 +1,10 @@
-;; -*- emacs-lisp -*- <16/09/17 14:45:36 /Users/jez/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <16/09/22 00:27:02 /Users/jez/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
-((["scp" nil "host" nil nil]
-  nil)
- (["ssh" nil "skywalker" nil nil]
+((["ssh" nil "skywalker" nil nil]
   ("locale" "LC_ALL=en_US.utf8")
-  ("uname" "Linux 3.13.0-91-generic")
+  ("uname" "Linux 3.13.0-93-generic")
   ("test" "test")
   ("remote-path"
    ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
@@ -20,4 +18,10 @@
   ("perl-file-spec" t)
   ("perl-cwd-realpath" t)
   ("perl" "\\perl")
-  ("readlink" "\\readlink")))
+  ("ls" "/bin/ls --color=never")
+  ("readlink" "\\readlink")
+  ("git" "\\git"))
+ (["su" "root" "Jezraels-MacBook-Pro.local" nil nil]
+  nil)
+ (["skywalker" nil "su" nil nil]
+  nil))

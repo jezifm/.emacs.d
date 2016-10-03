@@ -44,6 +44,28 @@
 ;; Maximize window
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;; Disable backup file
+(defun org-babel-temp-file (prefix &optional suffix)
+  "Create a temporary file in the `org-babel-temporary-directory'.
+Passes PREFIX and SUFFIX directly to `make-temp-file' with the
+value of `temporary-file-directory' temporarily set to the value
+of `org-babel-temporary-directory'."
+  (if (file-remote-p default-directory)
+      (let ((prefix
+             ;; We cannot use `temporary-file-directory' as local part
+             ;; on the remote host, because it might be another OS
+             ;; there.  So we assume "/tmp", which ought to exist on
+             ;; relevant architectures.
+             (concat (file-remote-p default-directory)
+                     ;; REPLACE temporary-file-directory with /tmp:
+                     (expand-file-name prefix "/tmp/"))))
+        (make-temp-file prefix nil suffix))
+    (let ((temporary-file-directory
+           (or (and (boundp 'org-babel-temporary-directory)
+                    (file-exists-p org-babel-temporary-directory)
+                    org-babel-temporary-directory)
+               temporary-file-directory)))
+      (make-temp-file prefix nil suffix))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helm
@@ -75,7 +97,10 @@
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-		
+
+;; Override buffer list
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+
 (helm-mode 1)
 (setq projectile-global-mode t)
 
@@ -118,6 +143,9 @@
    (http . t)
    (python . t)
    (sh . t)
+   (js . t)
+   (http . t)
+   (dot . t)   
    ))
 
 ;; Home Directory
@@ -130,8 +158,34 @@
 ;; Use org-refile to file or jump to headings
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 
-;; org capture
+;; Save all capture to single file
 (setq org-default-notes-file "~/organizer.org")
+
+;; Add waiting state in todo
+(setq org-todo-keywords
+      '((sequence "TODO" "WAITING" "DONE")))
+
+;; Disable prompt on source block eval
+(setq org-confirm-babel-evaluate nil)
+
+;; Disable prompt for specific language (sh)
+;; (defun my-org-confirm-babel-evaluate (lang body)
+;;   (not (string= lang "sh")))  ; don't ask for ditaa
+;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
+;; Display images in buffer after eval
+(add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
+
+;; Set author
+(setq user-full-name "Jezrael Arciaga")
+
+;; enable markdown export
+(eval-after-load "org"
+  '(require 'ox-md nil t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Doc View
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Datetime
@@ -166,4 +220,42 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Trump mode
+
+(require 'tramp)
 (setq tramp-default-method "ssh")
+;; Fix issue - sudo can only use the local host
+(add-to-list 'tramp-default-proxies-alist
+             '(nil "\\`root\\'" "/ssh:%h:"))
+(add-to-list 'tramp-default-proxies-alist
+             '((regexp-quote (system-name)) nil nil))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Yasnippet
+;; (yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Insert pair
+
+(global-set-key (kbd "M-[") 'insert-pair)
+(global-set-key (kbd "M-{") 'insert-pair)
+(global-set-key (kbd "M-\"") 'insert-pair)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Timestamp
+
+;; Insert todays date
+(defun insert-date (prefix)
+  "Insert the current date. With prefix-argument, use ISO format. With
+   two prefix arguments, write out the day and month name."
+  (interactive "P")
+  (let ((format (cond
+		 ((not prefix) "%d.%m.%Y")
+		 ((equal prefix '(4)) "%Y-%m-%d")
+		 ((equal prefix '(16)) "%A, %d. %B %Y")))
+	(system-time-locale "en_US"))
+    (insert (format-time-string format))))
+
+(global-set-key (kbd "C-c d") 'insert-date)

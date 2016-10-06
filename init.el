@@ -21,6 +21,16 @@
 (package-initialize) ;; You might already have this line
 
 
+;; Org Emacs lisp Package Archive
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Local dependencies
+
+(setq settings-dir
+      (expand-file-name "settings" user-emacs-directory))
+(add-to-list 'load-path settings-dir)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; No Externals
 
@@ -183,9 +193,22 @@ of `org-babel-temporary-directory'."
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Doc View
+;; Send HTML email using org mode
+(require 'org-mime)
+(setq org-mime-library 'mml)
 
+;; set code blocks background to dark
+(add-hook 'org-mime-html-hook
+          (lambda ()
+            (org-mime-change-element-style
+             "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+                           "#E6E1DC" "#232323"))))
+
+;; set block quotes offset
+(add-hook 'org-mime-html-hook
+          (lambda ()
+            (org-mime-change-element-style
+             "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Datetime
@@ -231,7 +254,8 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yasnippet
-;; (yas-reload-all)
+(require 'yasnippet)
+(yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 
 
@@ -259,3 +283,23 @@ of `org-babel-temporary-directory'."
     (insert (format-time-string format))))
 
 (global-set-key (kbd "C-c d") 'insert-date)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto complete
+(require 'setup-hippie)
+(global-set-key "\M- " 'hippie-expand)
+(global-set-key (kbd "C-.") 'hippie-expand-no-case-fold)
+(global-set-key (kbd "C-:") 'hippie-expand-lines)
+(global-set-key (kbd "C-,") 'completion-at-point)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Jedi - temporary disable. feature is slow
+
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Email - GNUS
+
+;; Always on topic mode
+(add-hook 'gnus-group-mode-hook 'gnus-topic-mode)

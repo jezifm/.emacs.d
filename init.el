@@ -155,7 +155,8 @@ of `org-babel-temporary-directory'."
    (sh . t)
    (js . t)
    (http . t)
-   (dot . t)   
+   (dot . t)
+   (sql . t)
    ))
 
 ;; Home Directory
@@ -171,9 +172,9 @@ of `org-babel-temporary-directory'."
 ;; Save all capture to single file
 (setq org-default-notes-file "~/organizer.org")
 
-;; Add waiting state in todo
-(setq org-todo-keywords
-      '((sequence "TODO" "WAITING" "DONE")))
+;; Add waiting state in todo - waiting state is not that helpful
+;; (setq org-todo-keywords
+;;       '((sequence "TODO" "WAITING" "DONE")))
 
 ;; Disable prompt on source block eval
 (setq org-confirm-babel-evaluate nil)
@@ -185,6 +186,15 @@ of `org-babel-temporary-directory'."
 
 ;; Display images in buffer after eval
 (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
+
+;; center all images
+;; (advice-add 'org-latex--inline-image :around
+;;             (lambda (orig link info)
+;;               (concat
+;;                "\\begin{center}"
+;;                (funcall orig link info)
+;;                "\\end{center}")))
+
 
 ;; Set author
 (setq user-full-name "Jezrael Arciaga")
@@ -209,6 +219,17 @@ of `org-babel-temporary-directory'."
           (lambda ()
             (org-mime-change-element-style
              "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
+
+;; Update tasks state base on subtask
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+
+;; Syntax highlighting
+(setq org-src-fontify-natively t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Datetime
@@ -303,3 +324,18 @@ of `org-babel-temporary-directory'."
 
 ;; Always on topic mode
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Directory Navigation - Not yet useful. Remove if comment still here even 2017 
+
+(require 'dirtree)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SQL Mode
+
+(add-hook 'sql-mode-hook 'sqlup-mode)
+(add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+(global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
+

@@ -1,13 +1,8 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs UI
 (load-theme 'tango-dark)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
-
-;; (add-hook 'after-init-hook '(lambda ()
-;; 			      (load "~/.emacs.d/my-load-melpa.el")
-;; 			      (load "~/.emacs.d/my-noexternals.el")
-;; 			      (load "~/.emacs.d/my-window-config.el")
-;; 			      (load "~/.emacs.d/my-helm.el")
-;; ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; El-get
@@ -387,7 +382,6 @@ of `org-babel-temporary-directory'."
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Publish settings
 (load-file "~/.emacs.d/publish-settings.el")
@@ -397,3 +391,13 @@ of `org-babel-temporary-directory'."
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-shortcuts t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Keychord
+(require 'iy-go-to-char)
+(require 'key-chord)
+(key-chord-mode 1)
+
+;; Move to char similar to "f" in vim, f+g forward, d+f backward
+(key-chord-define-global "fj" 'iy-go-to-char)
+(key-chord-define-global "df" 'iy-go-to-char-backward)

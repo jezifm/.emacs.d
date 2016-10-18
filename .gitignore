@@ -6,3 +6,6 @@
 /el-get
 /elisp
 .org-id-locations
+*.dat
+*.eld
+tramp

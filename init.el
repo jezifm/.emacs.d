@@ -10,6 +10,21 @@
 ;; ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; El-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Melpa
 
 (require 'package) ;; You might already have this line
@@ -146,12 +161,14 @@ of `org-babel-temporary-directory'."
 (setq org-export-coding-system 'utf-8)
 (setq org-log-done 'time)
 
+(require 'ob-ipython)
 ;; enable http in code blocks
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (http . t)
    (python . t)
+   (ipython . t)
    (sh . t)
    (js . t)
    (http . t)
@@ -188,12 +205,12 @@ of `org-babel-temporary-directory'."
 (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
 
 ;; center all images
-;; (advice-add 'org-latex--inline-image :around
-;;             (lambda (orig link info)
-;;               (concat
-;;                "\\begin{center}"
-;;                (funcall orig link info)
-;;                "\\end{center}")))
+(advice-add 'org-latex--inline-image :around
+            (lambda (orig link info)
+              (concat
+               "\\begin{center}"
+               (funcall orig link info)
+               "\\end{center}")))
 
 
 ;; Set author
@@ -253,6 +270,12 @@ of `org-babel-temporary-directory'."
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
+;; fix issue - not working in org mode
+;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Wind-move
@@ -276,8 +299,34 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yasnippet
 (require 'yasnippet)
+(add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
+;; (add-hook 'prog-mode-hook #'yas-minor-mode)
+(yas-global-mode 1)
 (yas-reload-all)
-(add-hook 'prog-mode-hook #'yas-minor-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Yasnippet custom
+
+;; python google docstring. through =defg=
+(defun python-args-to-google-docstring (text &optional make-fields)
+  "Return a reST docstring format for the python arguments in yas-text."
+  (let* ((indent (concat "\n" (make-string (current-column) 32)))
+         (args (python-split-args text))
+     (nr 0)
+         (formatted-args
+      (mapconcat
+       (lambda (x)
+         (concat "   " (nth 0 x)
+             (if make-fields (format " ${%d:arg%d}" (incf nr) nr))
+             (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
+       args
+       indent)))
+    (unless (string= formatted-args "")
+      (concat
+       (mapconcat 'identity
+          (list "" "Args:" formatted-args)
+          indent)
+       "\n"))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -327,15 +376,24 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Directory Navigation - Not yet useful. Remove if comment still here even 2017 
-
-(require 'dirtree)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SQL Mode
 
 (add-hook 'sql-mode-hook 'sqlup-mode)
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
 (global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Disable full yes-no
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Publish settings
+(load-file "~/.emacs.d/publish-settings.el")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ropemacs
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-shortcuts t)

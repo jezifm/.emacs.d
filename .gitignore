@@ -9,3 +9,5 @@
 *.dat
 *.eld
 tramp
+eshell
+/bookmarks

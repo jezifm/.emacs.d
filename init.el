@@ -5,7 +5,7 @@
 (setq make-backup-files nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; El-get
+;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil 'noerror)
@@ -18,9 +18,8 @@
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (el-get 'sync)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Melpa
+;; Package Manager - melpa
 
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
@@ -191,11 +190,6 @@ of `org-babel-temporary-directory'."
 ;; Disable prompt on source block eval
 (setq org-confirm-babel-evaluate nil)
 
-;; Disable prompt for specific language (sh)
-;; (defun my-org-confirm-babel-evaluate (lang body)
-;;   (not (string= lang "sh")))  ; don't ask for ditaa
-;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-
 ;; Display images in buffer after eval
 (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
 
@@ -206,7 +200,6 @@ of `org-babel-temporary-directory'."
                "\\begin{center}"
                (funcall orig link info)
                "\\end{center}")))
-
 
 ;; Set author
 (setq user-full-name "Jezrael Arciaga")
@@ -394,9 +387,9 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keychord
-(require 'iy-go-to-char)
 (require 'key-chord)
 (key-chord-mode 1)
+(require 'iy-go-to-char)
 
 ;; Move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)

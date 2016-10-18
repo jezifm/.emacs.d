@@ -183,10 +183,6 @@ of `org-babel-temporary-directory'."
 ;; Save all capture to single file
 (setq org-default-notes-file "~/organizer.org")
 
-;; Add waiting state in todo - waiting state is not that helpful
-;; (setq org-todo-keywords
-;;       '((sequence "TODO" "WAITING" "DONE")))
-
 ;; Disable prompt on source block eval
 (setq org-confirm-babel-evaluate nil)
 

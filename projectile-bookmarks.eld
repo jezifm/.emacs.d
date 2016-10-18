@@ -1,1 +1,0 @@
-("~/workspace/analytics/skywalker_proj/skywalker/" "~/.emacs.d/" "~/workspace/tasks/" "~/workspace/babygalaxy_project/babygalaxy-datawarehouse/" "~/workspace/analytics/skywalker_proj/skywalker-design/" "/usr/local/")

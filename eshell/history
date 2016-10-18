@@ -1,8 +1,0 @@
-cd ...
-cd skywalker_proj/
-source script-setup-environment.sh
-ls
-source script-setup-environment.sh
-python fixtures/src/upload_logos.py
-cd skywalker
-python fixtures/src/upload_logos.py

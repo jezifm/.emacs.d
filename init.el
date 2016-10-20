@@ -277,7 +277,6 @@ of `org-babel-temporary-directory'."
             (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Wind-move
 

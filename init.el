@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs core
 
-;; Minimize
+;; disable minimize
 (global-unset-key (kbd "C-z"))
 
 ;; disable full yes no - "Resist the temptation to guess"

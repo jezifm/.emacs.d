@@ -128,7 +128,7 @@
  '(markdown-command "/usr/local/bin/pandoc")
  '(org-agenda-files
    (quote
-    ("~/organizer.org" "/Users/jez/workspace/tasks/tasks.org")))
+    ("~/organizer.org" "~/workspace/tasks/tasks.org")))
  '(projectile-global-mode t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
@@ -266,7 +266,7 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ace Jump mode
 
-(add-to-list 'load-path "/Users/jez/.emacs.d/ace-jump-mode")
+(add-to-list 'load-path "~/.emacs.d/ace-jump-mode")
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 

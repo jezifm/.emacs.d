@@ -58,7 +58,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; local dependencies
+;; Local Dependencies
 
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))

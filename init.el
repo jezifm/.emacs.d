@@ -1,8 +1,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs UI
+;; Emacs core
+
+;; Minimize
+(global-unset-key (kbd "C-z"))
+
+;; disable full yes no - "Resist the temptation to guess"
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs GUI
+
 (load-theme 'tango-dark)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
+
+;; Remove scrollbard, menu bars, and toolbars
+; when is a special form of "if", with no else clause, it reads:
+; (when <condition> <code-to-execute1> <code-to-execute2> ...)
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; maximize window
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
@@ -18,6 +40,7 @@
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (el-get 'sync)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - melpa
 
@@ -25,66 +48,33 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
+  ;; for important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
 
 
-;; Org Emacs lisp Package Archive
+;; org emacs lisp package archive
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Local dependencies
+;; local dependencies
 
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; No Externals
+;; Expand Region
 
-;; Remove scrollbard, menu bars, and toolbars
-; when is a special form of "if", with no else clause, it reads:
-; (when <condition> <code-to-execute1> <code-to-execute2> ...)
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; Expands region
 (require 'expand-region)
 (global-set-key (kbd "C-=")  'er/expand-region)
-
-; (require 'multiple-cursor)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; Maximize window
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; Disable backup file
-(defun org-babel-temp-file (prefix &optional suffix)
-  "Create a temporary file in the `org-babel-temporary-directory'.
-Passes PREFIX and SUFFIX directly to `make-temp-file' with the
-value of `temporary-file-directory' temporarily set to the value
-of `org-babel-temporary-directory'."
-  (if (file-remote-p default-directory)
-      (let ((prefix
-             ;; We cannot use `temporary-file-directory' as local part
-             ;; on the remote host, because it might be another OS
-             ;; there.  So we assume "/tmp", which ought to exist on
-             ;; relevant architectures.
-             (concat (file-remote-p default-directory)
-                     ;; REPLACE temporary-file-directory with /tmp:
-                     (expand-file-name prefix "/tmp/"))))
-        (make-temp-file prefix nil suffix))
-    (let ((temporary-file-directory
-           (or (and (boundp 'org-babel-temporary-directory)
-                    (file-exists-p org-babel-temporary-directory)
-                    org-babel-temporary-directory)
-               temporary-file-directory)))
-      (make-temp-file prefix nil suffix))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helm
@@ -117,11 +107,12 @@ of `org-babel-temporary-directory'."
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
-;; Override buffer list
+;; override buffer list
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
 (helm-mode 1)
 (setq projectile-global-mode t)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
@@ -147,16 +138,39 @@ of `org-babel-temporary-directory'."
  ;; If there is more than one, they won't work right.
  )
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org mode
 
-;; (setq org-default-notes-file (concat org-directory "/notes.org"))
+;; Disable backup file
+(defun org-babel-temp-file (prefix &optional suffix)
+  "Create a temporary file in the `org-babel-temporary-directory'.
+Passes PREFIX and SUFFIX directly to `make-temp-file' with the
+value of `temporary-file-directory' temporarily set to the value
+of `org-babel-temporary-directory'."
+  (if (file-remote-p default-directory)
+      (let ((prefix
+             ;; We cannot use `temporary-file-directory' as local part
+             ;; on the remote host, because it might be another OS
+             ;; there.  So we assume "/tmp", which ought to exist on
+             ;; relevant architectures.
+             (concat (file-remote-p default-directory)
+                     ;; REPLACE temporary-file-directory with /tmp:
+                     (expand-file-name prefix "/tmp/"))))
+        (make-temp-file prefix nil suffix))
+    (let ((temporary-file-directory
+           (or (and (boundp 'org-babel-temporary-directory)
+                    (file-exists-p org-babel-temporary-directory)
+                    org-babel-temporary-directory)
+               temporary-file-directory)))
+      (make-temp-file prefix nil suffix))))
+
+;; Enable task capture
 (define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-export-coding-system 'utf-8)
 (setq org-log-done 'time)
 
-(require 'ob-ipython)
-;; enable http in code blocks
+;; Enable languages(require 'ob-ipython)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -232,6 +246,7 @@ of `org-babel-temporary-directory'."
 ;; Syntax highlighting
 (setq org-src-fontify-natively t)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Datetime
 
@@ -245,6 +260,7 @@ of `org-babel-temporary-directory'."
 		 ((equal prefix '(16)) "%A, %d. %B %Y")))
 	(system-time-locale "de_DE"))
     (insert (format-time-string format))))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -261,6 +277,7 @@ of `org-babel-temporary-directory'."
             (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)))
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Wind-move
 
@@ -268,6 +285,7 @@ of `org-babel-temporary-directory'."
 (global-set-key (kbd "C-c C-k") 'windmove-down)
 (global-set-key (kbd "C-c C-l") 'windmove-up)
 (global-set-key (kbd "C-c C-;") 'windmove-right)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Trump mode
@@ -280,13 +298,16 @@ of `org-babel-temporary-directory'."
 (add-to-list 'tramp-default-proxies-alist
              '((regexp-quote (system-name)) nil nil))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yasnippet
+
 (require 'yasnippet)
 (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
 ;; (add-hook 'prog-mode-hook #'yas-minor-mode)
 (yas-global-mode 1)
 (yas-reload-all)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yasnippet custom
@@ -324,7 +345,7 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Timestamp
 
-;; Insert todays date
+;; insert todays date
 (defun insert-date (prefix)
   "Insert the current date. With prefix-argument, use ISO format. With
    two prefix arguments, write out the day and month name."
@@ -338,6 +359,7 @@ of `org-babel-temporary-directory'."
 
 (global-set-key (kbd "C-c d") 'insert-date)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto complete
 (require 'setup-hippie)
@@ -346,11 +368,13 @@ of `org-babel-temporary-directory'."
 (global-set-key (kbd "C-:") 'hippie-expand-lines)
 (global-set-key (kbd "C-,") 'completion-at-point)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Jedi - temporary disable. feature is slow
 
 ;; (add-hook 'python-mode-hook 'jedi:setup)
 ;; (setq jedi:complete-on-dot t)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Email - GNUS
@@ -366,27 +390,32 @@ of `org-babel-temporary-directory'."
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
 (global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Disable full yes-no
-
-(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Publish settings
 (load-file "~/.emacs.d/publish-settings.el")
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ropemacs
+;; Ropemacs
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-shortcuts t)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Keychord
+;; Keychord - temporary disabled. Adding latency on each keypress
 (require 'key-chord)
-(key-chord-mode 1)
 (require 'iy-go-to-char)
 
-;; Move to char similar to "f" in vim, f+g forward, d+f backward
+(key-chord-mode 0)
+
+;; move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)
 (key-chord-define-global "df" 'iy-go-to-char-backward)
+
+;; ninja-mode
+(key-chord-define-global "BB" 'helm-buffers-list)
+(key-chord-define-global "FF" 'helm-find-files)
+(key-chord-define-global "jk" 'beginning-of-buffer)
+(key-chord-define-global "PP" 'helm-filtered-bookmarks)

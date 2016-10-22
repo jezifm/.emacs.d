@@ -490,4 +490,3 @@ of `org-babel-temporary-directory'."
 ;; Window Numbering
 (require 'window-numbering)
 (window-numbering-mode 1)
-

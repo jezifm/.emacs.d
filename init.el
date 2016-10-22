@@ -7,15 +7,31 @@
 ;; disable full yes no - "Resist the temptation to guess"
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; sort lines
+(global-set-key (kbd "<f5>") 'sort-lines)
+;; set function as ctrl
+(setq ns-function-modifier 'control)
+
+;; change quit key
+(global-unset-key (kbd "C-x C-c"))
+(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
+
+;; delete blank lines
+(global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
+
+;; regex replace
+(global-set-key (kbd "M-&") 'query-replace-regexp)
+
+;; back to indentation
+(global-set-key (kbd "M-i") 'back-to-indentation)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
-
 (load-theme 'tango-dark)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
-;; Remove scrollbard, menu bars, and toolbars
+;; Remove scrollbar, menu bars, and toolbars
 ; when is a special form of "if", with no else clause, it reads:
 ; (when <condition> <code-to-execute1> <code-to-execute2> ...)
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -24,6 +40,9 @@
 
 ;; maximize window
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; no splash screen please ... jeez
+(setq inhibit-startup-message t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -92,7 +111,13 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-=")  'er/expand-region)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Multiple Cursor
+
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-S-c C-S-a") 'mc/edit-beginnings-of-lines)
+(global-set-key (kbd "C-S-c C-S-e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
@@ -160,6 +185,16 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; combine diff
+(defun ediff-copy-both-to-C ()
+  (interactive)
+  (ediff-copy-diff ediff-current-difference nil 'C nil
+                   (concat
+                    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+(defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+(add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org mode
@@ -192,7 +227,7 @@ of `org-babel-temporary-directory'."
 (setq org-export-coding-system 'utf-8)
 (setq org-log-done 'time)
 
-;; Enable languages(require 'ob-ipython)
+;; Enable languages
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -204,6 +239,7 @@ of `org-babel-temporary-directory'."
    (http . t)
    (dot . t)
    (sql . t)
+   (ditaa . t)
    ))
 
 ;; Home Directory
@@ -430,14 +466,20 @@ of `org-babel-temporary-directory'."
 (require 'key-chord)
 (require 'iy-go-to-char)
 
-(key-chord-mode 0)
+(key-chord-mode 1)
 
 ;; move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)
 (key-chord-define-global "df" 'iy-go-to-char-backward)
 
 ;; ninja-mode
-(key-chord-define-global "BB" 'helm-buffers-list)
-(key-chord-define-global "FF" 'helm-find-files)
-(key-chord-define-global "jk" 'beginning-of-buffer)
-(key-chord-define-global "PP" 'helm-filtered-bookmarks)
+;; (key-chord-define-global "BB" 'helm-buffers-list)
+;; (key-chord-define-global "FF" 'helm-find-files)
+;; (key-chord-define-global "jk" 'beginning-of-buffer)
+;; (key-chord-define-global "PP" 'helm-filtered-bookmarks)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Window Numbering
+(require 'window-numbering)
+(window-numbering-mode 1)

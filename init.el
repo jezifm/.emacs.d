@@ -100,7 +100,8 @@
      iy-go-to-char
      magit
      window-numbering
-     multiple-cursors)))
+     multiple-cursors
+     nyan-mode)))
 
 (condition-case nil
     (init--install-packages)
@@ -178,7 +179,7 @@
  '(org-agenda-files (quote ("~/organizer.org" "~/workspace/tasks/tasks.org")))
  '(package-selected-packages
    (quote
-    (multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
+    (nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
  '(projectile-global-mode t t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
@@ -486,3 +487,9 @@ of `org-babel-temporary-directory'."
 ;; Window Numbering
 (require 'window-numbering)
 (window-numbering-mode 1)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Nyan Mode
+(require 'nyan-mode)
+(nyan-mode 1)

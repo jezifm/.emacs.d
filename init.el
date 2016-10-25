@@ -240,6 +240,7 @@ of `org-babel-temporary-directory'."
    (dot . t)
    (sql . t)
    (ditaa . t)
+   (plantuml . t)
    ))
 
 ;; Home Directory
@@ -483,3 +484,9 @@ of `org-babel-temporary-directory'."
 ;; Window Numbering
 (require 'window-numbering)
 (window-numbering-mode 1)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Plantuml
+
+(setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")

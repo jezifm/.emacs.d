@@ -98,7 +98,10 @@
      yasnippet
      key-chord
      iy-go-to-char
-     magit)))
+     magit
+     window-numbering
+     multiple-cursors
+     nyan-mode)))
 
 (condition-case nil
     (init--install-packages)
@@ -173,10 +176,11 @@
  ;; If there is more than one, they won't work right.
  '(helm-mode t)
  '(markdown-command "/usr/local/bin/pandoc")
- '(org-agenda-files
+ '(org-agenda-files (quote ("~/organizer.org" "~/workspace/tasks/tasks.org")))
+ '(package-selected-packages
    (quote
-    ("~/organizer.org" "~/workspace/tasks/tasks.org")))
- '(projectile-global-mode t)
+    (nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
+ '(projectile-global-mode t t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -490,3 +494,10 @@ of `org-babel-temporary-directory'."
 ;; Plantuml
 
 (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Nyan Mode
+
+(require 'nyan-mode)
+(nyan-mode 1)

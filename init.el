@@ -101,7 +101,8 @@
      magit
      window-numbering
      multiple-cursors
-     nyan-mode)))
+     nyan-mode
+     go-mode)))
 
 (condition-case nil
     (init--install-packages)

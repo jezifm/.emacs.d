@@ -102,7 +102,8 @@
      window-numbering
      multiple-cursors
      nyan-mode
-     go-mode)))
+     go-mode
+     ob-go)))
 
 (condition-case nil
     (init--install-packages)
@@ -246,6 +247,7 @@ of `org-babel-temporary-directory'."
    (sql . t)
    (ditaa . t)
    (plantuml . t)
+   (go . t)
    ))
 
 ;; Home Directory

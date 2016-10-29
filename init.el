@@ -20,7 +20,7 @@
 (global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
 
 ;; regex replace
-(global-set-key (kbd "M-&") 'query-replace-regexp)
+(global-set-key (kbd "C-c r") 'query-replace-regexp)
 
 ;; back to indentation
 (global-set-key (kbd "M-i") 'back-to-indentation)

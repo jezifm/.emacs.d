@@ -25,6 +25,10 @@
 ;; back to indentation
 (global-set-key (kbd "M-i") 'back-to-indentation)
 
+;; remap backspace
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
 (load-theme 'tango-dark)
@@ -181,7 +185,7 @@
  '(org-agenda-files (quote ("~/organizer.org" "~/workspace/tasks/tasks.org")))
  '(package-selected-packages
    (quote
-    (nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
+    (ob-go go-mode nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
  '(projectile-global-mode t t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces

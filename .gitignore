@@ -13,3 +13,6 @@ eshell
 /bookmarks
 /abbrev_defs
 /server/server
+/prodigy-settings.el
+/publish-settings.el
+/request/curl-cookie-jar

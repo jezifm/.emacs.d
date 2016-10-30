@@ -25,6 +25,9 @@
 ;; back to indentation
 (global-set-key (kbd "M-i") 'back-to-indentation)
 
+;; set abbrev silently
+(setq save-abbrevs 'silently)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
 (load-theme 'tango-dark)
@@ -86,6 +89,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install missing dependencies
+(when (not (package-installed-p 'dash))
+  (package-install 'dash))
+
 (require 'setup-package)
 
 (defun init--install-packages ()
@@ -104,7 +110,8 @@
      nyan-mode
      go-mode
      ob-go
-     prodigy)))
+     prodigy
+     ace-jump-mode)))
 
 (condition-case nil
     (init--install-packages)
@@ -460,11 +467,20 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Publish settings
-(load-file "~/.emacs.d/publish-settings.el")
+(when (file-exists-p "publish-settings.el")
+  (load-file "publish-settings.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ropemacs
+
+;; make sure packages are installed
+(when (not (el-get-package-exists-p 'ropemacs))
+  (el-get-install 'ropemacs))
+(when (not (el-get-package-exists-p 'pymacs))
+  (el-get-install 'pymacs))
+
+;; load pymacs
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-shortcuts t)
@@ -509,4 +525,5 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Prodigy
-(load-file "~/.emacs.d/prodigy-settings.el")
+(when (file-exists-p "prodigy-settings.el")
+  (load-file "prodigy-settings.el"))

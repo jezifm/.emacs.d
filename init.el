@@ -103,7 +103,8 @@
      multiple-cursors
      nyan-mode
      go-mode
-     ob-go)))
+     ob-go
+     prodigy)))
 
 (condition-case nil
     (init--install-packages)
@@ -504,3 +505,8 @@ of `org-babel-temporary-directory'."
 
 (require 'nyan-mode)
 (nyan-mode 1)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Prodigy
+(load-file "~/.emacs.d/prodigy-settings.el")

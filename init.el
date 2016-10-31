@@ -99,6 +99,7 @@
    '(expand-region
      helm
      ob-http
+     ob-redis
      ob-ipython
      org-plus-contrib
      yasnippet
@@ -112,7 +113,8 @@
      ob-go
      prodigy
      ace-jump-mode
-     hackernews)))
+     hackernews
+     redis)))
 
 (condition-case nil
     (init--install-packages)

@@ -111,7 +111,8 @@
      go-mode
      ob-go
      prodigy
-     ace-jump-mode)))
+     ace-jump-mode
+     hackernews)))
 
 (condition-case nil
     (init--install-packages)
@@ -527,3 +528,9 @@ of `org-babel-temporary-directory'."
 ;; Prodigy
 (when (file-exists-p "prodigy-settings.el")
   (load-file "prodigy-settings.el"))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; HackerNews
+
+(require 'hackernews)

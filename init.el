@@ -33,26 +33,6 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs GUI
-(load-theme 'spolsky)
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-
-;; Remove scrollbar, menu bars, and toolbars
-; when is a special form of "if", with no else clause, it reads:
-; (when <condition> <code-to-execute1> <code-to-execute2> ...)
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; maximize window
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; no splash screen please ... jeez
-(setq inhibit-startup-message t)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -126,6 +106,26 @@
   (error
    (package-refresh-contents)
    (init--install-packages)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs GUI
+(load-theme 'spolsky t)
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+
+;; Remove scrollbar, menu bars, and toolbars
+; when is a special form of "if", with no else clause, it reads:
+; (when <condition> <code-to-execute1> <code-to-execute2> ...)
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; maximize window
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; no splash screen please ... jeez
+(setq inhibit-startup-message t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

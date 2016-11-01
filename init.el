@@ -346,15 +346,16 @@ of `org-babel-temporary-directory'."
 
 (add-to-list 'load-path "~/.emacs.d/ace-jump-mode")
 (require 'ace-jump-mode)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-(define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode)
+
+(defun jez/ace-enable-key-bind ()
+  "Allow C-c C-SPC to trigger ace jump mode"
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+  (define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode))
+(jez/ace-enable-key-bind)
 
 ;; fix issue - not working in org mode
 ;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "\C-c SPC") 'ace-jump-mode)
-	    (local-set-key (kbd "\C-c C-SPC") 'ace-jump-mode)))
+(add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

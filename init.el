@@ -28,6 +28,7 @@
 ;; set abbrev silently
 (setq save-abbrevs 'silently)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
 (load-theme 'tango-dark)
@@ -122,11 +123,13 @@
    (package-refresh-contents)
    (init--install-packages)))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Expand Region
 
 (require 'expand-region)
 (global-set-key (kbd "C-=")  'er/expand-region)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Multiple Cursor
@@ -340,7 +343,6 @@ of `org-babel-temporary-directory'."
     (insert (format-time-string format))))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ace Jump mode
 
@@ -494,6 +496,7 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keychord - temporary disabled. Adding latency on each keypress
+
 (require 'key-chord)
 (require 'iy-go-to-char)
 
@@ -503,12 +506,6 @@ of `org-babel-temporary-directory'."
 (key-chord-define-global "fj" 'iy-go-to-char)
 (key-chord-define-global "df" 'iy-go-to-char-backward)
 
-;; ninja-mode
-;; (key-chord-define-global "BB" 'helm-buffers-list)
-;; (key-chord-define-global "FF" 'helm-find-files)
-;; (key-chord-define-global "jk" 'beginning-of-buffer)
-;; (key-chord-define-global "PP" 'helm-filtered-bookmarks)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window Numbering
@@ -517,7 +514,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Plantuml
+;; Plantuml - For diagram and UML
 
 (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
 

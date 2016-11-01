@@ -28,6 +28,10 @@
 ;; set abbrev silently
 (setq save-abbrevs 'silently)
 
+;; electric mode
+(electric-pair-mode)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
 (load-theme 'spolsky)

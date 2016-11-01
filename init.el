@@ -30,7 +30,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
-(load-theme 'tango-dark)
+(load-theme 'spolsky)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
@@ -114,7 +114,8 @@
      prodigy
      ace-jump-mode
      hackernews
-     redis)))
+     redis
+     sublime-themes)))
 
 (condition-case nil
     (init--install-packages)
@@ -192,7 +193,7 @@
  '(org-agenda-files (quote ("~/organizer.org" "~/workspace/tasks/tasks.org")))
  '(package-selected-packages
    (quote
-    (nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
+    (sublime-themes nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
  '(projectile-global-mode t t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces

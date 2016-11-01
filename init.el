@@ -473,8 +473,8 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Publish settings
-(when (file-exists-p "publish-settings.el")
-  (load-file "publish-settings.el"))
+(when (file-exists-p "~/.emacs.d/publish-settings.el")
+  (load-file "~/.emacs.d/publish-settings.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -531,8 +531,11 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Prodigy
-(when (file-exists-p "prodigy-settings.el")
-  (load-file "prodigy-settings.el"))
+
+(require 'prodigy)
+
+(when (file-exists-p "~/.emacs.d/prodigy-settings.el")
+  (load-file "~/.emacs.d/prodigy-settings.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

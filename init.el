@@ -29,7 +29,7 @@
 (setq save-abbrevs 'silently)
 
 ;; electric mode
-(electric-pair-mode)
+(electric-pair-mode t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

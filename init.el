@@ -99,7 +99,9 @@
      ace-jump-mode
      hackernews
      redis
-     sublime-themes)))
+     sublime-themes
+     dockerfile-mode
+     yaml-mode)))
 
 (condition-case nil
     (init--install-packages)
@@ -194,14 +196,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" default)))
  '(helm-mode t)
+ '(linum-format " %7i ")
  '(markdown-command "/usr/local/bin/pandoc")
  '(org-agenda-files (quote ("~/organizer.org" "~/workspace/tasks/tasks.org")))
  '(package-selected-packages
    (quote
     (sublime-themes nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
- '(projectile-global-mode t t)
- '(send-mail-function (quote smtpmail-send-it)))
+ '(projectile-global-mode t)
+ '(send-mail-function (quote smtpmail-send-it))
+ '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -266,6 +273,7 @@ of `org-babel-temporary-directory'."
    (ditaa . t)
    (plantuml . t)
    (go . t)
+   (yaml . t)
    ))
 
 ;; Home Directory
@@ -361,7 +369,7 @@ of `org-babel-temporary-directory'."
 
 ;; fix issue - not working in org mode
 ;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
-(add-hook 'org-mode-hook (jez/ace-enable-key-bind))
+;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -543,3 +551,10 @@ of `org-babel-temporary-directory'."
 ;; HackerNews
 
 (require 'hackernews)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; YAML mode
+
+(require 'org)
+(defun org-babel-execute:yaml (body params) body)

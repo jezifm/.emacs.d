@@ -101,7 +101,7 @@
      redis
      sublime-themes
      dockerfile-mode
-     yaml-mode)))
+     yaml-mode
      lorem-ipsum)))
 
 (condition-case nil
@@ -273,7 +273,6 @@ of `org-babel-temporary-directory'."
    (ditaa . t)
    (plantuml . t)
    (go . t)
-   (yaml . t)
    ))
 
 ;; Home Directory

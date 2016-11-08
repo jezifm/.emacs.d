@@ -100,6 +100,7 @@
      hackernews
      redis
      sublime-themes
+     cyberpunk-theme
      dockerfile-mode
      yaml-mode
      lorem-ipsum)))
@@ -113,7 +114,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
-(load-theme 'spolsky t)
+(load-theme 'cyberpunk t)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
@@ -199,7 +200,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default)))
+    ("38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" "a800120841da457aa2f86b98fb9fd8df8ba682cebde033d7dbf8077c1b7d677a" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default)))
  '(helm-mode t)
  '(linum-format " %7i ")
  '(markdown-command "/usr/local/bin/pandoc")
@@ -207,7 +208,7 @@
  '(package-selected-packages
    (quote
     (material-theme lorem-ipsum sublime-themes nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
- '(projectile-global-mode t t)
+ '(projectile-global-mode t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

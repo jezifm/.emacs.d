@@ -25,6 +25,9 @@
 ;; back to indentation
 (global-set-key (kbd "M-i") 'back-to-indentation)
 
+;; toggle truncate line
+(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+
 ;; set abbrev silently
 (setq save-abbrevs 'silently)
 
@@ -103,7 +106,8 @@
      cyberpunk-theme
      dockerfile-mode
      yaml-mode
-     lorem-ipsum)))
+     lorem-ipsum
+     swift-mode)))
 
 (condition-case nil
     (init--install-packages)

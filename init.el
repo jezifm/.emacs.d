@@ -109,7 +109,7 @@
      lorem-ipsum
      color-theme-modern
      swiper
-     avy)))
+     avy
      swift-mode)))
 
 (condition-case nil
@@ -215,7 +215,7 @@
  '(package-selected-packages
    (quote
     (material-theme lorem-ipsum sublime-themes nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
- '(projectile-global-mode t)
+ '(projectile-global-mode t t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

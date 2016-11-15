@@ -104,7 +104,9 @@
      dockerfile-mode
      yaml-mode
      lorem-ipsum
-     color-theme-modern)))
+     color-theme-modern
+     swiper
+     avy)))
 
 (condition-case nil
     (init--install-packages)
@@ -561,3 +563,17 @@ of `org-babel-temporary-directory'."
 
 (require 'org)
 (defun org-babel-execute:yaml (body params) body)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Swiper
+
+(require 'swiper)
+(global-set-key (kbd "C-s") 'swiper)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Avy
+
+(require 'avy)
+(global-set-key (kbd "M-g f") 'avy-goto-line)

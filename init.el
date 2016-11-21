@@ -58,7 +58,7 @@
 
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+	     '("melpa" . "https://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; for important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -238,9 +238,9 @@
 (defun ediff-copy-both-to-C ()
   (interactive)
   (ediff-copy-diff ediff-current-difference nil 'C nil
-                   (concat
-                    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-                    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+		   (concat
+		    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+		    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
@@ -256,19 +256,19 @@ value of `temporary-file-directory' temporarily set to the value
 of `org-babel-temporary-directory'."
   (if (file-remote-p default-directory)
       (let ((prefix
-             ;; We cannot use `temporary-file-directory' as local part
-             ;; on the remote host, because it might be another OS
-             ;; there.  So we assume "/tmp", which ought to exist on
-             ;; relevant architectures.
-             (concat (file-remote-p default-directory)
-                     ;; REPLACE temporary-file-directory with /tmp:
-                     (expand-file-name prefix "/tmp/"))))
-        (make-temp-file prefix nil suffix))
+	     ;; We cannot use `temporary-file-directory' as local part
+	     ;; on the remote host, because it might be another OS
+	     ;; there.  So we assume "/tmp", which ought to exist on
+	     ;; relevant architectures.
+	     (concat (file-remote-p default-directory)
+		     ;; REPLACE temporary-file-directory with /tmp:
+		     (expand-file-name prefix "/tmp/"))))
+	(make-temp-file prefix nil suffix))
     (let ((temporary-file-directory
-           (or (and (boundp 'org-babel-temporary-directory)
-                    (file-exists-p org-babel-temporary-directory)
-                    org-babel-temporary-directory)
-               temporary-file-directory)))
+	   (or (and (boundp 'org-babel-temporary-directory)
+		    (file-exists-p org-babel-temporary-directory)
+		    org-babel-temporary-directory)
+	       temporary-file-directory)))
       (make-temp-file prefix nil suffix))))
 
 ;; Enable task capture
@@ -314,11 +314,11 @@ of `org-babel-temporary-directory'."
 
 ;; center all images
 (advice-add 'org-latex--inline-image :around
-            (lambda (orig link info)
-              (concat
-               "\\begin{center}"
-               (funcall orig link info)
-               "\\end{center}")))
+	    (lambda (orig link info)
+	      (concat
+	       "\\begin{center}"
+	       (funcall orig link info)
+	       "\\end{center}")))
 
 ;; Set author
 (setq user-full-name "Jezrael Arciaga")
@@ -334,16 +334,16 @@ of `org-babel-temporary-directory'."
 
 ;; set code blocks background to dark
 (add-hook 'org-mime-html-hook
-          (lambda ()
-            (org-mime-change-element-style
-             "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
-                           "#E6E1DC" "#232323"))))
+	  (lambda ()
+	    (org-mime-change-element-style
+	     "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+			   "#E6E1DC" "#232323"))))
 
 ;; set block quotes offset
 (add-hook 'org-mime-html-hook
-          (lambda ()
-            (org-mime-change-element-style
-             "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
+	  (lambda ()
+	    (org-mime-change-element-style
+	     "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
 
 ;; Update tasks state base on subtask
 (defun org-summary-todo (n-done n-not-done)
@@ -405,9 +405,9 @@ of `org-babel-temporary-directory'."
 (setq tramp-default-method "ssh")
 ;; Fix issue - sudo can only use the local host
 (add-to-list 'tramp-default-proxies-alist
-             '(nil "\\`root\\'" "/ssh:%h:"))
+	     '(nil "\\`root\\'" "/ssh:%h:"))
 (add-to-list 'tramp-default-proxies-alist
-             '((regexp-quote (system-name)) nil nil))
+	     '((regexp-quote (system-name)) nil nil))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -427,21 +427,21 @@ of `org-babel-temporary-directory'."
 (defun python-args-to-google-docstring (text &optional make-fields)
   "Return a reST docstring format for the python arguments in yas-text."
   (let* ((indent (concat "\n" (make-string (current-column) 32)))
-         (args (python-split-args text))
+	 (args (python-split-args text))
      (nr 0)
-         (formatted-args
+	 (formatted-args
       (mapconcat
        (lambda (x)
-         (concat "   " (nth 0 x)
-             (if make-fields (format " ${%d:arg%d}" (incf nr) nr))
-             (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
+	 (concat "   " (nth 0 x)
+	     (if make-fields (format " ${%d:arg%d}" (incf nr) nr))
+	     (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
        args
        indent)))
     (unless (string= formatted-args "")
       (concat
        (mapconcat 'identity
-          (list "" "Args:" formatted-args)
-          indent)
+	  (list "" "Args:" formatted-args)
+	  indent)
        "\n"))))
 
 

@@ -14,7 +14,7 @@
 
 ;; change quit key
 (global-unset-key (kbd "C-x C-c"))
-(global-set-key (kbd "C-x r q") 'sbave-buffers-kill-terminal)
+(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
 ;; delete blank lines
 (global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)

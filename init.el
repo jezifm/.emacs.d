@@ -37,6 +37,20 @@
 ;; highlight matching parenthesis
 (show-paren-mode t)
 
+;; go to shell
+(defun jez/shell-shortcut ()
+  "Create shell buffer based on current buffer name"
+  (interactive)
+  (let* ((current-buffer-name (buffer-name (current-buffer))))
+    (shell (format "sh-%s" current-buffer-name))))
+(global-set-key (kbd "C-z") 'jez/shell-shortcut)
+
+;; join line
+(defun jez/join-line ()
+  "Custom join line"
+  (interactive)
+  (join-line -1))
+(global-set-key (kbd "M-j") 'jez/join-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
@@ -626,7 +640,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Desktopp
+;; Desktop
 (require 'desktop)
 
 (add-to-list 'desktop-path "~/.emacs.d/desktop")
@@ -638,4 +652,8 @@ of `org-babel-temporary-directory'."
 ;; VIM's - Change Inner
 
 (require 'change-inner)
-(global-set-key (kbd "C-c i") 'change-inner)
+(global-set-key (kbd "M-I") 'change-inner)
+(global-set-key (kbd "M-O") 'change-outer)
+
+(global-set-key (kbd "s-i") 'copy-inner)
+(global-set-key (kbd "s-o") 'copy-outer)

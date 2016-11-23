@@ -17,7 +17,7 @@
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
 
 ;; delete blank lines
-(global-set-key (kbd "C-c C-<return>") 'delete-blank-lines)
+(global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
 
 ;; regex replace
 (global-set-key (kbd "C-c r") 'query-replace-regexp)

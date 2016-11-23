@@ -626,7 +626,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Desktop
+;; Desktopp
 (require 'desktop)
 
 (add-to-list 'desktop-path "~/.emacs.d/desktop")
@@ -638,5 +638,4 @@ of `org-babel-temporary-directory'."
 ;; VIM's - Change Inner
 
 (require 'change-inner)
-(global-set-key (kbd "C-i") 'change-inner)
-(global-set-key (kbd "C-o") 'change-outer)
+(global-set-key (kbd "C-c i") 'change-inner)

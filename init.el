@@ -58,7 +58,7 @@
 
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+	     '("melpa" . "https://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; for important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -117,6 +117,7 @@
      color-theme-modern
      paredit
      ace-window
+     change-inner
      )))
 
 (condition-case nil
@@ -129,6 +130,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
 (load-theme 'cyberpunk t)
+(load-theme 'tty-dark t t)
+(enable-theme 'tty-dark)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
@@ -215,7 +218,7 @@
  '(custom-enabled-themes (quote (cyberpunk sanityinc-tomorrow-night)))
  '(custom-safe-themes
    (quote
-    ("a800120841da457aa2f86b98fb9fd8df8ba682cebde033d7dbf8077c1b7d677a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "c39142cd89505a1b05130b65c85aed93e5a46426424a9143214cdb1778dbc8ce" "b4fd44f653c69fb95d3f34f071b223ae705bb691fb9abaf2ffca3351e92aa374" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" "bff3bf3adad639ec87c15766758ba3ae5492722fb77932ab5bfd9f232e911c2f" "b9293d120377ede424a1af1e564ba69aafa85e0e9fd19cf89b4e15f8ee42a8bb" "2ea9afebc23cca3cd0cd39943b8297ce059e31cb62302568b8fa5c25a22db5bc" "31772cd378fd8267d6427cec2d02d599eee14a1b60e9b2b894dd5487bd30978e" "1f126eb4a1e5d6b96b3faf494c8c490f1d1e5ad4fc5a1ce120034fe140e77b88" "fe349b21bb978bb1f1f2db05bc87b2c6d02f1a7fe3f27584cd7b6fbf8e53391a" "77515a438dc348e9d32310c070bfdddc5605efc83671a159b223e89044e4c4f1" "2d5c40e709543f156d3dee750cd9ac580a20a371f1b1e1e3ecbef2b895cf0cd2" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "4c8372c68b3eab14516b6ab8233de2f9e0ecac01aaa859e547f902d27310c0c3" "e26e879d250140e0d4c4d5ab457c32bcb29742599bd28c1ce31301344c6f2a11" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default)))
+    ("25a6adc1f35899735e4b46f5d175f5feaee8c881c287d863536dbda4c9d5c905" "604648621aebec024d47c352b8e3411e63bdb384367c3dd2e8db39df81b475f5" "b4fd44f653c69fb95d3f34f071b223ae705bb691fb9abaf2ffca3351e92aa374" "abd7719fd9255fcd64f631664390e2eb89768a290ee082a9f0520c5f12a660a8" "f831c1716ebc909abe3c851569a402782b01074e665a4c140e3e52214f7504a0" "a455366c5cdacebd8adaa99d50e37430b0170326e7640a688e9d9ad406e2edfd" "aaf4fde2e679ea2d6588be88da84b98562e97ae3154e93e0c8897c0ecb118347" "c39142cd89505a1b05130b65c85aed93e5a46426424a9143214cdb1778dbc8ce" "191df4eca32409aaea7a80e833ae451c13d67511665b27f1782960788c3f336d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "f81a9aabc6a70441e4a742dfd6d10b2bae1088830dc7aba9c9922f4b1bd2ba50" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "b9293d120377ede424a1af1e564ba69aafa85e0e9fd19cf89b4e15f8ee42a8bb" "2ea9afebc23cca3cd0cd39943b8297ce059e31cb62302568b8fa5c25a22db5bc" "31772cd378fd8267d6427cec2d02d599eee14a1b60e9b2b894dd5487bd30978e" "1f126eb4a1e5d6b96b3faf494c8c490f1d1e5ad4fc5a1ce120034fe140e77b88" "fe349b21bb978bb1f1f2db05bc87b2c6d02f1a7fe3f27584cd7b6fbf8e53391a" "77515a438dc348e9d32310c070bfdddc5605efc83671a159b223e89044e4c4f1" "2d5c40e709543f156d3dee750cd9ac580a20a371f1b1e1e3ecbef2b895cf0cd2" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "4c8372c68b3eab14516b6ab8233de2f9e0ecac01aaa859e547f902d27310c0c3" "e26e879d250140e0d4c4d5ab457c32bcb29742599bd28c1ce31301344c6f2a11" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default)))
  '(fci-rule-color "#383838")
  '(helm-mode t)
  '(linum-format " %7i ")
@@ -226,9 +229,8 @@
  '(org-agenda-files (quote ("~/organizer.org" "~/workspace/tasks/tasks.org")))
  '(package-selected-packages
    (quote
-    (color-theme-modern rainbow-delimiters yaml-mode dockerfile-mode cyberpunk-theme ein material-theme lorem-ipsum sublime-themes nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
- '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(projectile-global-mode t)
+    (change-inner badwolf-theme danneskjold-theme color-theme-sanityinc-tomorrow molokai-theme monokai-theme color-theme-modern rainbow-delimiters yaml-mode dockerfile-mode cyberpunk-theme ein material-theme lorem-ipsum sublime-themes nyan-mode visual-regexp multiple-cursors yasnippet window-numbering org-plus-contrib ob-ipython ob-http magit key-chord iy-go-to-char helm expand-region)))
+ '(projectile-global-mode t t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -241,9 +243,9 @@
 (defun ediff-copy-both-to-C ()
   (interactive)
   (ediff-copy-diff ediff-current-difference nil 'C nil
-                   (concat
-                    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-                    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+		   (concat
+		    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+		    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
@@ -259,19 +261,19 @@ value of `temporary-file-directory' temporarily set to the value
 of `org-babel-temporary-directory'."
   (if (file-remote-p default-directory)
       (let ((prefix
-             ;; We cannot use `temporary-file-directory' as local part
-             ;; on the remote host, because it might be another OS
-             ;; there.  So we assume "/tmp", which ought to exist on
-             ;; relevant architectures.
-             (concat (file-remote-p default-directory)
-                     ;; REPLACE temporary-file-directory with /tmp:
-                     (expand-file-name prefix "/tmp/"))))
-        (make-temp-file prefix nil suffix))
+	     ;; We cannot use `temporary-file-directory' as local part
+	     ;; on the remote host, because it might be another OS
+	     ;; there.  So we assume "/tmp", which ought to exist on
+	     ;; relevant architectures.
+	     (concat (file-remote-p default-directory)
+		     ;; REPLACE temporary-file-directory with /tmp:
+		     (expand-file-name prefix "/tmp/"))))
+	(make-temp-file prefix nil suffix))
     (let ((temporary-file-directory
-           (or (and (boundp 'org-babel-temporary-directory)
-                    (file-exists-p org-babel-temporary-directory)
-                    org-babel-temporary-directory)
-               temporary-file-directory)))
+	   (or (and (boundp 'org-babel-temporary-directory)
+		    (file-exists-p org-babel-temporary-directory)
+		    org-babel-temporary-directory)
+	       temporary-file-directory)))
       (make-temp-file prefix nil suffix))))
 
 ;; Enable task capture
@@ -317,11 +319,11 @@ of `org-babel-temporary-directory'."
 
 ;; center all images
 (advice-add 'org-latex--inline-image :around
-            (lambda (orig link info)
-              (concat
-               "\\begin{center}"
-               (funcall orig link info)
-               "\\end{center}")))
+	    (lambda (orig link info)
+	      (concat
+	       "\\begin{center}"
+	       (funcall orig link info)
+	       "\\end{center}")))
 
 ;; Set author
 (setq user-full-name "Jezrael Arciaga")
@@ -337,16 +339,16 @@ of `org-babel-temporary-directory'."
 
 ;; set code blocks background to dark
 (add-hook 'org-mime-html-hook
-          (lambda ()
-            (org-mime-change-element-style
-             "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
-                           "#E6E1DC" "#232323"))))
+	  (lambda ()
+	    (org-mime-change-element-style
+	     "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+			   "#E6E1DC" "#232323"))))
 
 ;; set block quotes offset
 (add-hook 'org-mime-html-hook
-          (lambda ()
-            (org-mime-change-element-style
-             "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
+	  (lambda ()
+	    (org-mime-change-element-style
+	     "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
 
 ;; Update tasks state base on subtask
 (defun org-summary-todo (n-done n-not-done)
@@ -408,9 +410,9 @@ of `org-babel-temporary-directory'."
 (setq tramp-default-method "ssh")
 ;; Fix issue - sudo can only use the local host
 (add-to-list 'tramp-default-proxies-alist
-             '(nil "\\`root\\'" "/ssh:%h:"))
+	     '(nil "\\`root\\'" "/ssh:%h:"))
 (add-to-list 'tramp-default-proxies-alist
-             '((regexp-quote (system-name)) nil nil))
+	     '((regexp-quote (system-name)) nil nil))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -430,30 +432,30 @@ of `org-babel-temporary-directory'."
 (defun python-args-to-google-docstring (text &optional make-fields)
   "Return a reST docstring format for the python arguments in yas-text."
   (let* ((indent (concat "\n" (make-string (current-column) 32)))
-         (args (python-split-args text))
+	 (args (python-split-args text))
      (nr 0)
-         (formatted-args
+	 (formatted-args
       (mapconcat
        (lambda (x)
-         (concat "   " (nth 0 x)
-             (if make-fields (format " ${%d:arg%d}" (incf nr) nr))
-             (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
+	 (concat "   " (nth 0 x)
+	     (if make-fields (format " ${%d:arg%d}" (incf nr) nr))
+	     (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
        args
        indent)))
     (unless (string= formatted-args "")
       (concat
        (mapconcat 'identity
-          (list "" "Args:" formatted-args)
-          indent)
+	  (list "" "Args:" formatted-args)
+	  indent)
        "\n"))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Insert pair
+;; Insert pair - not needed since eletric mode activated
 
-(global-set-key (kbd "M-[") 'insert-pair)
-(global-set-key (kbd "M-{") 'insert-pair)
-(global-set-key (kbd "M-\"") 'insert-pair)
+;; (global-set-key (kbd "M-[") 'insert-pair)
+;; (global-set-key (kbd "M-{") 'insert-pair)
+;; (global-set-key (kbd "M-\"") 'insert-pair)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -609,6 +611,7 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Local functions
+;; VIM's - Change Inner
 
 (when (file-exists-p "~/.emacs.d/local-init.el")
   (load-file "~/.emacs.d/local-init.el"))
@@ -630,3 +633,6 @@ of `org-babel-temporary-directory'."
 (add-to-list 'desktop-path "~/.emacs.d/desktop")
 ;; (setq desktop-dirname "~/.emacs.d/desktop")
 ;; (setq desktop-base-file-name "desktop.desktop")
+(require 'change-inner)
+(global-set-key (kbd "M-i") 'change-inner)
+(global-set-key (kbd "M-o") 'change-outer)

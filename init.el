@@ -52,6 +52,9 @@
   (join-line -1))
 (global-set-key (kbd "M-j") 'jez/join-line)
 
+;; disable anoying popup
+(global-unset-key (kbd "s-t"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")

@@ -637,6 +637,7 @@ of `org-babel-temporary-directory'."
 ;; Ace window
 
 (global-set-key (kbd "M-p") 'ace-window)
+(global-set-key (kbd "s-p") 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)

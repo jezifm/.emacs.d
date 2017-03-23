@@ -368,6 +368,14 @@ of `org-babel-temporary-directory'."
 ;; Syntax highlighting
 (setq org-src-fontify-natively t)
 
+;; inline image auto refresh
+(defun shk-fix-inline-images ()
+  (interactive)
+  (when org-inline-image-overlays
+    (org-redisplay-inline-images)))
+
+
+(add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Datetime

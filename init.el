@@ -558,7 +558,7 @@ of `org-babel-temporary-directory'."
 
 ;; move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)
-(key-chord-define-global "df" 'iy-go-to-char-backward)
+;; (key-chord-define-global "df" 'iy-go-to-char-backward)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

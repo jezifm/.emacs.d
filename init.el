@@ -494,6 +494,23 @@ of `org-babel-temporary-directory'."
 ;; (add-hook 'python-mode-hook 'jedi:setup)
 ;; (setq jedi:complete-on-dot t)
 
+;; combine multiline
+(defun jez/simplify ()
+  (interactive)
+  (back-to-indentation)
+  (let ((column (current-column)))
+    (while (progn
+	     (forward-line 1)
+	     (goto-char (line-beginning-position))
+	     (skip-chars-forward "[:space:]")
+	     (if (and (/= (current-column) column)
+		      (/= (point) (point-max)))
+		 (progn
+		   (delete-indentation)
+		   t)
+	       nil)))))
+(global-set-key (kbd "M-J") 'jez/simplify)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Email - GNUS

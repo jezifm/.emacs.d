@@ -394,7 +394,7 @@ of `org-babel-temporary-directory'."
 
 ;; fix issue - not working in org mode
 ;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
-(add-hook 'org-mode-hook (jez/ace-enable-key-bind))
+;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

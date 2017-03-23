@@ -160,6 +160,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
+
+;; ensure we have the theme
+(load-file "/Users/jez/.emacs.d/custom-themes/emacs-darkane-theme/darkane-theme.el")
+
 (load-theme 'darkane t t)
 (enable-theme 'darkane)
 (setq auto-save-default nil)

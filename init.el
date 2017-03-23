@@ -41,8 +41,14 @@
 (defun jez/shell-shortcut ()
   "Create shell buffer based on current buffer name"
   (interactive)
-  (let* ((current-buffer-name (buffer-name (current-buffer))))
-    (shell (format "sh-%s" current-buffer-name))))
+  (let* ((buffer-name-current (buffer-name (current-buffer)))
+	 (buffer-name-shell (format "sh-%s" buffer-name-current)))
+    (shell buffer-name-shell)
+    (switch-to-buffer buffer-name-current)
+    (when (equal (count-windows) 1)
+      (split-window-right))
+    (other-window 1)
+    (switch-to-buffer buffer-name-shell)))
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
 
 ;; join line

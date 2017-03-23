@@ -154,8 +154,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs GUI
-(load-theme 'tty-dark t t)
-(enable-theme 'tty-dark)
+(load-theme 'darkane t t)
+(enable-theme 'darkane)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 

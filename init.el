@@ -443,6 +443,7 @@ of `org-babel-temporary-directory'."
 (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
 ;; (add-hook 'prog-mode-hook #'yas-minor-mode)
 (yas-global-mode 1)
+(setq yas-buffer-local-condition `always)
 (yas-reload-all)
 
 

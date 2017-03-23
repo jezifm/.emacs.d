@@ -119,6 +119,7 @@
   (packages-install
    '(expand-region
      helm
+     helm-projectile
      ob-http
      ob-redis
      ob-ipython

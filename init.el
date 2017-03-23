@@ -225,6 +225,10 @@
 ;; override buffer list
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
+;; set helm projectile grep
+(global-set-key (kbd "C-x p p") 'helm-projectile-grep)
+
+
 (helm-mode 1)
 (setq projectile-global-mode t)
 

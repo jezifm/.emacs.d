@@ -55,6 +55,14 @@
 ;; disable anoying popup
 (global-unset-key (kbd "s-t"))
 
+;; just like `align-regexp' but better
+(defun align-repeat (start end regexp)
+  "Repeat alignment with respect to
+     the given regular expression."
+  (interactive "r\nsAlign regexp: ")
+  (align-regexp start end
+		(concat "\\(\\s-*\\)" regexp) 1 1 t))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")

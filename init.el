@@ -498,11 +498,10 @@ of `org-babel-temporary-directory'."
   (interactive "P")
   (let ((format (cond
 		 ((not prefix) "%Y-%m-%d")
-		 ((equal prefix '(4)) "%d.%m.%Y")
+		 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
 		 ((equal prefix '(16)) "%A, %d. %B %Y")))
 	(system-time-locale "en_US"))
     (insert (format-time-string format))))
-
 (global-set-key (kbd "C-c C-d") 'insert-date)
 
 (defun jez/annotate ()

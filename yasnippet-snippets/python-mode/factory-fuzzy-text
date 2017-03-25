@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: factory-fuzzy-text
+# key: zt
+# --
+factory.fuzzy.FuzzyText()$0

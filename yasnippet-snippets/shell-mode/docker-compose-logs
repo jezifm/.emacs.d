@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-compose-logs
+# key: dcl
+# --
+docker-compose logs --follow --tail=5 | grep ${1:imfree_api} $0

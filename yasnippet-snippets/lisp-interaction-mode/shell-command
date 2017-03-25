@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: shell-command
+# key: sc
+# --
+(progn
+  (defun jez-shell-command ()
+    (interactive)
+    (with-current-buffer "sh-imfree"
+      (erase-buffer)
+      (insert "make test")
+      (comint-send-input)))
+  (global-set-key (kbd "C-r") 'jez-shell-command))
+$0

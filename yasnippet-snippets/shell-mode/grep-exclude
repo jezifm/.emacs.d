@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: grep-exclude
+# key: gx
+# --
+| grep -v $1 $0

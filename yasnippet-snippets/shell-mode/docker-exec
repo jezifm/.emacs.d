@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-exec
+# key: de
+# --
+docker exec -it ${1:imfree_api} /bin/bash $0

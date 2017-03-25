@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: awk
+# key: awk
+# --
+awk '{print \$1}' $0

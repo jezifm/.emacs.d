@@ -167,6 +167,7 @@
      paredit
      ace-window
      change-inner
+     undo-tree
      )))
 
 (condition-case nil
@@ -574,6 +575,11 @@ of `org-babel-temporary-directory'."
 (key-chord-define-global "fj" 'iy-go-to-char)
 ;; (key-chord-define-global "df" 'iy-go-to-char-backward)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Undo Tree
+
+(undo-tree-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window Numbering

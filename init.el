@@ -494,14 +494,19 @@ of `org-babel-temporary-directory'."
    two prefix arguments, write out the day and month name."
   (interactive "P")
   (let ((format (cond
-		 ((not prefix) "%d.%m.%Y")
-		 ((equal prefix '(4)) "%Y-%m-%d")
+		 ((not prefix) "%Y-%m-%d")
+		 ((equal prefix '(4)) "%d.%m.%Y")
 		 ((equal prefix '(16)) "%A, %d. %B %Y")))
 	(system-time-locale "en_US"))
     (insert (format-time-string format))))
 
-(global-set-key (kbd "C-c d") 'insert-date)
+(global-set-key (kbd "C-c C-d") 'insert-date)
 
+(defun jez/annotate ()
+  "Insert annotation for commenting"
+  (interactive)
+  (insert "--jez ")
+  (insert-date nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto complete

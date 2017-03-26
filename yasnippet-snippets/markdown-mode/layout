@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: layout
+# key: layout
+# --
+---
+layout: post
+title: '${1:`(buffer-name)`}'
+date:   `(format-time-string "%Y-%m-%d %H:%M:%S +0800")`
+categories: 
+---
+$0

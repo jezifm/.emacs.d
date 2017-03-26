@@ -134,41 +134,41 @@
 
 (defun init--install-packages ()
   (packages-install
-   '(expand-region
-     helm
-     helm-projectile
-     helm-ag
-     ob-http
-     ob-redis
-     ob-ipython
-     org-plus-contrib
-     yasnippet
-     key-chord
-     iy-go-to-char
-     magit
-     window-numbering
-     multiple-cursors
-     nyan-mode
-     go-mode
-     ob-go
-     prodigy
-     ace-jump-mode
-     hackernews
-     redis
-     sublime-themes
+   '(ace-jump-mode
+     ace-window
+     avy
+     change-inner
+     color-theme-modern
+     color-theme-modern
      cyberpunk-theme
      dockerfile-mode
-     yaml-mode
+     expand-region
+     go-mode
+     hackernews
+     helm
+     helm-ag
+     helm-projectile
+     iy-go-to-char
+     key-chord
      lorem-ipsum
-     color-theme-modern
-     swiper
-     avy
-     swift-mode
-     color-theme-modern
+     magit
+     multiple-cursors
+     nyan-mode
+     ob-go
+     ob-http
+     ob-ipython
+     ob-redis
+     org-plus-contrib
      paredit
-     ace-window
-     change-inner
+     prodigy
+     redis
+     sublime-themes
+     swift-mode
+     swiper
      undo-tree
+     window-numbering
+     yaml-mode
+     yasnippet
      )))
 
 (condition-case nil

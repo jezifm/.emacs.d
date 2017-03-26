@@ -483,14 +483,6 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Insert pair - not needed since eletric mode activated
-
-;; (global-set-key (kbd "M-[") 'insert-pair)
-;; (global-set-key (kbd "M-{") 'insert-pair)
-;; (global-set-key (kbd "M-\"") 'insert-pair)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Timestamp
 
 ;; insert todays date
@@ -666,15 +658,6 @@ of `org-babel-temporary-directory'."
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Desktop
-(require 'desktop)
-
-(add-to-list 'desktop-path "~/.emacs.d/desktop")
-;; (setq desktop-dirname "~/.emacs.d/desktop")
-;; (setq desktop-base-file-name "desktop.desktop")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

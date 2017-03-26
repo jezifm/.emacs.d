@@ -137,6 +137,7 @@
    '(expand-region
      helm
      helm-projectile
+     helm-ag
      ob-http
      ob-redis
      ob-ipython
@@ -255,7 +256,7 @@
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
 ;; set helm projectile grep
-(global-set-key (kbd "C-x p p") 'helm-projectile-grep)
+(global-set-key (kbd "C-x p p") 'helm-do-ag-project-root)
 
 
 (helm-mode 1)

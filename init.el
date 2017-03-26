@@ -9,6 +9,7 @@
 
 ;; sort lines
 (global-set-key (kbd "<f5>") 'sort-lines)
+
 ;; set function as ctrl
 (setq ns-function-modifier 'control)
 
@@ -139,7 +140,6 @@
      avy
      change-inner
      color-theme-modern
-     color-theme-modern
      cyberpunk-theme
      dockerfile-mode
      expand-region
@@ -182,8 +182,7 @@
 ;; Emacs GUI
 
 ;; ensure we have the theme
-(load-file "/Users/jez/.emacs.d/custom-themes/emacs-darkane-theme/darkane-theme.el")
-
+(f-expand "custom-theme/emacs-darkane-theme/darkane-theme.el" user-emacs-directory)
 (load-theme 'darkane t t)
 (enable-theme 'darkane)
 (setq auto-save-default nil)
@@ -213,11 +212,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Multiple Cursor
 
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C-S-c C-S-a") 'mc/edit-beginnings-of-lines)
-(global-set-key (kbd "C-S-c C-S-e") 'mc/edit-ends-of-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-S-c C-S-a") 'mc/edit-beginnings-of-lines)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-S-c C-S-e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
@@ -426,12 +425,12 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Wind-move
+;; Wind-move - window numbering is better --jez 2017-03-27
 
-(global-set-key (kbd "C-c C-j") 'windmove-left)
-(global-set-key (kbd "C-c C-k") 'windmove-down)
-(global-set-key (kbd "C-c C-l") 'windmove-up)
-(global-set-key (kbd "C-c C-;") 'windmove-right)
+;; (global-set-key (kbd "C-c C-;") 'windmove-right)
+;; (global-set-key (kbd "C-c C-j") 'windmove-left)
+;; (global-set-key (kbd "C-c C-k") 'windmove-down)
+;; (global-set-key (kbd "C-c C-l") 'windmove-up)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -458,32 +457,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Yasnippet custom
-
-;; python google docstring. through =defg=
-(defun python-args-to-google-docstring (text &optional make-fields)
-  "Return a reST docstring format for the python arguments in yas-text."
-  (let* ((indent (concat "\n" (make-string (current-column) 32)))
-	 (args (python-split-args text))
-     (nr 0)
-	 (formatted-args
-      (mapconcat
-       (lambda (x)
-	 (concat "   " (nth 0 x)
-	     (if make-fields (format " ${%d:arg%d}" (incf nr) nr))
-	     (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
-       args
-       indent)))
-    (unless (string= formatted-args "")
-      (concat
-       (mapconcat 'identity
-	  (list "" "Args:" formatted-args)
-	  indent)
-       "\n"))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Timestamp
+;; Annotation
 
 ;; insert todays date
 (defun insert-date (prefix)
@@ -506,6 +480,7 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto complete
+
 (require 'setup-hippie)
 (global-set-key "\M- " 'hippie-expand)
 (global-set-key (kbd "C-.") 'hippie-expand-no-case-fold)
@@ -644,7 +619,6 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Local functions
-
 
 (when (file-exists-p "~/.emacs.d/local-init.el")
   (load-file "~/.emacs.d/local-init.el"))

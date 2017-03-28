@@ -143,6 +143,7 @@
      color-theme-modern
      cyberpunk-theme
      dockerfile-mode
+     exec-path-from-shell
      expand-region
      go-mode
      hackernews
@@ -644,3 +645,9 @@ of `org-babel-temporary-directory'."
 (global-set-key (kbd "s-i") 'copy-inner)
 (global-set-key (kbd "s-o") 'copy-outer)
 (put 'erase-buffer 'disabled nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bash
+
+(exec-path-from-shell-initialize)

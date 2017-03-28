@@ -145,11 +145,13 @@
      dockerfile-mode
      exec-path-from-shell
      expand-region
+     ein
      go-mode
      hackernews
      helm
      helm-ag
      helm-projectile
+     hydra
      iy-go-to-char
      key-chord
      lorem-ipsum
@@ -646,8 +648,24 @@ of `org-babel-temporary-directory'."
 (global-set-key (kbd "s-o") 'copy-outer)
 (put 'erase-buffer 'disabled nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hydra
+
+;; ein is not working properly uncomment when fixed --jez 2017-03-27
+;; (defhydra hydra-ein (ein:notebook-multilang-mode-map "C-c")
+;;   "ein"
+;;   ("p" ein:worksheet-goto-prev-input "prev")
+;;   ("n" ein:worksheet-goto-next-input "next"))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bash
 
 (exec-path-from-shell-initialize)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Quirks
+;; disable annoying auto complete
+(global-auto-complete-mode -1)
+(put 'upcase-region 'disabled nil)

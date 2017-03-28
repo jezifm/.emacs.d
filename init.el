@@ -182,7 +182,7 @@
 ;; Emacs GUI
 
 ;; ensure we have the theme
-(f-expand "custom-theme/emacs-darkane-theme/darkane-theme.el" user-emacs-directory)
+(load-file (f-expand "custom-themes/emacs-darkane-theme/darkane-theme.el" user-emacs-directory))
 (load-theme 'darkane t t)
 (enable-theme 'darkane)
 (setq auto-save-default nil)
@@ -410,7 +410,6 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ace Jump mode
 
-(add-to-list 'load-path "~/.emacs.d/ace-jump-mode")
 (require 'ace-jump-mode)
 
 (defun jez/ace-enable-key-bind ()

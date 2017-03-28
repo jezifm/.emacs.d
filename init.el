@@ -129,6 +129,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install missing dependencies
 (when (not (package-installed-p 'dash))
+  (package-refresh-contents)
   (package-install 'dash))
 
 (require 'setup-package)

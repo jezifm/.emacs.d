@@ -5,6 +5,8 @@
 (progn
   (defun jez-shell-command ()
     (interactive)
+    (if (buffer-file-name)
+      (save-buffer))
     (with-current-buffer "sh-imfree"
       (erase-buffer)
       (insert "make test")

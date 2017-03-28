@@ -183,7 +183,7 @@
 ;; Emacs GUI
 
 ;; ensure we have the theme
-(load-file (f-expand "custom-themes/emacs-darkane-theme/darkane-theme.el" user-emacs-directory))
+(load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
 (load-theme 'darkane t t)
 (enable-theme 'darkane)
 (setq auto-save-default nil)

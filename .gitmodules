@@ -1,0 +1,3 @@
+[submodule "custom-themes/emacs-darkane-theme"]
+	path = custom-themes/emacs-darkane-theme
+	url = https://github.com/FelixFortis/emacs-darkane-theme.git

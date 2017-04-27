@@ -87,6 +87,11 @@
   (align-regexp start end
 		(concat "\\(\\s-*\\)" regexp) 1 1 t))
 
+(defun jez/to-camel-case (string)
+  "Convert STRING to camelcase"
+  (setq string (capitalize string))
+  (replace-regexp-in-string "_" "" string))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -329,6 +334,7 @@ of `org-babel-temporary-directory'."
    (python . t)
    (ipython . t)
    (sh . t)
+   (shell . t)
    (js . t)
    (http . t)
    (dot . t)
@@ -544,7 +550,7 @@ of `org-babel-temporary-directory'."
 
 ;; move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)
-;; (key-chord-define-global "df" 'iy-go-to-char-backward)
+(key-chord-define-global "df" 'iy-go-to-char-backward)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: left-join
+# key: lj
+# --
+LEFT JOIN ${1:join_table}s ${2:A} ON $3.$1_id = $2.$1_id

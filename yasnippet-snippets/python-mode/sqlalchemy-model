@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: sqlalchemy-model
+# key: sqlm
+# --
+from . import *
+
+class ${1:$(jez/to-camel-case yas-text)}(orm.base):
+
+    __tablename__ = '$1s'
+
+    id = Column('$1_id', Integer, Sequence('$1_id_seq', start=1, increment=1), primary_key=True)
+    uuid = Column('uuid', String)
+
+$0

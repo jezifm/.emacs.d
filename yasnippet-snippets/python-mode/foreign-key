@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: foreign-key
+# key: fk
+# --
+${1:table}_id = Column(Integer, ForeignKey('$1s.$1_id'))
+$0

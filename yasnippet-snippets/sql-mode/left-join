@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: left-join
+# key: lj
+# --
+LEFT JOIN $1s $2 ON $2.$1_id=$3.$1_id
+$0

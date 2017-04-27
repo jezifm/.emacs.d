@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: factories-class
+# key: clsf
+# --
+class ${1:ClassName}Factory(factory.alchemy.SQLAlchemyModelFactory):
+
+    $2
+
+    class Meta:
+        model = master.$1
+        sqlalchemy_session = Session
+$0

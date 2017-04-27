@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: select-from
+# key: sf
+# --
+SELECT * FROM ${1:table};$0

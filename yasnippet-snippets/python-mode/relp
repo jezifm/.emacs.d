@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: relationship
+# key: relp
+# --
+${1:parent} = relationship('${1:$(jez/to-camel-case yas-text)}', back_populates='$2')
+$0

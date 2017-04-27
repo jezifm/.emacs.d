@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: factory-fuzzy-choice
+# key: zc
+# --
+${1:field-name} = factory.fuzzy.FuzzyChoice(literals.$1_enum)
+$0

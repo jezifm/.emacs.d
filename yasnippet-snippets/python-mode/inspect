@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: inspect
+# key: inspect
+# --
+import inspect
+print inspect.getframeinfo(inspect.getouterframes(inspect.currentframe())[1][0])[0]
+$0

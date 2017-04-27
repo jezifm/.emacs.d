@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: find-copy
+# key: fcp
+# --
+sudo find / -name '*.${1:org}' -exec cp {} . \;$0

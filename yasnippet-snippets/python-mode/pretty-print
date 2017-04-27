@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: pretty-print
+# key: ppl
+# --
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint($1)
+$0

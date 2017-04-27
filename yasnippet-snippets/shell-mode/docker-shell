@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-bash
+# key: dbash
+# --
+docker run -v \$(pwd):/code -w /code -it ${1:node} bash $0

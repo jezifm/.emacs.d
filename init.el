@@ -673,5 +673,5 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Quirks
 ;; disable annoying auto complete
-(global-auto-complete-mode -1)
+(setq-default global-auto-complete-mode -1)
 (put 'upcase-region 'disabled nil)

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: docker-compose-new
+# key: dcnew
+# --
+version: '2'
+
+services:
+
+  ${1:web}:
+    build: $1
+    volumes:
+      - ./$1:/code
+$0

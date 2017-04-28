@@ -87,11 +87,6 @@
   (align-regexp start end
 		(concat "\\(\\s-*\\)" regexp) 1 1 t))
 
-(defun jez/to-camel-case (string)
-  "Convert STRING to camelcase"
-  (setq string (capitalize string))
-  (replace-regexp-in-string "_" "" string))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -178,6 +173,9 @@
      window-numbering
      yaml-mode
      yasnippet
+     plantuml-mode
+     emmet-mode
+     impatient-mode
      )))
 
 (condition-case nil
@@ -334,7 +332,6 @@ of `org-babel-temporary-directory'."
    (python . t)
    (ipython . t)
    (sh . t)
-   (shell . t)
    (js . t)
    (http . t)
    (dot . t)
@@ -550,7 +547,7 @@ of `org-babel-temporary-directory'."
 
 ;; move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)
-(key-chord-define-global "df" 'iy-go-to-char-backward)
+;; (key-chord-define-global "df" 'iy-go-to-char-backward)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -568,6 +565,7 @@ of `org-babel-temporary-directory'."
 ;; Plantuml - For diagram and UML
 
 (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+(setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -658,16 +656,28 @@ of `org-babel-temporary-directory'."
 ;; Hydra
 
 ;; ein is not working properly uncomment when fixed --jez 2017-03-27
-;; (defhydra hydra-ein (ein:notebook-multilang-mode-map "C-c")
-;;   "ein"
-;;   ("p" ein:worksheet-goto-prev-input "prev")
-;;   ("n" ein:worksheet-goto-next-input "next"))
+(defun jez/ein-hydra ()
+  "Add custom hydra to ein"
+  (interactive "P")
+  (defhydra hydra-ein (ein:notebook-multilang-mode-map "C-c")
+    "ein"
+    ("p" ein:worksheet-goto-prev-input "prev")
+    ("n" ein:worksheet-goto-next-input "next")))
+(add-hook 'ein:connect-mode-hook 'jez/ein-hydra)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bash
 
 (exec-path-from-shell-initialize)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emmet mode
+(require 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

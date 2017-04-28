@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: this-assign
+# key: ta
+# --
+this.$1 = $1;
+$0

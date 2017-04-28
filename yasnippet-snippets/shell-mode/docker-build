@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-build
+# key: db
+# --
+docker build -t ${1:image_name} .$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: with-open
+# key: witho
+# --
+with open(${1:filename}, 'wb') as f:
+    $0

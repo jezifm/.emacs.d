@@ -704,3 +704,14 @@ of `org-babel-temporary-directory'."
 ;; disable annoying auto complete
 (setq-default global-auto-complete-mode -1)
 (put 'upcase-region 'disabled nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom variable set by emacs
+
+(setq custom-file "~/.emacs.d/custom.el")
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
+(load custom-file)
+
+

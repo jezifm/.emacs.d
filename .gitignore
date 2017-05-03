@@ -16,3 +16,4 @@ eshell
 /prodigy-settings.el
 /publish-settings.el
 /request/curl-cookie-jar
+/custom.el

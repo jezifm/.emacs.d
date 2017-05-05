@@ -2,4 +2,4 @@
 # name: grep-exclude
 # key: gx
 # --
-| grep -v $1 $0
+| grep -v ${1:grep} $0

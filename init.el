@@ -480,6 +480,9 @@ of `org-babel-temporary-directory'."
 (setq yas-buffer-local-condition `always)
 (yas-reload-all)
 
+;; fix indent line in python
+(setq yas-indent-line 'fixed)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Annotation
@@ -687,13 +690,14 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Bash
+;; Bash - run bash init script
 
 (exec-path-from-shell-initialize)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emmet mode
+
 (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
@@ -702,6 +706,7 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Quirks
 ;; disable annoying auto complete
+
 (setq-default global-auto-complete-mode -1)
 (put 'upcase-region 'disabled nil)
 
@@ -713,5 +718,3 @@ of `org-babel-temporary-directory'."
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 (load custom-file)
-
-

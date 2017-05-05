@@ -279,6 +279,7 @@
 
 ;; override buffer list
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 
 ;; set helm projectile grep
 (global-set-key (kbd "C-x p p") 'helm-do-ag-project-root)

@@ -369,7 +369,6 @@ of `org-babel-temporary-directory'."
    (emacs-lisp . t)
    (go . t)
    (http . t)
-   (http . t)
    (ipython . t)
    (js . t)
    (plantuml . t)

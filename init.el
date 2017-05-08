@@ -38,6 +38,10 @@
 ;; highlight matching parenthesis
 (show-paren-mode t)
 
+;; disable prompt on changing case of region
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
 ;; go to shell
 (defun jez/shell-shortcut ()
   "Create shell buffer based on current buffer name"
@@ -720,7 +724,6 @@ of `org-babel-temporary-directory'."
 ;; disable annoying auto complete
 
 (setq-default global-auto-complete-mode -1)
-(put 'upcase-region 'disabled nil)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -730,4 +733,3 @@ of `org-babel-temporary-directory'."
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 (load custom-file)
-(put 'downcase-region 'disabled nil)

@@ -719,3 +719,4 @@ of `org-babel-temporary-directory'."
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 (load custom-file)
+(put 'downcase-region 'disabled nil)

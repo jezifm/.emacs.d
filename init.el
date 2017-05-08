@@ -177,15 +177,17 @@
      color-theme-modern
      cyberpunk-theme
      dockerfile-mode
+     ein
+     emmet-mode
      exec-path-from-shell
      expand-region
-     ein
      go-mode
      hackernews
      helm
      helm-ag
      helm-projectile
      hydra
+     impatient-mode
      iy-go-to-char
      key-chord
      lorem-ipsum
@@ -198,6 +200,7 @@
      ob-redis
      org-plus-contrib
      paredit
+     plantuml-mode
      prodigy
      redis
      sublime-themes
@@ -207,9 +210,6 @@
      window-numbering
      yaml-mode
      yasnippet
-     plantuml-mode
-     emmet-mode
-     impatient-mode
      )))
 
 (condition-case nil
@@ -226,6 +226,8 @@
 (load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
 (load-theme 'darkane t t)
 (enable-theme 'darkane)
+
+;; remove backup files
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
@@ -362,18 +364,18 @@ of `org-babel-temporary-directory'."
 ;; Enable languages
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((emacs-lisp . t)
-   (http . t)
-   (python . t)
-   (ipython . t)
-   (sh . t)
-   (js . t)
-   (http . t)
+ '((ditaa . t)
    (dot . t)
-   (sql . t)
-   (ditaa . t)
-   (plantuml . t)
+   (emacs-lisp . t)
    (go . t)
+   (http . t)
+   (http . t)
+   (ipython . t)
+   (js . t)
+   (plantuml . t)
+   (python . t)
+   (sh . t)
+   (sql . t)
    ))
 
 ;; Home Directory

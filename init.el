@@ -52,6 +52,17 @@
     (switch-to-buffer buffer-name-shell)))
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
 
+
+;; guess shell buffer name
+(defun jez/guess-shell-buffer-name ()
+  "Return name of buffer with 'sh-' as prefix"
+  (interactive)
+  (let* ((shell-pattern "^sh-.*")
+	 (buffers (--map (buffer-name it) (buffer-list)))
+	 (shell-buffers (--filter (string-match shell-pattern it)
+				  buffers)))
+    (car shell-buffers)))
+
 ;; join line
 (defun jez/join-line ()
   "Custom join line"

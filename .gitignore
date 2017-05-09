@@ -17,3 +17,4 @@ eshell
 /publish-settings.el
 /request/curl-cookie-jar
 /custom.el
+/local-init.el

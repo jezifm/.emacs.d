@@ -18,3 +18,4 @@ eshell
 /request/curl-cookie-jar
 /custom.el
 /local-init.el
+/url/cookies

@@ -4,7 +4,7 @@
 # --
 from . import *
 
-class ${1:$(jez/to-camel-case yas-text)}(orm.base):
+class ${1:$(jez/camelize yas-text)}(orm.base):
 
     __tablename__ = '$1s'
 

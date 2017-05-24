@@ -121,6 +121,13 @@
           (set-buffer-modified-p nil))))))
 
 
+(defun jez/camelize (s)
+  "Convert under_score string S to CamelCase string."
+  (mapconcat 'identity (mapcar
+			'(lambda (word) (capitalize (downcase word)))
+			(split-string s "_")) ""))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -190,6 +197,7 @@
      impatient-mode
      iy-go-to-char
      key-chord
+     latex-preview-pane
      lorem-ipsum
      magit
      multiple-cursors
@@ -725,6 +733,8 @@ of `org-babel-temporary-directory'."
 ;; disable annoying auto complete
 
 (setq-default global-auto-complete-mode -1)
+(global-auto-complete-mode -1)
+(setq auto-complete-mode -1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

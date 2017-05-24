@@ -2,4 +2,4 @@
 # name: print-var
 # key: pl
 # --
-print('${1:variable}: %s' % $1) $0
+print('${1:variable}: %s' % $1)$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: drop-create
+# key: dropc
+# --
+DROP DATABASE $1; CREATE DATABASE $1;$0

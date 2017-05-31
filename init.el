@@ -179,6 +179,7 @@
   (packages-install
    '(ace-jump-mode
      ace-window
+     auctex
      avy
      change-inner
      color-theme-modern
@@ -727,6 +728,18 @@ of `org-babel-temporary-directory'."
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+
+;; (require 'auctex)
+;; (setq TeX-auto-save t)
+;; (setq TeX-parse-self t)
+;; (setq-default TeX-master nil)
+
+;; (setq TeX-save-query nil)
+;; (setq LaTeX-item-indent 0)
+;; (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Quirks

@@ -32,7 +32,7 @@
 ;; fix issue - annoying save-abbrevs prompt
 (setq save-abbrevs 'silently)
 
-;; auto create pair when `(` was pressed
+
 (electric-pair-mode t)
 
 ;; highlight matching parenthesis
@@ -473,7 +473,6 @@ of `org-babel-temporary-directory'."
 ;; fix issue - not working in org mode
 ;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
 ;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Wind-move - window numbering is better --jez 2017-03-27

@@ -458,6 +458,8 @@ of `org-babel-temporary-directory'."
 
 (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
 
+;; auto fill mode on org mode
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ace Jump mode

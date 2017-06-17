@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: while
+# key: while
+# --
+while true; do ${1:git pull origin master} && break; done

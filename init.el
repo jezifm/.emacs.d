@@ -758,3 +758,11 @@ of `org-babel-temporary-directory'."
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 (load custom-file)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SQL default
+
+(add-hook 'sql-interactive-mode-hook
+          (lambda ()
+            (toggle-truncate-lines t)))

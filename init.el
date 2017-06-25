@@ -128,6 +128,13 @@
 			(split-string s "_")) ""))
 
 
+(defun jez/abbreviate (string &optional seperator)
+  "Return first letter on each word of STRING using SEPERATOR"
+  (interactive "s")
+  (or seperator (setq seperator "_"))
+  (s-join "" (--map (s-left 1 it) (s-split string))))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -766,3 +773,6 @@ of `org-babel-temporary-directory'."
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
+
+(define-key sql-interactive-mode-map (kbd "s-<return>") 'comint-send-input)
+(define-key sql-interactive-mode-map (kbd "RET") nil)

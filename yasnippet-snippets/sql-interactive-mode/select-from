@@ -2,4 +2,4 @@
 # name: select-from
 # key: sf
 # --
-SELECT * FROM ${1:table} LIMIT 5;$0
+SELECT * FROM ${1:table} 

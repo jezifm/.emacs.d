@@ -774,5 +774,6 @@ of `org-babel-temporary-directory'."
           (lambda ()
             (toggle-truncate-lines t)))
 
+(require 'sql)
 (define-key sql-interactive-mode-map (kbd "M-<return>") 'comint-send-input)
 (define-key sql-interactive-mode-map (kbd "RET") nil)

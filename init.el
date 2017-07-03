@@ -128,12 +128,11 @@
 			(split-string s "_")) ""))
 
 
-(defun jez/abbreviate (string &optional seperator)
+(defun jez/abbreviate (string &optional separator)
   "Return first letter on each word of STRING using SEPERATOR"
   (interactive "s")
-  (or seperator (setq seperator "_"))
-  (s-join "" (--map (s-left 1 it) (s-split string))))
-
+  (let* ((separator (or separator "_")))
+    (s-join "" (--map (s-left 1 it) (s-split separator string)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get

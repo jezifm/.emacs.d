@@ -219,6 +219,7 @@
      prodigy
      redis
      sublime-themes
+     ;; sqlup-mode
      swift-mode
      swiper
      undo-tree

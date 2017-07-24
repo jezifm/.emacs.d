@@ -754,7 +754,6 @@ of `org-babel-temporary-directory'."
 ;; disable annoying auto complete
 
 (setq-default global-auto-complete-mode -1)
-(global-auto-complete-mode -1)
 (setq auto-complete-mode -1)
 
 

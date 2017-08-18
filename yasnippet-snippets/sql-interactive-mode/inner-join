@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: inner-join
+# key: ij
+# --
+INNER JOIN ${1:join_table} ${1:$(jez/abbreviate yas-text)} ON $2 = ${1:$(jez/abbreviate yas-text)}.${2:$(replace-regexp-in-string ".*\\\." "" yas-text)}

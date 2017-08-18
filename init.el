@@ -445,6 +445,10 @@ of `org-babel-temporary-directory'."
 	    (org-mime-change-element-style
 	     "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
 
+;; org todo sequence
+(setq org-todo-keywords
+      '((sequence "TODO" "SCHEDULED" "|" "DONE")))
+
 ;; Update tasks state base on subtask
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."

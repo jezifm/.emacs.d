@@ -780,3 +780,16 @@ of `org-babel-temporary-directory'."
 (require 'sql)
 (define-key sql-interactive-mode-map (kbd "M-<return>") 'comint-send-input)
 (define-key sql-interactive-mode-map (kbd "RET") nil)
+
+(defun jez/sql-connect (connection &optional new-name)
+  "Modify sql-connect to use CONNECTION name as buffer name"
+  (interactive
+   (if sql-connection-alist
+       (list (sql-read-connection "Connection: " nil '(nil))
+	     current-prefix-arg)
+     (user-error "No SQL Connections defined")))
+  (let ((buffer-name (format "*sql-%s*" connection)))
+    (when (get-buffer buffer-name)
+      (switch-to-buffer buffer-name))
+    (sql-connect connection new-name)
+    (rename-buffer buffer-name)))

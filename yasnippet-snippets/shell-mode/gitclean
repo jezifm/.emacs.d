@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: git-cleanup
+# key: gitclean
+# --
+git branch -r --merged | grep -v origin/master | grep -v origin/data | grep -v origin/production | grep -v origin/staging | grep -v tehp_viz | sed s/origin.//g | while read i; do git tag archive/$i origin/$i; git push origin -d $i; done; git push --tags

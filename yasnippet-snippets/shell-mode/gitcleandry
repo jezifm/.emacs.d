@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: git-clean-dry
+# key: gitcleandry
+# --
+git branch -r --merged | grep -v origin/master | grep -v origin/data | grep -v origin/production | grep -v origin/staging | grep -v tehp_viz | sed s/origin.//g | while read i; do echo $i; done

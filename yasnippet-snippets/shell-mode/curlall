@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: curlall
+# key: curlall
+# --
+echo '$1' | while read i; do echo http://static-origin.dev.imfreemobile.com$i; done | while read i; do curl -o /dev/null --silent --head --write-out '%{http_code} - %{url_effective}\n' "$i"; done

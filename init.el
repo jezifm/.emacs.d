@@ -793,3 +793,24 @@ of `org-babel-temporary-directory'."
       (switch-to-buffer buffer-name))
     (sql-connect connection new-name)
     (rename-buffer buffer-name)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs - Nifty Tricks
+
+(defun line-copy-char (&optional b)
+  "Copy a character exactly below/above the point
+       to the current point of the cursor (default is above)."
+  (interactive "p")
+  (let (p col s)
+    (setq p (point))
+    (setq col (current-column))
+    (forward-line (if b -1 1))
+    (move-to-column col)
+    (setq s (buffer-substring (point) (+ (point) 1)))
+    (goto-char p)
+    (insert s)))
+(define-key global-map [f12] 'line-copy-char)
+(define-key global-map [(shift f12)] '(lambda ()(interactive)(line-copy-char nil)))
+
+(global-set-key (kbd "M-SPC") 'cycle-spacing)

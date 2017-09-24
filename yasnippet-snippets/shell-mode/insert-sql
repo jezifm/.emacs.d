@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: insert-sql
+# key: insert-sql
+# --
+echo '' | while read i; do psql -U imfree -h localhost -p 5432 imfree < $i; done

@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: create-table
+# key: create-table
+# --
+--create table for ${1:entity}s
+CREATE TABLE IF NOT EXISTS $1s(
+    $1_id Integer,
+    user_id Integer,
+    context character varying(255), --(REDEMPTION, CONVO, VOUCHER, SIGNUP, etc)
+    response text, --(text, integer as text)
+    status character varying(255), --(SENT, RESENT, COMPLETED)
+
+    creator_id character varying(255),
+    created_at timestamp with time zone,
+    updater_id character varying(255),
+    updated_at timestamp with time zone,
+    uuid character varying(255),
+    is_deleted_flag BOOLEAN,
+    deleted_at timestamp with time zone
+);
+
+CREATE SEQUENCE IF NOT EXISTS $1_id_seq;
+ALTER SEQUENCE $1_id_seq OWNED BY $1s.$1_id;
+ALTER TABLE IF EXISTS $1s ALTER COLUMN $1_id SET DEFAULT nextval('$1_id_seq');
+ALTER TABLE IF EXISTS $1s ADD CONSTRAINT $1_pkey PRIMARY KEY ($1_id);

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: insert-html-template
+# key: ins-html
+# --
+#+SETUPFILE: ~/.emacs.d/org-html-themes/setup/theme-readtheorg.setup
+#+OPTIONS: num:nil
+#+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>

@@ -815,3 +815,10 @@ of `org-babel-temporary-directory'."
 (define-key global-map [(shift f12)] '(lambda ()(interactive)(line-copy-char nil)))
 
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; smooth scrolling for mouse
+
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)

@@ -822,3 +822,11 @@ of `org-babel-temporary-directory'."
 
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; shell mode
+
+(define-key shell-mode-map (kbd "s-k") '(lambda () (interactive)
+					  (erase-buffer)
+					  (comint-send-input)))

@@ -56,6 +56,10 @@
     (switch-to-buffer buffer-name-shell)))
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
 
+;; visit current directory
+(global-set-key (kbd "C-x C-j") (lambda () (interactive)
+				  (dired default-directory)))
+
 
 ;; guess shell buffer name
 (defun jez/guess-shell-buffer-name ()
@@ -217,15 +221,18 @@
      paredit
      plantuml-mode
      prodigy
+     quelpa
      redis
      sublime-themes
      ;; sqlup-mode
      swift-mode
      swiper
      undo-tree
+     web-mode
      window-numbering
      yaml-mode
      yasnippet
+     yasnippet-snippets
      )))
 
 (condition-case nil
@@ -428,22 +435,22 @@ of `org-babel-temporary-directory'."
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
-;; Send HTML email using org mode
-(require 'org-mime)
-(setq org-mime-library 'mml)
+;; ;; Send HTML email using org mode
+;; (require 'org-mime)
+;; (setq org-mime-library 'mml)
 
-;; set code blocks background to dark
-(add-hook 'org-mime-html-hook
-	  (lambda ()
-	    (org-mime-change-element-style
-	     "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
-			   "#E6E1DC" "#232323"))))
+;; ;; set code blocks background to dark
+;; (add-hook 'org-mime-html-hook
+;; 	  (lambda ()
+;; 	    (org-mime-change-element-style
+;; 	     "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+;; 			   "#E6E1DC" "#232323"))))
 
-;; set block quotes offset
-(add-hook 'org-mime-html-hook
-	  (lambda ()
-	    (org-mime-change-element-style
-	     "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
+;; ;; set block quotes offset
+;; (add-hook 'org-mime-html-hook
+;; 	  (lambda ()
+;; 	    (org-mime-change-element-style
+;; 	     "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
 
 ;; org todo sequence
 (setq org-todo-keywords
@@ -559,6 +566,9 @@ of `org-babel-temporary-directory'."
 
 ;; (add-hook 'python-mode-hook 'jedi:setup)
 ;; (setq jedi:complete-on-dot t)
+(setq elpy-rpc-python-command "python3")
+(setq py-python-command "python3")
+(define-key python-mode-map (kbd "C-c t") 'toggle-truncate-lines)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -573,7 +583,10 @@ of `org-babel-temporary-directory'."
 
 (add-hook 'sql-mode-hook 'sqlup-mode)
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+;; (define-key sql-mode-map (kbd ("C-c u")) 'sqlup-capitalize-keywords-in-region)
+;; (define-key sql-mode-map (kbd ("C-h s")) 'sqlformat)
 (global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
+(global-set-key (kbd "C-h s") 'sqlformat)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -740,6 +753,16 @@ of `org-babel-temporary-directory'."
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . emmet-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . emmet-mode))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -830,3 +853,27 @@ of `org-babel-temporary-directory'."
 (define-key shell-mode-map (kbd "s-k") '(lambda () (interactive)
 					  (erase-buffer)
 					  (comint-send-input)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; web mode
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(setq web-mode-enable-current-element-highlight t)
+(setq web-mode-enable-current-column-highlight nil)
+
+(defun jez/web-mode-hook ()
+  (electric-pair-local-mode -1)
+  (emmet-mode t)
+  (toggle-truncate-lines t)
+  )
+(add-hook 'web-mode-hook 'jez/web-mode-hook)
+

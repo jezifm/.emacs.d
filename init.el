@@ -216,7 +216,6 @@
      ob-go
      ob-http
      ob-ipython
-     ob-redis
      org-plus-contrib
      paredit
      plantuml-mode

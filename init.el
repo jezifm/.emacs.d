@@ -211,6 +211,7 @@
      latex-preview-pane
      lorem-ipsum
      magit
+     markdown-mode
      multiple-cursors
      nyan-mode
      ob-go

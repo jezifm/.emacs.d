@@ -138,6 +138,16 @@
   (let* ((separator (or separator "_")))
     (s-join "" (--map (s-left 1 it) (s-split separator string)))))
 
+
+(defun jez/clear-buffers ()
+  "Clears all buffer"
+  (interactive)
+  (let* ((ignore-list '("*scratch*" "*Messages*" "*Pymacs*" "init.el"))
+	 (buffer-list
+	  (seq-filter
+	   '(lambda (buffer) (not (member (buffer-name buffer) ignore-list)))
+	   (buffer-list))))
+    (mapc 'kill-buffer buffer-list))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")

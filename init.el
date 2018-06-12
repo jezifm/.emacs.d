@@ -131,6 +131,15 @@
 			'(lambda (word) (capitalize (downcase word)))
 			(split-string s "_")) ""))
 
+(defun jez/snake-case ()
+  "Convert region to snake case"
+  (interactive)
+  (save-excursion
+    (save-restriction
+     (narrow-to-region (region-beginning) (region-end))
+     (downcase-region (point-min) (point-max))
+     (goto-char (point-min))
+     (replace-string " " "_"))))
 
 (defun jez/abbreviate (string &optional separator)
   "Return first letter on each word of STRING using SEPERATOR"

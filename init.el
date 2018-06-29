@@ -156,7 +156,7 @@
 	  (seq-filter
 	   '(lambda (buffer) (not (member (buffer-name buffer) ignore-list)))
 	   (buffer-list))))
-    (mapc 'kill-buffer buffer-list))))
+    (mapc 'kill-buffer buffer-list)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")

@@ -344,9 +344,17 @@
 ;; set helm projectile grep
 (global-set-key (kbd "C-x p p") 'helm-do-ag-project-root)
 
-
 (helm-mode 1)
 (setq projectile-global-mode t)
+
+;; custom
+(require 'helm-projectile)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+
+;; (global-set-key (kbd "C-x p f") 'helm-projectile-find-file)
+;; (helm-projectile-on)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -582,14 +590,14 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Jedi - temporary disable. feature is slow
+;; Elpy
 
-;; (add-hook 'python-mode-hook 'jedi:setup)
-;; (setq jedi:complete-on-dot t)
-(setq elpy-rpc-python-command "python3")
-(setq py-python-command "python3")
-(define-key python-mode-map (kbd "C-c t") 'toggle-truncate-lines)
+(defun jez/elpy-mode-hook ()
+  (company-mode -1))
+(add-hook 'elpy-mode 'jez/elpy-mode-hook)
 
+(package-initialize)
+(elpy-enable)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Email - GNUS
@@ -613,21 +621,6 @@ of `org-babel-temporary-directory'."
 ;; Publish settings
 (when (file-exists-p "~/.emacs.d/publish-settings.el")
   (load-file "~/.emacs.d/publish-settings.el"))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ropemacs
-
-;; make sure packages are installed
-(when (not (el-get-package-exists-p 'ropemacs))
-  (el-get-install 'ropemacs))
-(when (not (el-get-package-exists-p 'pymacs))
-  (el-get-install 'pymacs))
-
-;; load pymacs
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-(setq ropemacs-enable-shortcuts t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -896,4 +889,3 @@ of `org-babel-temporary-directory'."
   (toggle-truncate-lines t)
   )
 (add-hook 'web-mode-hook 'jez/web-mode-hook)
-

@@ -28,6 +28,7 @@
 
 ;; toggle text wrap
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+(set-default 'truncate-lines t)
 
 ;; fix issue - annoying save-abbrevs prompt
 (setq save-abbrevs 'silently)

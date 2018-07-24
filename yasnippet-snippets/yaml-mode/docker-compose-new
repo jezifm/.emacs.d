@@ -6,8 +6,8 @@ version: '2'
 
 services:
 
-  ${1:web}:
+  ${1:app}:
     build: $1
     volumes:
-      - ./$1:/code
+      - ./$1:/app
 $0

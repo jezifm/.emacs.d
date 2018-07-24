@@ -49,11 +49,11 @@
   (interactive)
   (let* ((buffer-name-current (buffer-name (current-buffer)))
 	 (buffer-name-shell (format "sh-%s" buffer-name-current)))
-    (shell buffer-name-shell)
-    (switch-to-buffer buffer-name-current)
+    (save-current-buffer
+      (shell buffer-name-shell))
     (when (equal (count-windows) 1)
-      (split-window-right))
-    (other-window 1)
+      (split-window-right)
+      (other-window 1))
     (switch-to-buffer buffer-name-shell)))
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
 

@@ -591,14 +591,33 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python mode
+
+(defun jez/python-mode-hook ()
+  (setq truncate-lines t))
+(add-hook 'python-mode-hook 'jez/python-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Elpy
 
 (defun jez/elpy-mode-hook ()
   (company-mode -1))
-(add-hook 'elpy-mode 'jez/elpy-mode-hook)
+(add-hook 'elpy-mode-hook 'jez/elpy-mode-hook)
 
 (package-initialize)
 (elpy-enable)
+
+;; remap this keys somewhere
+;; keys are affecting other mode like helm and shell needs way to not affect them
+(define-key elpy-mode-map (kbd "C-c C-d") nil) ;; elpy-doc
+(define-key elpy-mode-map (kbd "C-c C-c") nil) ;; something related to python buffer send
+
+;; remove conflicting with other mode
+(defun jez/remove-elpy-conflicts ()
+  (ignore-errors (elpy-mode -1)))
+(add-hook 'org-mode-hook 'jez/remove-elpy-conflicts)
+(add-hook 'shell-mode-hook 'jez/remove-elpy-conflicts)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Email - GNUS

@@ -425,6 +425,7 @@ of `org-babel-temporary-directory'."
    (plantuml . t)
    (python . t)
    (sh . t)
+   (shell . t)
    (sql . t)
    ))
 

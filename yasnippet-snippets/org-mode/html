@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: html
+# key: html
+# --
+#+PROPERTY: header-args :eval never-export
+#+SETUPFILE: ~/.emacs.d/org-html-themes/setup/theme-readtheorg.setup
+#+OPTIONS: num:nil
+#+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
+#+TITLE: ${1:`(s-capitalized-words (s-replace ".org" "" (buffer-name (current-buffer))))`}

@@ -638,11 +638,6 @@ of `org-babel-temporary-directory'."
 (package-initialize)
 (elpy-enable)
 
-;; remap this keys somewhere
-;; keys are affecting other mode like helm and shell needs way to not affect them
-(define-key elpy-mode-map (kbd "C-c C-d") nil) ;; elpy-doc
-(define-key elpy-mode-map (kbd "C-c C-c") nil) ;; something related to python buffer send
-
 ;; remove conflicting with other mode
 (defun jez/remove-elpy-conflicts ()
   (ignore-errors (elpy-mode -1)))

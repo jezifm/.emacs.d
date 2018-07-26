@@ -2,4 +2,4 @@
 # name: docker-bash
 # key: dbash
 # --
-docker run --rm -v \$(pwd):/code -w /code -it --net host --name ${1:node} $1 bash $0
+docker run --rm -v \$(pwd):/app -w /app -it --net host --name ${1:node} $1 bash $0

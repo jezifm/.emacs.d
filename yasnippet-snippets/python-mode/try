@@ -3,7 +3,6 @@
 # key: try
 # --
 try:
-    $1        
+    $1
 except Exception as e:
-    self.logger.warn((self, sys._getframe().f_code.co_name, e, traceback.print_exc()))
-$0
+    $0

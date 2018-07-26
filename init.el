@@ -188,6 +188,22 @@ Version 2017-09-01"
        (progn
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
+
+(defun jez/css-minify ()
+  "CSS Minify current buffer"
+  (interactive)
+  (let ((url-request-method "POST")
+	(url-request-extra-headers
+	 '(("Content-Type" . "application/x-www-form-urlencoded")))
+	(url-request-data (format "input=%s" (buffer-substring (point-min) (point-max)))))
+    (url-retrieve "https://cssminifier.com/raw"
+		  (lambda (status current-buffer)
+		    (let ((body (buffer-substring (1+ url-http-end-of-headers) (point-max))))
+		      (with-current-buffer current-buffer
+			(delete-region (point-min) (point-max))
+			(insert body))))
+		  (list (buffer-name (current-buffer))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")

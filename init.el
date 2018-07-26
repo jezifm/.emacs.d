@@ -385,6 +385,7 @@ Version 2017-09-01"
 
 ;; (global-set-key (kbd "C-x p f") 'helm-projectile-find-file)
 ;; (helm-projectile-on)
+(setq projectile-indexing-method 'alien)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -294,6 +294,7 @@ Version 2017-09-01"
      swift-mode
      swiper
      undo-tree
+     web-beautify
      web-mode
      window-numbering
      yaml-mode

@@ -289,8 +289,8 @@ Version 2017-09-01"
      prodigy
      quelpa
      redis
+     restclient
      sublime-themes
-     ;; sqlup-mode
      swift-mode
      swiper
      undo-tree

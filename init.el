@@ -644,6 +644,7 @@ of `org-babel-temporary-directory'."
 (defun jez/python-mode-hook ()
   (setq truncate-lines t))
 (add-hook 'python-mode-hook 'jez/python-mode-hook)
+(add-to-list 'auto-mode-alist '("\\.tac\\'" . python-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

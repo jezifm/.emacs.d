@@ -930,10 +930,6 @@ of `org-babel-temporary-directory'."
 					  (erase-buffer)
 					  (comint-send-input)))
 
-;; added due to elpy conflict
-;; (define-key shell-mode-map (kbd "C-c C-c") 'comint-interrupt-subjob)
-;; (add-hook 'shell-mode-hook 'jez/shell-mode-hook)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; web mode

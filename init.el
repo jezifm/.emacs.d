@@ -642,7 +642,8 @@ of `org-babel-temporary-directory'."
 ;; Python mode
 
 (defun jez/python-mode-hook ()
-  (setq truncate-lines t))
+  (setq truncate-lines t)
+  (hs-minor-mode t))
 (add-hook 'python-mode-hook 'jez/python-mode-hook)
 (add-to-list 'auto-mode-alist '("\\.tac\\'" . python-mode))
 
@@ -795,11 +796,12 @@ of `org-babel-temporary-directory'."
 ;; VIM's - Change Inner
 
 (require 'change-inner)
+(load-file "~/.emacs.d/custom-ci.el")
 (global-set-key (kbd "M-I") 'change-inner)
 (global-set-key (kbd "M-O") 'change-outer)
 
-(global-set-key (kbd "s-i") 'copy-inner)
-(global-set-key (kbd "s-o") 'copy-outer)
+(global-set-key (kbd "s-i") 'jez/copy-inner)
+(global-set-key (kbd "s-o") 'jez/copy-outer)
 (put 'erase-buffer 'disabled nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -840,25 +842,9 @@ of `org-babel-temporary-directory'."
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . emmet-mode))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
+;; Auto-Complete
 
-;; (require 'auctex)
-;; (setq TeX-auto-save t)
-;; (setq TeX-parse-self t)
-;; (setq-default TeX-master nil)
-
-;; (setq TeX-save-query nil)
-;; (setq LaTeX-item-indent 0)
-;; (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Quirks
-;; disable annoying auto complete
-
-;; (setq-default global-auto-complete-mode -1)
-;; (setq auto-complete-mode -1)
 (global-auto-complete-mode -1)
 
 
@@ -913,7 +899,6 @@ of `org-babel-temporary-directory'."
     (insert s)))
 (define-key global-map [f12] 'line-copy-char)
 (define-key global-map [(shift f12)] '(lambda ()(interactive)(line-copy-char nil)))
-
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
 
 
@@ -951,6 +936,5 @@ of `org-babel-temporary-directory'."
 (defun jez/web-mode-hook ()
   (electric-pair-local-mode -1)
   (emmet-mode t)
-  (toggle-truncate-lines t)
-  )
+  (toggle-truncate-lines t))
 (add-hook 'web-mode-hook 'jez/web-mode-hook)

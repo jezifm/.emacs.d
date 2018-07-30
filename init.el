@@ -549,12 +549,14 @@ of `org-babel-temporary-directory'."
   (interactive)
   (when org-inline-image-overlays
     (org-redisplay-inline-images)))
-
-
 (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
 
 ;; auto fill mode on org mode
 (add-hook 'org-mode-hook 'auto-fill-mode)
+
+;; store link
+(define-key org-mode-map (kbd "C-c l") 'org-store-link)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ace Jump mode

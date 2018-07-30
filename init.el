@@ -466,6 +466,7 @@ of `org-babel-temporary-directory'."
  '((ditaa . t)
    (dot . t)
    (emacs-lisp . t)
+   (gnuplot . t)
    (go . t)
    (http . t)
    (ipython . t)
@@ -515,14 +516,12 @@ of `org-babel-temporary-directory'."
 ;; ;; Send HTML email using org mode
 ;; (require 'org-mime)
 ;; (setq org-mime-library 'mml)
-
 ;; ;; set code blocks background to dark
 ;; (add-hook 'org-mime-html-hook
 ;; 	  (lambda ()
 ;; 	    (org-mime-change-element-style
 ;; 	     "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
 ;; 			   "#E6E1DC" "#232323"))))
-
 ;; ;; set block quotes offset
 ;; (add-hook 'org-mime-html-hook
 ;; 	  (lambda ()
@@ -538,7 +537,6 @@ of `org-babel-temporary-directory'."
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 
 ;; Syntax highlighting

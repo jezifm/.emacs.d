@@ -192,7 +192,7 @@ Version 2017-09-01"
 (defun jez/css-minify-uglify ()
   "CSS Minify current buffer using `uglify'"
   (let ((minified (shell-command-to-string (format "uglifycss %s" buffer-file-name))))
-    (delete-region (point-min) (point-max))
+    (erase-buffer)
     (insert minified)))
 
 (defun jez/css-minify-requests ()
@@ -205,7 +205,7 @@ Version 2017-09-01"
 		  (lambda (status current-buffer)
 		    (let ((body (buffer-substring (1+ url-http-end-of-headers) (point-max))))
 		      (with-current-buffer current-buffer
-			(delete-region (point-min) (point-max))
+			(erase-buffer)
 			(insert body))))
 		  (list (buffer-name (current-buffer))))))
 
@@ -215,7 +215,8 @@ Version 2017-09-01"
   (if (executable-find "uglifycss")
       (jez/css-minify-uglify)
     (jez/css-minify-requests)))
-(define-key css-mode-map (kbd "C-m") 'jez/css-minify)
+(require 'css-mode)
+(define-key css-mode-map (kbd "C-c m") 'jez/css-minify)
 
 (defun jez/insert-current-buffer-name ()
   "Insert name of current buffer"
@@ -480,6 +481,7 @@ of `org-babel-temporary-directory'."
 (setq org-log-done 'time)
 
 ;; Enable languages
+(require 'org)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -764,7 +766,7 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; YAML mode
 
-(require 'org)
+;; (require 'org)
 (defun org-babel-execute:yaml (body params) body)
 
 

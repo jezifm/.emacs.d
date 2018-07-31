@@ -372,7 +372,18 @@ Version 2017-09-01"
 (global-set-key (kbd "C-S-c C-S-e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+(progn
+  (defun jez/sublime-expand-like (arg)
+    "Simulate sublime function on multiple cursor"
+    (interactive "p")
+    (if (not (region-active-p))
+	(er/expand-region arg)
+      (mc/mark-next-like-this arg)))
+  (push 'jez/sublime-expand-like mc--default-cmds-to-run-once)
+  (remove-duplicates mc--default-cmds-to-run-once))
+(global-set-key (kbd "s-d") 'jez/sublime-expand-like)
 
+mc--default-cmds-to-run-once
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helm
 
@@ -592,15 +603,6 @@ of `org-babel-temporary-directory'."
 ;; fix issue - not working in org mode
 ;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
 ;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Wind-move - window numbering is better --jez 2017-03-27
-
-;; (global-set-key (kbd "C-c C-;") 'windmove-right)
-;; (global-set-key (kbd "C-c C-j") 'windmove-left)
-;; (global-set-key (kbd "C-c C-k") 'windmove-down)
-;; (global-set-key (kbd "C-c C-l") 'windmove-up)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Trump mode

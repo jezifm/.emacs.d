@@ -474,6 +474,7 @@ of `org-babel-temporary-directory'."
 (setq org-log-done 'time)
 
 ;; Enable languages
+(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ditaa . t)

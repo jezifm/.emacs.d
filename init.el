@@ -215,6 +215,12 @@ Version 2017-09-01"
   (if (executable-find "uglifycss")
       (jez/css-minify-uglify)
     (jez/css-minify-requests)))
+(define-key css-mode-map (kbd "C-m") 'jez/css-minify)
+
+(defun jez/insert-current-buffer-name ()
+  "Insert name of current buffer"
+  (interactive)
+  (insert (buffer-name (current-buffer))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

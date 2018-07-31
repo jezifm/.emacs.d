@@ -32,7 +32,7 @@
 ;; fix issue - annoying save-abbrevs prompt
 (setq save-abbrevs 'silently)
 
-
+;; insert parenthesis, bracket etc
 (electric-pair-mode t)
 
 ;; highlight matching parenthesis

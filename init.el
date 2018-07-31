@@ -189,9 +189,14 @@ Version 2017-09-01"
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
 
-(defun jez/css-minify ()
-  "CSS Minify current buffer"
-  (interactive)
+(defun jez/css-minify-uglify ()
+  "CSS Minify current buffer using `uglify'"
+  (let ((minified (shell-command-to-string (format "uglifycss %s" buffer-file-name))))
+    (delete-region (point-min) (point-max))
+    (insert minified)))
+
+(defun jez/css-minify-requests ()
+  "CSS Minify current buffer via `cssminifier.com'"
   (let ((url-request-method "POST")
 	(url-request-extra-headers
 	 '(("Content-Type" . "application/x-www-form-urlencoded")))
@@ -203,6 +208,14 @@ Version 2017-09-01"
 			(delete-region (point-min) (point-max))
 			(insert body))))
 		  (list (buffer-name (current-buffer))))))
+
+(defun jez/css-minify ()
+  "CSS Minify current buffer"
+  (interactive)
+  (if (executable-find "uglifycss")
+      (jez/css-minify-uglify)
+    (jez/css-minify-requests)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package Manager - el-get

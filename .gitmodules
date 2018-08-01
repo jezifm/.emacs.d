@@ -3,4 +3,4 @@
 	url = https://github.com/FelixFortis/emacs-darkane-theme.git
 [submodule "org-html-themes"]
 	path = org-html-themes
-	url = git@github.com:fniessen/org-html-themes.git
+	url = https://github.com/fniessen/org-html-themes.git

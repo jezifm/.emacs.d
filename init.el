@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs core
+;;; Emacs core
 
 ;; disable minimize
 (global-unset-key (kbd "C-z"))
@@ -227,7 +227,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Package Manager - el-get
+;;; Package Manager - el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil 'noerror)
@@ -242,7 +242,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Package Manager - melpa
+;;; Package Manager - melpa
 
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
@@ -258,7 +258,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Local Dependencies
+;;; Local Dependencies
 
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))
@@ -266,7 +266,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Install missing dependencies
+;;; Install missing dependencies
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)
   (package-install 'dash))
@@ -332,7 +332,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs GUI
+;;; Emacs GUI
 
 ;; ensure we have the theme
 (load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
@@ -358,14 +358,14 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Expand Region
+;;; Expand Region
 
 (require 'expand-region)
 (global-set-key (kbd "C-=")  'er/expand-region)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Multiple Cursor
+;;; Multiple Cursor
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -400,7 +400,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Helm
+;;; Helm
 
 (require 'helm)
 (require 'helm-config)
@@ -452,7 +452,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Magit
+;;; Magit
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -476,7 +476,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Org mode
+;;; Org mode
 
 ;; Disable backup file
 (defun org-babel-temp-file (prefix &optional suffix)
@@ -605,7 +605,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ace Jump mode
+;;; Ace Jump mode
 
 (require 'ace-jump-mode)
 
@@ -620,7 +620,7 @@ of `org-babel-temporary-directory'."
 ;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Trump mode
+;;; Trump mode
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
@@ -632,7 +632,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Yasnippet
+;;; Yasnippet
 
 (require 'yasnippet)
 (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
@@ -646,7 +646,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Annotation
+;;; Annotation
 
 ;; insert todays date
 (defun insert-date (prefix)
@@ -668,7 +668,7 @@ of `org-babel-temporary-directory'."
   (insert-date nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto complete
+;;; Auto complete
 
 (require 'setup-hippie)
 (global-set-key "\M- " 'hippie-expand)
@@ -678,7 +678,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Python mode
+;;; Python mode
 
 (defun jez/python-mode-hook ()
   (setq truncate-lines t)
@@ -688,12 +688,13 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Elpy
+;;; Elpy
 
 (defun jez/elpy-mode-hook ()
   (company-mode -1))
 (add-hook 'elpy-mode-hook 'jez/elpy-mode-hook)
 
+ 
 (package-initialize)
 (elpy-enable)
 
@@ -704,14 +705,14 @@ of `org-babel-temporary-directory'."
 (add-hook 'shell-mode-hook 'jez/remove-elpy-conflicts)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Email - GNUS
+;;; Email - GNUS
 
 ;; Always on topic mode
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; SQL Mode
+;;; SQL Mode
 
 (add-hook 'sql-mode-hook 'sqlup-mode)
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
@@ -722,13 +723,13 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Publish settings
+;;; Publish settings
 (when (file-exists-p "~/.emacs.d/publish-settings.el")
   (load-file "~/.emacs.d/publish-settings.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Keychord - temporary disabled. Adding latency on each keypress
+;;; Keychord - temporary disabled. Adding latency on each keypress
 
 (require 'key-chord)
 (require 'iy-go-to-char)
@@ -741,32 +742,32 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Undo Tree
+;;; Undo Tree
 
 (undo-tree-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Window Numbering
+;;; Window Numbering
 (require 'window-numbering)
 (window-numbering-mode 1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Plantuml - For diagram and UML
+;;; Plantuml - For diagram and UML
 
 (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
 (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Nyan Mode
+;;; Nyan Mode
 
 (require 'nyan-mode)
 (nyan-mode 1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Prodigy
+;;; Prodigy
 
 (require 'prodigy)
 
@@ -775,34 +776,34 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; HackerNews
+;;; HackerNews
 
 (require 'hackernews)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; YAML mode
+;;; YAML mode
 
 ;; (require 'org)
 (defun org-babel-execute:yaml (body params) body)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Swiper
+;;; Swiper
 
 (require 'swiper)
 (global-set-key (kbd "C-s") 'swiper)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Avy
+;;; Avy
 
 (require 'avy)
 (global-set-key (kbd "M-g f") 'avy-goto-line)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Paredit
+;;; Paredit
 
 (require 'paredit)
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -815,14 +816,14 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Local functions
+;;; Local functions
 
 (when (file-exists-p "~/.emacs.d/local-init.el")
   (load-file "~/.emacs.d/local-init.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ace window
+;;; Ace window
 
 (global-set-key (kbd "M-p") 'ace-window)
 (global-set-key (kbd "s-p") 'ace-window)
@@ -832,7 +833,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; VIM's - Change Inner
+;;; VIM's - Change Inner
 
 (require 'change-inner)
 (load-file "~/.emacs.d/custom-ci.el")
@@ -844,7 +845,7 @@ of `org-babel-temporary-directory'."
 (put 'erase-buffer 'disabled nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Hydra
+;;; Hydra
 
 ;; ein is not working properly uncomment when fixed --jez 2017-03-27
 (defun jez/ein-hydra ()
@@ -859,13 +860,13 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Bash - run bash init script
+;;; Bash - run bash init script
 
 (exec-path-from-shell-initialize)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emmet mode
+;;; Emmet mode
 
 (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
@@ -882,13 +883,13 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto-Complete
+;;; Auto-Complete
 
 (global-auto-complete-mode -1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom variable set by emacs
+;;; Custom variable set by emacs
 
 (setq custom-file "~/.emacs.d/custom.el")
 (unless (file-exists-p custom-file)
@@ -897,7 +898,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; SQL default
+;;; SQL default
 
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
@@ -922,7 +923,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs - Nifty Tricks
+;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
   "Copy a character exactly below/above the point
@@ -942,14 +943,14 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; smooth scrolling for mouse
+;;; smooth scrolling for mouse
 
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; shell mode
+;;; shell mode
 
 (define-key shell-mode-map (kbd "s-k") '(lambda () (interactive)
 					  (erase-buffer)
@@ -957,7 +958,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; web mode
+;;; web mode
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -980,7 +981,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; recent mode
+;;; recent mode
 
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)

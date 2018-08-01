@@ -365,6 +365,7 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Multiple Cursor
 
+(require 'multiple-cursors)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-S-c C-S-a") 'mc/edit-beginnings-of-lines)
@@ -372,18 +373,30 @@ Version 2017-09-01"
 (global-set-key (kbd "C-S-c C-S-e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-(progn
-  (defun jez/sublime-expand-like (arg)
-    "Simulate sublime function on multiple cursor"
-    (interactive "p")
-    (if (not (region-active-p))
-	(er/expand-region arg)
-      (mc/mark-next-like-this arg)))
-  (push 'jez/sublime-expand-like mc--default-cmds-to-run-once)
-  (remove-duplicates mc--default-cmds-to-run-once))
-(global-set-key (kbd "s-d") 'jez/sublime-expand-like)
+(defun jez/mark-word ()
+  "Use to highlight a word"
+  (interactive)
+  (let ((non-word "[^[:alnum:]-_]"))
+    (search-backward-regexp non-word)
+    (forward-char)
+    (set-mark (point))
+    (search-forward-regexp non-word)
+    (backward-char)))
 
-mc--default-cmds-to-run-once
+(defun jez/mark-multiple (arg)
+  "Simulate sublime function on multiple cursor"
+  (interactive "p")
+  (if (not (region-active-p))
+      (jez/mark-word)
+    (mc/mark-next-like-this arg)))
+
+(progn
+  (push 'jez/mark-multiple mc--default-cmds-to-run-once)
+  (remove-duplicates mc--default-cmds-to-run-once))
+
+(global-set-key (kbd "s-d") 'jez/mark-multiple)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helm
 

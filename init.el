@@ -165,7 +165,9 @@ If `universal-argument' is called first, copy only the dir path.
 
 If in dired, copy the file/dir cursor is on, or marked files.
 
-If a buffer is not file and not dired, copy value of `default-directory' (which is usually the “current” dir when that buffer was created)
+If a buffer is not file and not dired, copy value of
+`default-directory' (which is usually the “current” dir when that
+buffer was created)
 
 URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
 Version 2017-09-01"
@@ -404,10 +406,10 @@ Version 2017-09-01"
 (require 'helm-config)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+(global-unset-key (kbd "C-x c"))
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
@@ -975,3 +977,11 @@ of `org-babel-temporary-directory'."
   (emmet-mode t)
   (toggle-truncate-lines t))
 (add-hook 'web-mode-hook 'jez/web-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; recent mode
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)

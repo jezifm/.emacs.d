@@ -169,6 +169,15 @@ Note: just like `align-regexp' but better"
 ;;    (select-window current-window)
     ))
 
+(defun jez/change-theme ()
+  "Change current emacs theme without confirmation"
+  (interactive)
+  (let ((theme (intern (completing-read "Load custom theme: "
+				 (mapcar 'symbol-name
+					 (custom-available-themes))))))
+    (load-theme theme t)
+    (enable-theme theme)))
+
 (defun xah-copy-file-path (&optional @dir-path-only-p)
   "Copy the current buffer's file path or dired path to `kill-ring'.
 Result is full path.

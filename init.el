@@ -783,6 +783,7 @@ of `org-babel-temporary-directory'."
 ;;; Swiper
 
 (require 'swiper)
+(setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 (global-set-key (kbd "C-s") 'swiper)
 
 

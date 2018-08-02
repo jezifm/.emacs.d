@@ -610,6 +610,7 @@ of `org-babel-temporary-directory'."
 ;; when org-mode starts it (org-mode-map) overrides the ace-jump-mode.
 ;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Trump mode
 

@@ -279,6 +279,10 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Install missing dependencies
 
+;; hotfix
+;; org-mode error while being installed in windows
+(define-obsolete-function-alias 'org-define-error 'define-error)
+
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)
   (package-install 'dash))
@@ -513,22 +517,27 @@ of `org-babel-temporary-directory'."
 ;; enable languages
 (require 'org)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+(setq org-babel-languages
+      '((ditaa . t)
+	(dot . t)
+	(emacs-lisp . t)
+	(gnuplot . t)
+	(go . t)
+	(http . t)
+	(ipython . t)
+	(js . t)
+	(plantuml . t)
+	(python . t)
+	(sh . t)
+	(shell . t)
+	(sql . t)
+	))
+;; fix remove sh when running on windows
+(when (string-equal system-type "windows-nt")
+  (assq-delete-all 'sh org-babel-languages))
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((ditaa . t)
-   (dot . t)
-   (emacs-lisp . t)
-   (gnuplot . t)
-   (go . t)
-   (http . t)
-   (ipython . t)
-   (js . t)
-   (plantuml . t)
-   (python . t)
-   (sh . t)
-   (shell . t)
-   (sql . t)
-   ))
+ org-babel-languages)
 
 ;; home directory
 (global-set-key (kbd "C-c o") (lambda () (interactive) (find-file "~/organizer.org")))

@@ -24,6 +24,12 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; key bindings unset
+(global-unset-key (kbd "C-x C-c"))	; disable quit
+(global-unset-key (kbd "C-x c"))	; disable quit
+(global-unset-key (kbd "C-z"))		; disable minimize
+(global-unset-key (kbd "s-t"))		; disable font-panel
+
 ;; key bindings
 (global-set-key (kbd "<f5>") 'sort-lines)
 (global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
@@ -36,12 +42,6 @@
 (global-set-key (kbd "M-J") 'jez/simplify)
 (global-set-key (kbd "M-i") 'back-to-indentation)
 (global-set-key (kbd "M-j") 'jez/join-line)
-
-;; key bindings unset
-(global-unset-key (kbd "C-x C-c"))	; disable quit
-(global-unset-key (kbd "C-x c"))	; disable quit
-(global-unset-key (kbd "C-z"))		; disable minimize
-(global-unset-key (kbd "s-t"))		; disable font-panel
 
 ;; smooth scrolling for mouse
 (setq mouse-wheel-progressive-speed nil)

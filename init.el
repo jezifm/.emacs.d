@@ -31,6 +31,12 @@
 (electric-pair-mode t)
 (show-paren-mode t)
 
+(defun jez/clear-font-properties ()
+  "Clear font properties"
+  (interactive)
+  (let ((inhibit-read-only t))
+    (set-text-properties (point-min) (point-max) nil)))
+
 (defun jez/shell-shortcut ()
   "Create shell buffer based on current buffer name"
   (interactive)

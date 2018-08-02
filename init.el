@@ -123,7 +123,7 @@ Note: just like `align-regexp' but better"
 (defun jez/camelize (s)
   "Convert under_score string S to CamelCase string."
   (mapconcat 'identity (mapcar
-			'(lambda (word) (capitalize (downcase word)))
+			#'(lambda (word) (capitalize (downcase word)))
 			(split-string s "_")) ""))
 
 (defun jez/snake-case ()
@@ -156,6 +156,19 @@ Note: just like `align-regexp' but better"
   "Insert name of current buffer"
   (interactive)
   (insert (buffer-name (current-buffer))))
+
+(defun jez/occur (regexp)
+  "List lines containing REGEXP on temporary buffer"
+  (interactive "sView lines matching: ")
+  (let ((current-buffer (buffer-name))
+	(buffer-name (format "*occur*-%s" (buffer-name)))
+	(current-window (selected-window)))
+    (switch-to-buffer-other-window buffer-name)
+    (erase-buffer)
+    (insert-buffer current-buffer)
+    (keep-lines regexp)
+;;    (select-window current-window)
+    ))
 
 (defun xah-copy-file-path (&optional @dir-path-only-p)
   "Copy the current buffer's file path or dired path to `kill-ring'.

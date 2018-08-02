@@ -1,6 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
 
+;; set customization filepath
+(setq custom-file "~/.emacs.d/custom.el")
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
+(load custom-file)
+
 ;; global properties
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -336,7 +342,7 @@ Version 2017-09-01"
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
-;; Remove scrollbar, menu bars, and toolbars
+;; remove scrollbar, menu bars, and toolbars
 ;; when is a special form of "if", with no else clause, it reads:
 ;; (when <condition> <code-to-execute1> <code-to-execute2> ...)
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -399,7 +405,7 @@ Version 2017-09-01"
 (require 'helm)
 (require 'helm-config)
 
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; changed to "c-c h". note: we must set "c-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 
@@ -438,7 +444,7 @@ Version 2017-09-01"
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 
-;; (global-set-key (kbd "C-x p f") 'helm-projectile-find-file)
+;; (global-set-key (kbd "c-x p f") 'helm-projectile-find-file)
 ;; (helm-projectile-on)
 (setq projectile-indexing-method 'alien)
 
@@ -462,7 +468,7 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Org mode
 
-;; Disable backup file
+;; disable backup file
 (defun org-babel-temp-file (prefix &optional suffix)
   "Create a temporary file in the `org-babel-temporary-directory'.
 Passes PREFIX and SUFFIX directly to `make-temp-file' with the
@@ -485,12 +491,12 @@ of `org-babel-temporary-directory'."
 	       temporary-file-directory)))
       (make-temp-file prefix nil suffix))))
 
-;; Enable task capture
+;; enable task capture
 (define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-export-coding-system 'utf-8)
 (setq org-log-done 'time)
 
-;; Enable languages
+;; enable languages
 (require 'org)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 (org-babel-do-load-languages
@@ -510,22 +516,22 @@ of `org-babel-temporary-directory'."
    (sql . t)
    ))
 
-;; Home Directory
+;; home directory
 (global-set-key (kbd "C-c o") (lambda () (interactive) (find-file "~/organizer.org")))
 
 ;; set register
 (set-register ?o (cons 'file "~/organizer.org"))
 
-;; Use org-refile to file or jump to headings
+;; use org-refile to file or jump to headings
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
 
-;; Save all capture to single file
+;; save all capture to single file
 (setq org-default-notes-file "~/organizer.org")
 
-;; Disable prompt on source block eval
+;; disable prompt on source block eval
 (setq org-confirm-babel-evaluate nil)
 
-;; Display images in buffer after eval
+;; display images in buffer after eval
 (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
 
 ;; center all images
@@ -536,7 +542,7 @@ of `org-babel-temporary-directory'."
 	       (funcall orig link info)
 	       "\\end{center}")))
 
-;; Set author
+;; set author
 (setq user-full-name "Jezrael Arciaga")
 (setq user-mail-address "jezarciaga@gmail.com")
 
@@ -544,7 +550,7 @@ of `org-babel-temporary-directory'."
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
-;; ;; Send HTML email using org mode
+;; ;; send html email using org mode
 ;; (require 'org-mime)
 ;; (setq org-mime-library 'mml)
 ;; ;; set code blocks background to dark
@@ -563,14 +569,14 @@ of `org-babel-temporary-directory'."
 (setq org-todo-keywords
       '((sequence "TODO" "SCHEDULED" "|" "DONE")))
 
-;; Update tasks state base on subtask
+;; update tasks state base on subtask
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 
-;; Syntax highlighting
+;; syntax highlighting
 (setq org-src-fontify-natively t)
 
 ;; inline image auto refresh
@@ -599,7 +605,7 @@ of `org-babel-temporary-directory'."
 (jez/ace-enable-key-bind)
 
 ;; fix issue - not working in org mode
-;; When org-mode starts it (org-mode-map) overrides the ace-jump-mode.
+;; when org-mode starts it (org-mode-map) overrides the ace-jump-mode.
 ;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -607,7 +613,7 @@ of `org-babel-temporary-directory'."
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
-;; Fix issue - sudo can only use the local host
+;; fix issue - sudo can only use the local host
 (add-to-list 'tramp-default-proxies-alist
 	     '(nil "\\`root\\'" "/ssh:%h:"))
 (add-to-list 'tramp-default-proxies-alist
@@ -691,7 +697,7 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Email - GNUS
 
-;; Always on topic mode
+;; always on topic mode
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
 
@@ -863,15 +869,6 @@ of `org-babel-temporary-directory'."
 ;;; Auto-Complete
 
 (global-auto-complete-mode -1)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Custom variable set by emacs
-
-(setq custom-file "~/.emacs.d/custom.el")
-(unless (file-exists-p custom-file)
-  (write-region "" nil custom-file))
-(load custom-file)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

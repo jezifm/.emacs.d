@@ -158,7 +158,7 @@ Note: just like `align-regexp' but better"
   (insert (buffer-name (current-buffer))))
 
 (defun jez/occur (regexp)
-  "List lines containing REGEXP on temporary buffer"
+  "List lines containing REGEXP on current buffer"
   (interactive "sView lines matching: ")
   (let ((current-buffer (buffer-name))
 	(buffer-name (format "*occur*-%s" (buffer-name)))
@@ -458,7 +458,7 @@ Version 2017-09-01"
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 
-;; (global-set-key (kbd "c-x p f") 'helm-projectile-find-file)
+(global-set-key (kbd "C-x p f") 'helm-projectile-find-file)
 ;; (helm-projectile-on)
 (setq projectile-indexing-method 'alien)
 
@@ -915,7 +915,7 @@ of `org-babel-temporary-directory'."
 
 (defun line-copy-char (&optional b)
   "Copy a character exactly below/above the point
-       to the current point of the cursor (default is above)."
+to the current point of the cursor (default is above)."
   (interactive "p")
   (let (p col s)
     (setq p (point))

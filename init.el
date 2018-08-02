@@ -604,7 +604,9 @@ of `org-babel-temporary-directory'."
   (define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode))
 (jez/ace-enable-key-bind)
 
-;; fix issue - not working in org mode
+;; issue 1 - `ace-jump-mode' not enabled in `org-mode'
+;; issue 2 - `org-mode' not working properly when `ace-jump-mode' was
+;;           enabled. specially when exporting to html
 ;; when org-mode starts it (org-mode-map) overrides the ace-jump-mode.
 ;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
 

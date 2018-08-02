@@ -1,48 +1,36 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
 
-;; disable minimize
-(global-unset-key (kbd "C-z"))
-
-;; disable full yes no - "Resist the temptation to guess"
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; sort lines
+(global-unset-key (kbd "C-z"))		; disable minimize
+(global-unset-key (kbd "C-x C-c"))	; disable quit
+(global-unset-key (kbd "s-t"))		; disable font-panel
+
 (global-set-key (kbd "<f5>") 'sort-lines)
-
-;; set function as ctrl
-(setq ns-function-modifier 'control)
-
-;; change quit key
-(global-unset-key (kbd "C-x C-c"))
-(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal)
-
-;; delete blank lines
 (global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
-
-;; regex replace
 (global-set-key (kbd "C-c r") 'query-replace-regexp)
-
-;; back to indentation
-(global-set-key (kbd "M-i") 'back-to-indentation)
-
-;; toggle text wrap
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+(global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
+(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
+(global-set-key (kbd "C-z") 'jez/shell-shortcut)
+(global-set-key (kbd "M-J") 'jez/simplify)
+(global-set-key (kbd "M-i") 'back-to-indentation)
+(global-set-key (kbd "M-j") 'jez/join-line)
 
-;; fix issue - annoying save-abbrevs prompt
-(setq save-abbrevs 'silently)
-
-;; insert parenthesis, bracket etc
-(electric-pair-mode t)
-
-;; highlight matching parenthesis
-(show-paren-mode t)
-
-;; disable prompt on changing case of region
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-;; go to shell
+;; smooth scrolling for mouse
+(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq ns-function-modifier 'control)
+(setq save-abbrevs 'silently)
+
+;; mode defaults
+(electric-pair-mode t)
+(show-paren-mode t)
+
 (defun jez/shell-shortcut ()
   "Create shell buffer based on current buffer name"
   (interactive)
@@ -54,14 +42,7 @@
       (split-window-right)
       (other-window 1))
     (switch-to-buffer buffer-name-shell)))
-(global-set-key (kbd "C-z") 'jez/shell-shortcut)
 
-;; visit current directory
-(global-set-key (kbd "C-x C-j") (lambda () (interactive)
-				  (dired default-directory)))
-
-
-;; guess shell buffer name
 (defun jez/guess-shell-buffer-name ()
   "Return name of buffer with 'sh-' as prefix"
   (interactive)
@@ -71,15 +52,13 @@
 				  buffers)))
     (car shell-buffers)))
 
-;; join line
 (defun jez/join-line ()
   "Custom join line"
   (interactive)
   (join-line -1))
-(global-set-key (kbd "M-j") 'jez/join-line)
 
-;; combine multiline
 (defun jez/simplify ()
+  "Combine multiline"
   (interactive)
   (back-to-indentation)
   (let ((column (current-column)))
@@ -93,22 +72,15 @@
 		   (delete-indentation)
 		   t)
 	       nil)))))
-(global-set-key (kbd "M-J") 'jez/simplify)
 
-;; disable anoying popup
-(global-unset-key (kbd "s-t"))
-
-;; just like `align-regexp' but better
 (defun align-repeat (start end regexp)
   "Repeat alignment with respect to
-     the given regular expression."
+     the given regular expression.
+Note: just like `align-regexp' but better"
   (interactive "r\nsAlign regexp: ")
   (align-regexp start end
 		(concat "\\(\\s-*\\)" regexp) 1 1 t))
 
-
-;; rename file of currently opened buffer
-;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -158,6 +130,11 @@
 	   (buffer-list))))
     (mapc 'kill-buffer buffer-list)))
 
+(defun jez/insert-current-buffer-name ()
+  "Insert name of current buffer"
+  (interactive)
+  (insert (buffer-name (current-buffer))))
+
 (defun xah-copy-file-path (&optional @dir-path-only-p)
   "Copy the current buffer's file path or dired path to `kill-ring'.
 Result is full path.
@@ -191,6 +168,11 @@ Version 2017-09-01"
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; CSS Mode
+
+(require 'css-mode)
 (defun jez/css-minify-uglify ()
   "CSS Minify current buffer using `uglify'"
   (let ((minified (shell-command-to-string (format "uglifycss %s" buffer-file-name))))
@@ -217,17 +199,13 @@ Version 2017-09-01"
   (if (executable-find "uglifycss")
       (jez/css-minify-uglify)
     (jez/css-minify-requests)))
-(require 'css-mode)
-(define-key css-mode-map (kbd "C-c m") 'jez/css-minify)
 
-(defun jez/insert-current-buffer-name ()
-  "Insert name of current buffer"
-  (interactive)
-  (insert (buffer-name (current-buffer))))
+(define-key css-mode-map (kbd "C-c m") 'jez/css-minify)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - el-get
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil 'noerror)
@@ -267,6 +245,7 @@ Version 2017-09-01"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Install missing dependencies
+
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)
   (package-install 'dash))
@@ -694,7 +673,7 @@ of `org-babel-temporary-directory'."
   (company-mode -1))
 (add-hook 'elpy-mode-hook 'jez/elpy-mode-hook)
 
- 
+
 (package-initialize)
 (elpy-enable)
 
@@ -748,6 +727,7 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Window Numbering
+
 (require 'window-numbering)
 (window-numbering-mode 1)
 
@@ -943,14 +923,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; smooth scrolling for mouse
-
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-(setq mouse-wheel-progressive-speed nil)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; shell mode
+;;; Shell Mode
 
 (define-key shell-mode-map (kbd "s-k") '(lambda () (interactive)
 					  (erase-buffer)
@@ -958,7 +931,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; web mode
+;;; Web Mode
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))

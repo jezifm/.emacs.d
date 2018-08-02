@@ -375,6 +375,7 @@ Version 2017-09-01"
 
 (require 'expand-region)
 (global-set-key (kbd "C-=")  'er/expand-region)
+(global-set-key (kbd "M-=")  'er/contract-region)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

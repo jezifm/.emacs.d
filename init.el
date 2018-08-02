@@ -224,6 +224,13 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Dired Mode
+
+(setq dired-dwim-target t)		; default dest to other window
+(add-hook 'dired-mode-hook (lambda () (setq truncate-lines t)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; CSS Mode
 
 (require 'css-mode)

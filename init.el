@@ -682,19 +682,22 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Elpy
 
+(require 'elpy)
+
 (defun jez/elpy-mode-hook ()
+  "Disable company mode"
   (company-mode -1))
 (add-hook 'elpy-mode-hook 'jez/elpy-mode-hook)
 
-
-(package-initialize)
 (elpy-enable)
 
-;; remove conflicting with other mode
-(defun jez/remove-elpy-conflicts ()
+;; fix conflict
+(defun jez/disable-elpy ()
+  "Ensure `elpy-mode' is disabled"
   (ignore-errors (elpy-mode -1)))
-(add-hook 'org-mode-hook 'jez/remove-elpy-conflicts)
-(add-hook 'shell-mode-hook 'jez/remove-elpy-conflicts)
+(add-hook 'org-mode-hook 'jez/disable-elpy)
+(add-hook 'shell-mode-hook 'jez/disable-elpy)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Email - GNUS

@@ -113,7 +113,6 @@ Note: just like `align-regexp' but better"
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-
 (defun jez/camelize (s)
   "Convert under_score string S to CamelCase string."
   (mapconcat 'identity (mapcar
@@ -135,7 +134,6 @@ Note: just like `align-regexp' but better"
   (interactive "s")
   (let* ((separator (or separator "_")))
     (s-join "" (--map (s-left 1 it) (s-split separator string)))))
-
 
 (defun jez/clear-buffers ()
   "Clears all buffer except from some default"
@@ -246,7 +244,6 @@ Version 2017-09-01"
   ;; for important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
-
 
 ;; org emacs lisp package archive
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
@@ -450,14 +447,6 @@ Version 2017-09-01"
 ;;; Magit
 
 (global-set-key (kbd "C-x g") 'magit-status)
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; combine diff
 (defun ediff-copy-both-to-C ()
@@ -845,7 +834,6 @@ of `org-babel-temporary-directory'."
     ("p" ein:worksheet-goto-prev-input "prev")
     ("n" ein:worksheet-goto-next-input "next")))
 (add-hook 'ein:connect-mode-hook 'jez/ein-hydra)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

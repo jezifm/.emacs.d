@@ -784,7 +784,18 @@ of `org-babel-temporary-directory'."
 
 (require 'swiper)
 (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
-(global-set-key (kbd "C-s") 'swiper)
+
+(defun jez/swiper (args)
+  "Custom `swiper' that default to symbol on point if prefix was provided"
+  (interactive "p")
+  (let* ((prefix (>= args 4))
+	 (symbol (symbol-at-point))
+	 (symbol-name (symbol-name symbol)))
+    (if (and prefix symbol)
+	(swiper symbol-name)
+      (swiper))))
+
+(global-set-key (kbd "C-s") 'jez/swiper)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

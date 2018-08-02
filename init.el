@@ -46,6 +46,7 @@
 (setq mouse-wheel-progressive-speed nil)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq ns-function-modifier 'control)
+(setq dired-dwim-target t)		; default dest to other window
 (setq save-abbrevs 'silently)
 
 (defun jez/clear-font-properties ()

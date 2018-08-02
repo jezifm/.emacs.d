@@ -1,35 +1,45 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
 
+;; global properties
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+
+;; mode defaults
+(electric-pair-mode t)
+(recentf-mode t)
+(show-paren-mode t)
+
+;; mode properties
+(setq recentf-max-menu-items 25)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(global-unset-key (kbd "C-z"))		; disable minimize
-(global-unset-key (kbd "C-x C-c"))	; disable quit
-(global-unset-key (kbd "s-t"))		; disable font-panel
-
+;; key bindings
 (global-set-key (kbd "<f5>") 'sort-lines)
 (global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c r") 'query-replace-regexp)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
 (global-set-key (kbd "M-J") 'jez/simplify)
 (global-set-key (kbd "M-i") 'back-to-indentation)
 (global-set-key (kbd "M-j") 'jez/join-line)
 
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
+;; key bindings unset
+(global-unset-key (kbd "C-z"))		; disable minimize
+(global-unset-key (kbd "C-x C-c"))	; disable quit
+(global-unset-key (kbd "s-t"))		; disable font-panel
 
 ;; smooth scrolling for mouse
 (setq mouse-wheel-progressive-speed nil)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq ns-function-modifier 'control)
 (setq save-abbrevs 'silently)
-
-;; mode defaults
-(electric-pair-mode t)
-(show-paren-mode t)
 
 (defun jez/clear-font-properties ()
   "Clear font properties"
@@ -512,8 +522,7 @@ of `org-babel-temporary-directory'."
    ))
 
 ;; Home Directory
-(global-set-key (kbd "C-c o")
-		(lambda () (interactive) (find-file "~/organizer.org")))
+(global-set-key (kbd "C-c o") (lambda () (interactive) (find-file "~/organizer.org")))
 
 ;; set register
 (set-register ?o (cons 'file "~/organizer.org"))
@@ -633,7 +642,6 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Annotation
 
-;; insert todays date
 (defun insert-date (prefix)
   "Insert the current date. With prefix-argument, use ISO format. With
    two prefix arguments, write out the day and month name."
@@ -656,7 +664,6 @@ of `org-babel-temporary-directory'."
 ;;; Auto complete
 
 (require 'setup-hippie)
-(global-set-key "\M- " 'hippie-expand)
 (global-set-key (kbd "C-.") 'hippie-expand-no-case-fold)
 (global-set-key (kbd "C-:") 'hippie-expand-lines)
 (global-set-key (kbd "C-,") 'completion-at-point)
@@ -699,12 +706,11 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SQL Mode
 
+(require 'sql)
 (add-hook 'sql-mode-hook 'sqlup-mode)
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
-;; (define-key sql-mode-map (kbd ("C-c u")) 'sqlup-capitalize-keywords-in-region)
-;; (define-key sql-mode-map (kbd ("C-h s")) 'sqlformat)
-(global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
-(global-set-key (kbd "C-h s") 'sqlformat)
+(define-key sql-mode-map (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
+(define-key sql-mode-map (kbd "C-h s") 'sqlformat)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -715,13 +721,12 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Keychord - temporary disabled. Adding latency on each keypress
+;; move to char similar to "f" in vim, f+g forward, d+f backward
 
 (require 'key-chord)
 (require 'iy-go-to-char)
 
 (key-chord-mode 1)
-
-;; move to char similar to "f" in vim, f+g forward, d+f backward
 (key-chord-define-global "fj" 'iy-go-to-char)
 ;; (key-chord-define-global "df" 'iy-go-to-char-backward)
 
@@ -782,13 +787,6 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Avy
-
-(require 'avy)
-(global-set-key (kbd "M-g f") 'avy-goto-line)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Paredit
 
 (require 'paredit)
@@ -806,16 +804,6 @@ of `org-babel-temporary-directory'."
 
 (when (file-exists-p "~/.emacs.d/local-init.el")
   (load-file "~/.emacs.d/local-init.el"))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Ace window
-
-(global-set-key (kbd "M-p") 'ace-window)
-(global-set-key (kbd "s-p") 'ace-window)
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-(put 'narrow-to-region 'disabled nil)
-(put 'set-goal-column 'disabled nil)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -957,11 +945,3 @@ of `org-babel-temporary-directory'."
   (emmet-mode t)
   (toggle-truncate-lines t))
 (add-hook 'web-mode-hook 'jez/web-mode-hook)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; recent mode
-
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)

@@ -32,12 +32,12 @@
 ;; key bindings
 (global-set-key (kbd "<f5>") 'sort-lines)
 (global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
-(global-set-key (kbd "C-c r") 'query-replace-regexp)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
+(global-set-key (kbd "M-%") 'vr/query-replace)
 (global-set-key (kbd "M-J") 'jez/simplify)
 (global-set-key (kbd "M-i") 'back-to-indentation)
 (global-set-key (kbd "M-j") 'jez/join-line)
@@ -359,6 +359,7 @@ Version 2017-09-01"
      swift-mode
      swiper
      undo-tree
+     visual-regexp
      web-beautify
      web-mode
      window-numbering

@@ -397,7 +397,7 @@ Version 2017-09-01"
 ;; maximize window
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; no splash screen please ... jeez
+;; no splash screen
 (setq inhibit-startup-message t)
 
 
@@ -446,7 +446,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Helm
+;;; Helm Mode
 
 (require 'helm)
 (require 'helm-config)
@@ -496,7 +496,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Magit
+;;; Magit Mode
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -512,7 +512,7 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Org mode
+;;; Org Mode
 
 ;; disable backup file
 (defun org-babel-temp-file (prefix &optional suffix)
@@ -560,7 +560,7 @@ of `org-babel-temporary-directory'."
 	(shell . t)
 	(sql . t)
 	))
-;; fix remove sh when running on windows
+;; fix - remove sh when running on windows
 (when (string-equal system-type "windows-nt")
   (assq-delete-all 'sh org-babel-languages))
 (org-babel-do-load-languages
@@ -645,7 +645,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Ace Jump mode
+;;; Ace Jump Mode
 
 (require 'ace-jump-mode)
 
@@ -663,7 +663,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Trump mode
+;;; Trump Mode
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
@@ -710,7 +710,7 @@ of `org-babel-temporary-directory'."
   (insert-date nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Auto complete
+;;; Auto Complete
 
 (require 'setup-hippie)
 (global-set-key (kbd "C-.") 'hippie-expand-no-case-fold)
@@ -719,7 +719,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Python mode
+;;; Python Mode
 
 (defun jez/python-mode-hook ()
   (setq truncate-lines t)
@@ -772,7 +772,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Keychord - temporary disabled. Adding latency on each keypress
+;;; Keychord
 ;; move to char similar to "f" in vim, f+g forward, d+f backward
 
 (require 'key-chord)
@@ -784,7 +784,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Undo Tree
+;;; Undo Tree Mode
 
 (undo-tree-mode t)
 
@@ -851,7 +851,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Paredit
+;;; Paredit Mode
 
 (ignore-errors
   (require 'paredit)
@@ -904,7 +904,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Emmet mode
+;;; Emmet Mode
 
 (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes

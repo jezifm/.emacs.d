@@ -998,3 +998,23 @@ to the current point of the cursor (default is above)."
   (emmet-mode t)
   (toggle-truncate-lines t))
 (add-hook 'web-mode-hook 'jez/web-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Occur mode
+
+(defun jez/occur-prev ()
+  (interactive)
+  (occur-prev)
+  (occur-mode-display-occurrence))
+
+(defun jez/occur-next ()
+  (interactive)
+  (occur-next)
+  (occur-mode-display-occurrence))
+
+(defun jez/occur-mode-hook ()
+  (define-key occur-mode-map (kbd "p") 'jez/occur-prev)
+  (define-key occur-mode-map (kbd "n") 'jez/occur-next))
+
+(add-hook 'occur-mode-hook 'jez/occur-mode-hook)

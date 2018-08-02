@@ -7,11 +7,12 @@
   (write-region "" nil custom-file))
 (load custom-file)
 
-;; global properties
+;; disable prompt
 (put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+(put 'upcase-region 'disabled nil)
 
 ;; mode defaults
 (electric-pair-mode t)
@@ -674,7 +675,7 @@ of `org-babel-temporary-directory'."
   (setq truncate-lines t)
   (hs-minor-mode t))
 (add-hook 'python-mode-hook 'jez/python-mode-hook)
-(add-to-list 'auto-mode-alist '("\\.tac\\'" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.tac\\'" . python-mode))  ; twisted
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -829,7 +830,6 @@ of `org-babel-temporary-directory'."
 
 (global-set-key (kbd "s-i") 'jez/copy-inner)
 (global-set-key (kbd "s-o") 'jez/copy-outer)
-(put 'erase-buffer 'disabled nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Hydra
@@ -877,10 +877,6 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SQL default
 
-(add-hook 'sql-interactive-mode-hook
-          (lambda ()
-            (toggle-truncate-lines t)))
-
 (require 'sql)
 (define-key sql-interactive-mode-map (kbd "M-<return>") 'comint-send-input)
 (define-key sql-interactive-mode-map (kbd "RET") nil)
@@ -897,6 +893,8 @@ of `org-babel-temporary-directory'."
       (switch-to-buffer buffer-name))
     (sql-connect connection new-name)
     (rename-buffer buffer-name)))
+
+(add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -31,8 +31,9 @@
 (global-set-key (kbd "M-j") 'jez/join-line)
 
 ;; key bindings unset
-(global-unset-key (kbd "C-z"))		; disable minimize
 (global-unset-key (kbd "C-x C-c"))	; disable quit
+(global-unset-key (kbd "C-x c"))	; disable quit
+(global-unset-key (kbd "C-z"))		; disable minimize
 (global-unset-key (kbd "s-t"))		; disable font-panel
 
 ;; smooth scrolling for mouse
@@ -137,7 +138,7 @@ Note: just like `align-regexp' but better"
 
 
 (defun jez/clear-buffers ()
-  "Clears all buffer"
+  "Clears all buffer except from some default"
   (interactive)
   (let* ((ignore-list '("*scratch*" "*Messages*" "*Pymacs*" "init.el"))
 	 (buffer-list
@@ -339,8 +340,8 @@ Version 2017-09-01"
 (setq make-backup-files nil)
 
 ;; Remove scrollbar, menu bars, and toolbars
-; when is a special form of "if", with no else clause, it reads:
-; (when <condition> <code-to-execute1> <code-to-execute2> ...)
+;; when is a special form of "if", with no else clause, it reads:
+;; (when <condition> <code-to-execute1> <code-to-execute2> ...)
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -387,9 +388,10 @@ Version 2017-09-01"
       (jez/mark-word)
     (mc/mark-next-like-this arg)))
 
-(progn
-  (push 'jez/mark-multiple mc--default-cmds-to-run-once)
-  (remove-duplicates mc--default-cmds-to-run-once))
+;; hotfix - add `jez/mark-multiple' to `multiple-cursors' list of
+;; commands to run once
+(push 'jez/mark-multiple mc--default-cmds-to-run-once)
+(remove-duplicates mc--default-cmds-to-run-once)
 
 (global-set-key (kbd "s-d") 'jez/mark-multiple)
 
@@ -400,8 +402,6 @@ Version 2017-09-01"
 (require 'helm)
 (require 'helm-config)
 
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-(global-unset-key (kbd "C-x c"))
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
@@ -783,7 +783,7 @@ of `org-babel-temporary-directory'."
 ;;; Swiper
 
 (require 'swiper)
-(setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+(setq ivy-re-builders-alist '((t . ivy--regex-plus)))
 (global-set-key (kbd "C-s") 'swiper)
 
 

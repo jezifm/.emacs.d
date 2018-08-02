@@ -204,6 +204,16 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Boookmark
+
+(require 'bookmark)
+(unless (assoc "init.el" bookmark-alist)
+  (find-file "~/.emacs.d/init.el")
+  (bookmark-set "init.el")
+  (kill-buffer))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; CSS Mode
 
 (require 'css-mode)

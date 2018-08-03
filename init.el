@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs Version
 
+;; meta variables
+(setq emacs-starttime (current-time))
+
 (when (version< emacs-version "26")
   (error (format "Emacs version %s not supported. Please update to 26 or higher."
 		 emacs-version)))
@@ -37,8 +40,7 @@
 ;; dependencies included in `.emacs.d' but is not within package
 ;; managers above
 
-(setq settings-dir
-      (expand-file-name "settings" user-emacs-directory))
+(setq settings-dir (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
 
@@ -130,9 +132,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
-
-;; meta variables
-(setq emacs-starttime (current-time))
 
 ;; disable prompt
 (put 'downcase-region 'disabled nil)

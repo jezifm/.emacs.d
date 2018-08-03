@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
 
+;; declare meta variables
+(setq emacs-starttime (current-time))
+
 ;; set customization filepath
 (setq custom-file "~/.emacs.d/custom.el")
 (unless (file-exists-p custom-file)
@@ -1020,3 +1023,27 @@ to the current point of the cursor (default is above)."
   (define-key occur-mode-map (kbd "n") 'jez/occur-next))
 
 (add-hook 'occur-mode-hook 'jez/occur-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Startup
+
+(defun jez/display-time-elapsed ()
+  (interactive)
+  ;; patch display message method
+  (defun display-startup-echo-area-message ()
+    (message "It took %.2f seconds to load emacs"
+	   (float-time
+	    (time-subtract (current-time) emacs-starttime)))))
+
+(defun jez/display-bookmarks ()
+  (interactive)
+  (list-bookmarks)
+  (switch-to-buffer "*Bookmark List*"))
+
+(defun startup ()
+  (interactive)
+  (jez/display-bookmarks)
+  (jez/display-time-elapsed))
+
+(startup)

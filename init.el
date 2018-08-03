@@ -1,8 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Package Manager - el-get
+;; Emacs Version
 
-;; hotfix
-(define-obsolete-function-alias 'org-define-error 'define-error) ; org-mode fix
+(when (version< emacs-version "26")
+  (error (format "Emacs version %s not supported. Please update to 26 or higher."
+		 emacs-version)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Package Manager - el-get
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -20,16 +25,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - melpa
 
-(require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; for important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize) ;; You might already have this line
-
-;; org emacs lisp package archive
+(package-initialize) 			; fix issue package not yet initialize
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Local Dependencies
+;;
+;; dependencies included in `.emacs.d' but is not within package
+;; managers above
+
+(setq settings-dir
+      (expand-file-name "settings" user-emacs-directory))
+(add-to-list 'load-path settings-dir)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -100,17 +110,6 @@
   (error
    (package-refresh-contents)
    (init--install-packages)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Local Dependencies
-;;
-;; dependencies included in `.emacs.d' but is not within package
-;; managers above
-
-(setq settings-dir
-      (expand-file-name "settings" user-emacs-directory))
-(add-to-list 'load-path settings-dir)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -574,7 +573,6 @@ of `org-babel-temporary-directory'."
 	(js . t)
 	(plantuml . t)
 	(python . t)
-	(sh . t)
 	(shell . t)
 	(sql . t)
 	))
@@ -616,8 +614,7 @@ of `org-babel-temporary-directory'."
 (setq user-mail-address "jezarciaga@gmail.com")
 
 ;; enable markdown export
-(eval-after-load "org"
-  '(require 'ox-md nil t))
+(eval-after-load "org" '(require 'ox-md nil t))
 
 ;; ;; send html email using org mode
 ;; (require 'org-mime)

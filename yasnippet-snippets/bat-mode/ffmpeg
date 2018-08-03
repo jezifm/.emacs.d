@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ffmpeg
+# key: ffmpeg
+# --
+ffmpeg -i ${1:input.mp4} -vcodec h264 -acodec mp2 ${2:output.mp4}

@@ -33,7 +33,80 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Install missing dependencies
+
+;; package to install
+(defun init--install-packages ()
+  (packages-install
+   '(ace-jump-mode
+     ace-window
+     auctex
+     avy
+     change-inner
+     color-theme-modern
+     cyberpunk-theme
+     dockerfile-mode
+     ein
+     emmet-mode
+     exec-path-from-shell
+     expand-region
+     go-mode
+     hackernews
+     helm
+     helm-ag
+     helm-projectile
+     hydra
+     impatient-mode
+     iy-go-to-char
+     key-chord
+     latex-preview-pane
+     lorem-ipsum
+     magit
+     markdown-mode
+     multiple-cursors
+     nyan-mode
+     ob-go
+     ob-http
+     ob-ipython
+     org-plus-contrib
+     paredit
+     plantuml-mode
+     prodigy
+     quelpa
+     redis
+     restclient
+     sublime-themes
+     swift-mode
+     swiper
+     undo-tree
+     visual-regexp
+     web-beautify
+     web-mode
+     window-numbering
+     yaml-mode
+     yasnippet
+     yasnippet-snippets
+     )))
+
+;; prepare installer
+(when (not (package-installed-p 'dash))
+  (package-refresh-contents)
+  (package-install 'dash))
+(require 'setup-package)
+
+;; install missing packages
+(condition-case nil
+    (init--install-packages)
+  (error
+   (package-refresh-contents)
+   (init--install-packages)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Local Dependencies
+;;
+;; dependencies included in `.emacs.d' but is not within package
+;; managers above
 
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))
@@ -43,8 +116,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Host Specific Customization
 ;;
-;; allows bookmarks and other customization to persist when switching
-;; `.emacs.d'
+;; persist bookmarks and other customization when switching `.emacs.d'
 
 ;; ensure customization directory
 (setq custom-host-dir "~/.emacs.d.local")
@@ -319,74 +391,6 @@ Version 2017-09-01"
     (jez/css-minify-requests)))
 
 (define-key css-mode-map (kbd "C-c m") 'jez/css-minify)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Install missing dependencies
-
-(when (not (package-installed-p 'dash))
-  (package-refresh-contents)
-  (package-install 'dash))
-
-(require 'setup-package)
-
-(defun init--install-packages ()
-  (packages-install
-   '(ace-jump-mode
-     ace-window
-     auctex
-     avy
-     change-inner
-     color-theme-modern
-     cyberpunk-theme
-     dockerfile-mode
-     ein
-     emmet-mode
-     exec-path-from-shell
-     expand-region
-     go-mode
-     hackernews
-     helm
-     helm-ag
-     helm-projectile
-     hydra
-     impatient-mode
-     iy-go-to-char
-     key-chord
-     latex-preview-pane
-     lorem-ipsum
-     magit
-     markdown-mode
-     multiple-cursors
-     nyan-mode
-     ob-go
-     ob-http
-     ob-ipython
-     org-plus-contrib
-     paredit
-     plantuml-mode
-     prodigy
-     quelpa
-     redis
-     restclient
-     sublime-themes
-     swift-mode
-     swiper
-     undo-tree
-     visual-regexp
-     web-beautify
-     web-mode
-     window-numbering
-     yaml-mode
-     yasnippet
-     yasnippet-snippets
-     )))
-
-(condition-case nil
-    (init--install-packages)
-  (error
-   (package-refresh-contents)
-   (init--install-packages)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

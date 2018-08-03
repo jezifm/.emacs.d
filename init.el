@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - el-get
 
+;; hotfix
+(define-obsolete-function-alias 'org-define-error 'define-error) ; org-mode fix
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (unless (require 'el-get nil 'noerror)
@@ -320,10 +323,6 @@ Version 2017-09-01"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Install missing dependencies
-
-;; hotfix
-;; org-mode error while being installed in windows
-(define-obsolete-function-alias 'org-define-error 'define-error)
 
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)

@@ -304,9 +304,6 @@ Version 2017-09-01"
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
-;; settings that only applies to your local
-(when (file-exists-p "~/.emacs.d/local.el")
-  (load-file "~/.emacs.d/local.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

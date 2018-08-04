@@ -465,9 +465,18 @@ Version 2017-09-01"
         (jez/mark-word)
       (mc/mark-next-like-this arg)))
 
-  ;; update list multiple-cursors
-  (push 'jez/mark-multiple mc--default-cmds-to-run-once)
-  (remove-duplicates mc--default-cmds-to-run-once)
+  (defun jez/add-mc-once (func)
+    "Add FUNC to `mc--default-cmds-to-run-once'. Prevent duplicate entry"
+    (push func mc--default-cmds-to-run-once)
+    (remove-duplicates mc--default-cmds-to-run-once))
+
+  (defun jez/add-mc-all (func)
+    "Add FUNC to `mc--default-cmds-to-run-for-all'. Prevent duplicate entry"
+    (push func mc--default-cmds-to-run-for-all)
+    (remove-duplicates mc--default-cmds-to-run-once))
+
+  (jez/add-mc-once 'jez/mark-multiple)
+  (jez/add-mc-all 'paredit-backward-kill-word)
 
   :bind (("C-<" . mc/mark-previous-like-this)
          ("C->" . mc/mark-next-like-this)

@@ -481,51 +481,38 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Helm Mode
 
-(require 'helm)
-(require 'helm-config)
+(use-package helm
+  :ensure t
+  :bind (("M-x"     . helm-M-x)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b"   . helm-buffers-list)
+         ("C-c h"   . helm-command-prefix)
+         ("C-x p p" . helm-do-ag-project-root)
+         ("C-x r b" . helm-filtered-bookmarks)
+         ("C-x C-f" . helm-find-files)
+         ("M-y"     . helm-show-kill-ring)
+         :map helm-map
+         ("<tab>"   . helm-execute-persistent-action)
+         ("C-i"     . helm-execute-persistent-action)
+         ("C-z"     . helm-select-action))
+  :config
+  (helm-mode 1)
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
+  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-file-name-history-use-recentf t
+        projectile-global-mode                t))
 
-;; changed to "c-c h". note: we must set "c-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t)
-
-;; set helm hotkeys
-(global-set-key (kbd "M-x") #'helm-M-x)
-(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
-;; override buffer list
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-
-;; set helm projectile grep
-(global-set-key (kbd "C-x p p") 'helm-do-ag-project-root)
-
-(helm-mode 1)
-(setq projectile-global-mode t)
-
-;; custom
-(require 'helm-projectile)
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-
-(global-set-key (kbd "C-x p f") 'helm-projectile-find-file)
-;; (helm-projectile-on)
-(setq projectile-indexing-method 'alien)
+(use-package helm-projectile
+  :ensure t
+  :config
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+  :bind ("C-x p f" . helm-projectile-find-file)
+  :after helm)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

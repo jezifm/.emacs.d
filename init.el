@@ -361,6 +361,23 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Emacs Built-in Mode
+
+(use-package menu-bar   :defer 2 :config (menu-bar-mode -1))
+(use-package scroll-bar :defer 2 :config (scroll-bar-mode -1))
+(use-package tool-bar   :defer 2 :config (tool-bar-mode -1))
+(use-package elec-pair  :defer 2 :config (electric-pair-mode t))
+(use-package paren      :defer 2 :config (show-paren-mode t))
+
+(use-package recentf
+  :defer 2
+  :bind ("C-x C-r" . recentf-open-files)
+  :config
+  (recentf-mode t)
+  (setq recentf-max-menu-items 25))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Boookmark
 
 (use-package bookmark
@@ -381,23 +398,6 @@ Version 2017-09-01"
   :config
   (setq dired-dwim-target t)            ; default dest to other window
   (setq truncate-lines t))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Emacs Built-in Mode
-
-(use-package menu-bar   :defer 2 :config (menu-bar-mode -1))
-(use-package scroll-bar :defer 2 :config (scroll-bar-mode -1))
-(use-package tool-bar   :defer 2 :config (tool-bar-mode -1))
-(use-package elec-pair  :defer 2 :config (electric-pair-mode t))
-(use-package paren      :defer 2 :config (show-paren-mode t))
-
-(use-package recentf
-  :defer 2
-  :bind ("C-x C-r" . recentf-open-files)
-  :config
-  (recentf-mode t)
-  (setq recentf-max-menu-items 25))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

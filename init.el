@@ -941,15 +941,8 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :hook ((sgml-mode . emmet-mode)
-         (css-mode . emmet-mode))
-  :mode (("\\.phtml\\'"      . emmet-mode)
-         ("\\.tpl\\.php\\'"  . emmet-mode)
-         ("\\.[agj]sp\\'"    . emmet-mode)
-         ("\\.as[cp]x\\'"    . emmet-mode)
-         ("\\.erb\\'"        . emmet-mode)
-         ("\\.mustache\\'"   . emmet-mode)
-         ("\\.djhtml\\'"     . emmet-mode)
-         ("\\.html?\\'"      . emmet-mode)))
+         (css-mode . emmet-mode)
+         (web-mode . emmet-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -983,24 +976,24 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Web Mode
 
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-(setq web-mode-enable-current-element-highlight t)
-(setq web-mode-enable-current-column-highlight nil)
-
-(defun jez/web-mode-hook ()
-  (electric-pair-local-mode -1)
-  (emmet-mode t)
-  (toggle-truncate-lines t))
-(add-hook 'web-mode-hook 'jez/web-mode-hook)
+(use-package web-mode
+  :ensure t
+  :defer t
+  :mode (("\\.phtml\\'"      . web-mode)
+         ("\\.tpl\\.php\\'"  . web-mode)
+         ("\\.[agj]sp\\'"    . web-mode)
+         ("\\.as[cp]x\\'"    . web-mode)
+         ("\\.erb\\'"        . web-mode)
+         ("\\.mustache\\'"   . web-mode)
+         ("\\.djhtml\\'"     . web-mode)
+         ("\\.html?\\'"      . web-mode))
+  :config
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-enable-current-column-highlight nil)
+  (defun jez/web-mode-hook ()
+    (electric-pair-local-mode -1)
+    (toggle-truncate-lines t))
+  :hook ((web-mode . jez/web-mode-hook)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

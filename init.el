@@ -1043,7 +1043,8 @@ to the current point of the cursor (default is above)."
   (interactive)
   (setq indent-tabs-mode nil)
   (define-key emacs-lisp-mode-map (kbd "C-c d") 'jez/describe-symbol-qa-point)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-d") 'jez/describe-symbol-at-point))
+  (define-key emacs-lisp-mode-map (kbd "C-c C-d") 'jez/describe-symbol-at-point)
+  (toggle-truncate-lines t))
 (add-hook 'emacs-lisp-mode-hook 'jez/emacs-lisp-mode-hook)
 
 

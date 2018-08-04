@@ -922,18 +922,19 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emmet Mode
 
-(require 'emmet-mode)
-(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
-
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . emmet-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . emmet-mode))
+(use-package emmet-mode
+  :ensure t
+  :defer t
+  :hook ((sgml-mode . emmet-mode)
+         (css-mode . emmet-mode))
+  :mode (("\\.phtml\\'"      . emmet-mode)
+         ("\\.tpl\\.php\\'"  . emmet-mode)
+         ("\\.[agj]sp\\'"    . emmet-mode)
+         ("\\.as[cp]x\\'"    . emmet-mode)
+         ("\\.erb\\'"        . emmet-mode)
+         ("\\.mustache\\'"   . emmet-mode)
+         ("\\.djhtml\\'"     . emmet-mode)
+         ("\\.html?\\'"      . emmet-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

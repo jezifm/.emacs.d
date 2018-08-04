@@ -430,6 +430,7 @@ Version 2017-09-01"
 
 (use-package expand-region
   :ensure t
+  :defer t
   :bind (("C-=" . er/expand-region)
          ("M-=" . er/contract-region)))
 
@@ -439,6 +440,7 @@ Version 2017-09-01"
 
 (use-package multiple-cursors
   :ensure t
+  :defer t
   :config
   (defun jez/mark-word ()
     "Use to highlight a word"
@@ -533,6 +535,7 @@ Version 2017-09-01"
 
 (use-package magit
   :ensure t
+  :defer t
   :bind ("C-x g" . magit-status)
   :preface
   (defun ediff-copy-both-to-C ()
@@ -550,6 +553,7 @@ Version 2017-09-01"
 
 (use-package org
   :ensure t
+  :defer t
   :bind ("C-c l" . org-store-link)
   :config
   (setq user-full-name "Jezrael Arciaga")
@@ -639,6 +643,7 @@ of `org-babel-temporary-directory'."
 
 (use-package ace-jump-mode
   :ensure t
+  :defer t
   :bind (("C-c SPC" . ace-jump-mode)
          ("C-c C-SPC" . ace-jump-mode)))
 

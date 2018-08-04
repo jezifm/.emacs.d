@@ -170,13 +170,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
 
-;; disable prompt
-(put 'downcase-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'set-goal-column 'disabled nil)
-(put 'upcase-region 'disabled nil)
-
 ;; mode defaults
 (electric-pair-mode t)
 (recentf-mode t)
@@ -185,34 +178,13 @@
 ;; mode properties
 (setq recentf-max-menu-items 25)
 
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; key bindings unset
-(global-unset-key (kbd "C-x C-c"))	; disable quit
-(global-unset-key (kbd "C-x c"))	; disable quit
-(global-unset-key (kbd "C-z"))		; disable minimize
-(global-unset-key (kbd "s-t"))		; disable font-panel
-
-;; key bindings
-(global-set-key (kbd "<f5>") 'sort-lines)
-(global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
-(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
-(global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
-(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
+;; key bindings custom
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
 (global-set-key (kbd "M-%") 'vr/query-replace)
 (global-set-key (kbd "M-J") 'jez/simplify)
-(global-set-key (kbd "M-i") 'back-to-indentation)
 (global-set-key (kbd "M-j") 'jez/join-line)
 
-;; smooth scrolling for mouse
-(setq mouse-wheel-progressive-speed nil)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-(setq ns-function-modifier 'control)
-(setq dired-dwim-target t)		; default dest to other window
-(setq save-abbrevs 'silently)
-
+;; Define local functions
 (defun jez/clear-font-properties ()
   "Clear font properties"
   (interactive)

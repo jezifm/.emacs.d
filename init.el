@@ -687,7 +687,7 @@ of `org-babel-temporary-directory'."
 
 (use-package yasnippet
   :ensure t
-  :demand t
+  :defer 2
   :config
   (setq yas-indent-line 'fixed)
   (setq yas-buffer-local-condition `always)
@@ -777,7 +777,7 @@ of `org-babel-temporary-directory'."
 
 (use-package key-chord
   :ensure t
-  :demand t
+  :defer 2
   :config
   (key-chord-mode 1)
   (key-chord-define-global "fj" 'iy-go-to-char))

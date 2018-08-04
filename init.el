@@ -577,6 +577,42 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Outshine Mode
+
+(use-package imenu :commands imenu-choose-buffer-index)
+
+(use-package outshine
+  :ensure t
+  :defer t
+  :bind (:map outline-minor-mode-map
+         ("C-c n" . outline-next-visible-heading)
+         ("C-c p" . outline-previous-visible-heading))
+  :init (require 'helm)
+  :config
+  (defun outshine-emacs-lisp-mode-hook ()
+    (setq-local outshine-use-speed-commands t)
+    (outline-minor-mode t))
+
+  (defun py-outline-level ()
+    (let (buffer-invisibility-spec)
+      (save-excursion
+        (skip-chars-forward "    ")
+        (current-column))))
+
+  (defun outshine-python-mode-hook ()
+    (outline-minor-mode t)
+    (setq-local outline-regexp "[ \t]*# \\|[ \t]+\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
+    (setq-local outline-level 'py-outline-level)
+    (setq-local outshine-use-speed-commands nil)
+    (define-key python-mode-map (kbd "<tab>") 'indent-for-tab-command)
+    (define-key python-mode-map (kbd "C-<tab>") 'outline-cycle))
+
+  :hook ((outline-minor-mode . outshine-hook-function)
+         (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)
+         (python-mode . outshine-python-mode-hook)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Org Mode
 
 (use-package org
@@ -1057,23 +1093,6 @@ to the current point of the cursor (default is above)."
     (toggle-truncate-lines t))
 
   :hook (emacs-lisp-mode . jez/emacs-lisp-mode-hook))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Outshine Mode
-
-(use-package imenu :commands imenu-choose-buffer-index)
-
-(use-package outshine
-  :ensure t
-  :defer t
-  :bind (:map outline-minor-mode-map
-         ("C-c n" . outline-next-visible-heading)
-         ("C-c p" . outline-previous-visible-heading))
-  :init (require 'helm)
-  :config (setq outshine-use-speed-commands t)
-  :hook ((outline-minor-mode . outshine-hook-function)
-         (emacs-lisp-mode . outline-minor-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -910,20 +910,6 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Hydra
-
-;; ein is not working properly uncomment when fixed --jez 2017-03-27
-(defun jez/ein-hydra ()
-  "Add custom hydra to ein"
-  (interactive "P")
-  (defhydra hydra-ein (ein:notebook-multilang-mode-map "C-c")
-    "ein"
-    ("p" ein:worksheet-goto-prev-input "prev")
-    ("n" ein:worksheet-goto-next-input "next")))
-(add-hook 'ein:connect-mode-hook 'jez/ein-hydra)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Bash - run bash init script
 
 (ignore-errors

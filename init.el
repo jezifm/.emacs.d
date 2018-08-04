@@ -891,13 +891,15 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; VIM's - Change Inner
 
-(require 'change-inner)
-(load-file "~/.emacs.d/custom-ci.el")
-(global-set-key (kbd "M-I") 'change-inner)
-(global-set-key (kbd "M-O") 'change-outer)
-
-(global-set-key (kbd "s-i") 'jez/copy-inner)
-(global-set-key (kbd "s-o") 'jez/copy-outer)
+(use-package change-inner
+  :ensure t
+  :defer t
+  :bind (("M-I" . change-inner)
+         ("M-O" . change-inner)
+         ("s-i" . jez/copy-inner)
+         ("s-o" . jez/copy-outer))
+  :config
+  (load-file "~/.emacs.d/custom-ci.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

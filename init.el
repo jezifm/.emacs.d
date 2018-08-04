@@ -694,10 +694,10 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Auto Complete
 
-(require 'setup-hippie)
-(global-set-key (kbd "C-.") 'hippie-expand-no-case-fold)
-(global-set-key (kbd "C-:") 'hippie-expand-lines)
-(global-set-key (kbd "C-,") 'completion-at-point)
+(use-package setup-hippie
+  :bind (("C-." . hippie-expand-no-case-fold)
+         ("C-;" . hippie-expand-lines)
+         ("C-," . completion-at-point)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

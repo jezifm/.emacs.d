@@ -182,8 +182,26 @@
 (global-set-key (kbd "M-%") 'vr/query-replace)
 (global-set-key (kbd "M-J") 'jez/simplify)
 (global-set-key (kbd "M-j") 'jez/join-line)
+(global-set-key (kbd "C-c C-d") 'insert-date)
 
 ;; Define local functions
+(defun insert-date (prefix)
+  "Insert the current date. With prefix-argument, use ISO format. With
+   two prefix arguments, write out the day and month name."
+  (interactive "P")
+  (let ((format (cond
+                 ((not prefix) "%Y-%m-%d")
+                 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
+                 ((equal prefix '(16)) "%A, %d. %B %Y")))
+        (system-time-locale "en_US"))
+    (insert (format-time-string format))))
+
+(defun jez/annotate ()
+  "Insert annotation for commenting"
+  (interactive)
+  (insert "--jez ")
+  (insert-date nil))
+
 (defun jez/clear-font-properties ()
   "Clear font properties"
   (interactive)
@@ -674,27 +692,6 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Annotation
-
-(defun insert-date (prefix)
-  "Insert the current date. With prefix-argument, use ISO format. With
-   two prefix arguments, write out the day and month name."
-  (interactive "P")
-  (let ((format (cond
-                 ((not prefix) "%Y-%m-%d")
-                 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
-                 ((equal prefix '(16)) "%A, %d. %B %Y")))
-        (system-time-locale "en_US"))
-    (insert (format-time-string format))))
-(global-set-key (kbd "C-c C-d") 'insert-date)
-
-(defun jez/annotate ()
-  "Insert annotation for commenting"
-  (interactive)
-  (insert "--jez ")
-  (insert-date nil))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Auto Complete
 
 (require 'setup-hippie)
@@ -1004,7 +1001,8 @@ to the current point of the cursor (default is above)."
 
 (use-package elisp-mode
   :defer t
-  :bind (("C-c d" . jez/describe-symbol-at-point)
+  :bind (:map emacs-lisp-mode-map
+         ("C-c d" . jez/describe-symbol-at-point)
 	 ("C-c C-d" . jez/describe-symbol-at-point))
   :init
   (defun jez/describe-symbol-at-point ()

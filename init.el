@@ -761,10 +761,28 @@ of `org-babel-temporary-directory'."
 (use-package sql
   :ensure t
   :defer t
-  :bind (("C-c u" . 'sqlup-capitalize-keywords-in-region)
-         ("C-h s" . 'sqlformat))
+  :bind (
+         :map sql-interactive-mode-map
+         ("C-c u" . sqlup-capitalize-keywords-in-region)
+         ("C-h s" . sqlformat)
+         ("M-<return>" . comint-send-input))
   :hook ((sql-mode . sqlup-mode)
-         (sql-interactive-mode  . sqlup-mode)))
+         (sql-interactive-mode  . sqlup-mode))
+  :config
+  (defun jez/sql-connect (connection &optional new-name)
+    "Modify sql-connect to use CONNECTION name as buffer name"
+    (interactive
+     (if sql-connection-alist
+         (list (sql-read-connection "Connection: " nil '(nil))
+               current-prefix-arg)
+       (user-error "No SQL Connections defined")))
+    (let ((buffer-name (format "*sql-%s*" connection)))
+      (when (get-buffer buffer-name)
+        (switch-to-buffer buffer-name))
+      (sql-connect connection new-name)
+      (rename-buffer buffer-name)))
+  (define-key sql-interactive-mode-map (kbd "RET") nil)
+  (toggle-truncate-lines t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -940,29 +958,6 @@ of `org-babel-temporary-directory'."
          ("\\.mustache\\'"   . emmet-mode)
          ("\\.djhtml\\'"     . emmet-mode)
          ("\\.html?\\'"      . emmet-mode)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; SQL default
-
-(require 'sql)
-(define-key sql-interactive-mode-map (kbd "M-<return>") 'comint-send-input)
-(define-key sql-interactive-mode-map (kbd "RET") nil)
-
-(defun jez/sql-connect (connection &optional new-name)
-  "Modify sql-connect to use CONNECTION name as buffer name"
-  (interactive
-   (if sql-connection-alist
-       (list (sql-read-connection "Connection: " nil '(nil))
-             current-prefix-arg)
-     (user-error "No SQL Connections defined")))
-  (let ((buffer-name (format "*sql-%s*" connection)))
-    (when (get-buffer buffer-name)
-      (switch-to-buffer buffer-name))
-    (sql-connect connection new-name)
-    (rename-buffer buffer-name)))
-
-(add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

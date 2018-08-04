@@ -786,7 +786,13 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Undo Tree Mode
 
-(undo-tree-mode t)
+(use-package undo-tree
+  :commands undo-tree-mode
+  :ensure t
+  :defer t
+  :bind ("C-x u" . undo-tree-visualize)
+  :config (undo-tree-mode t))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Window Numbering

@@ -548,6 +548,7 @@ Version 2017-09-01"
   :bind (("C-x p f" . helm-projectile-find-file)
          ("C-c C-p p" . helm-projectile-switch-project))
   :config
+  (projectile-global-mode)              ; fix issue - https://github.com/bbatsov/projectile/issues/496
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 

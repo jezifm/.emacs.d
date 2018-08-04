@@ -430,45 +430,52 @@ Version 2017-09-01"
 ;;; Expand Region
 
 (use-package expand-region
+  :ensure t
   :bind (("C-=" . er/expand-region)
-         ("M-=" . er/contract-region))
-  :ensure t)
+         ("M-=" . er/contract-region)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Multiple Cursor
 
-(require 'multiple-cursors)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-S-c C-S-a") 'mc/edit-beginnings-of-lines)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C-S-c C-S-e") 'mc/edit-ends-of-lines)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(use-package multiple-cursors
+  :ensure t
+  :preface
+  (defun jez/mark-word ()
+    "Use to highlight a word"
+    (interactive)
+    (let ((non-word "[^[:alnum:]-_]"))
+      (search-backward-regexp non-word)
+      (forward-char)
+      (set-mark (point))
+      (search-forward-regexp non-word)
+      (backward-char)))
 
-(defun jez/mark-word ()
-  "Use to highlight a word"
-  (interactive)
-  (let ((non-word "[^[:alnum:]-_]"))
-    (search-backward-regexp non-word)
-    (forward-char)
-    (set-mark (point))
-    (search-forward-regexp non-word)
-    (backward-char)))
+  (defun jez/mark-multiple (arg)
+    "Simulate sublime function on multiple cursor"
+    (interactive "p")
+    (if (not (region-active-p))
+        (jez/mark-word)
+      (mc/mark-next-like-this arg)))
 
-(defun jez/mark-multiple (arg)
-  "Simulate sublime function on multiple cursor"
-  (interactive "p")
-  (if (not (region-active-p))
-      (jez/mark-word)
-    (mc/mark-next-like-this arg)))
+  (defun jez/mark-multiple (arg)
+    "Simulate sublime function on multiple cursor"
+    (interactive "p")
+    (if (not (region-active-p))
+        (jez/mark-word)
+      (mc/mark-next-like-this arg)))
 
-;; hotfix - add `jez/mark-multiple' to `multiple-cursors' list of
-;; commands to run once
-(push 'jez/mark-multiple mc--default-cmds-to-run-once)
-(remove-duplicates mc--default-cmds-to-run-once)
+  :config ((push 'jez/mark-multiple mc--default-cmds-to-run-once)
+           (remove-duplicates mc--default-cmds-to-run-once))
 
-(global-set-key (kbd "s-d") 'jez/mark-multiple)
+  :bind (("C-<" . mc/mark-previous-like-this)
+         ("C->" . mc/mark-next-like-this)
+         ("C-S-c C-S-a" . mc/edit-beginnings-of-lines)
+         ("C-S-c C-S-c" . mc/edit-lines)
+         ("C-S-c C-S-e" . mc/edit-ends-of-lines)
+         ("C-c C-<" . mc/mark-all-like-this)
+         ("s-d" . jez/mark-multiple))
+  :after expand-region)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

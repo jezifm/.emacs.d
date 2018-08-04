@@ -546,132 +546,90 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Org Mode
 
-;; disable backup file
-(defun org-babel-temp-file (prefix &optional suffix)
-  "Create a temporary file in the `org-babel-temporary-directory'.
+(use-package org
+  :ensure t
+  :bind ("C-c l" . org-store-link)
+  :config
+  (setq user-full-name "Jezrael Arciaga")
+  (setq user-mail-address "jezarciaga@gmail.com")
+  (setq org-export-coding-system 'utf-8)
+  (setq org-log-done 'time)
+  (setq org-src-fontify-natively t)
+  (setq org-todo-keywords '((sequence "TODO" "SCHEDULED" "|" "DONE")))
+  (setq org-babel-languages
+        '((ditaa . t)
+          (dot . t)
+          (emacs-lisp . t)
+          (gnuplot . t)
+          (go . t)
+          (http . t)
+          (ipython . t)
+          (js . t)
+          (plantuml . t)
+          (python . t)
+          (shell . t)
+          (sql . t)
+          ))
+  (when (string-equal system-type "windows-nt")
+    (assq-delete-all 'sh org-babel-languages))
+
+  (defun org-babel-temp-file (prefix &optional suffix)
+    "Create a temporary file in the `org-babel-temporary-directory'.
 Passes PREFIX and SUFFIX directly to `make-temp-file' with the
 value of `temporary-file-directory' temporarily set to the value
 of `org-babel-temporary-directory'."
-  (if (file-remote-p default-directory)
-      (let ((prefix
-             ;; We cannot use `temporary-file-directory' as local part
-             ;; on the remote host, because it might be another OS
-             ;; there.  So we assume "/tmp", which ought to exist on
-             ;; relevant architectures.
-             (concat (file-remote-p default-directory)
-                     ;; REPLACE temporary-file-directory with /tmp:
-                     (expand-file-name prefix "/tmp/"))))
-        (make-temp-file prefix nil suffix))
-    (let ((temporary-file-directory
-           (or (and (boundp 'org-babel-temporary-directory)
-                    (file-exists-p org-babel-temporary-directory)
-                    org-babel-temporary-directory)
-               temporary-file-directory)))
-      (make-temp-file prefix nil suffix))))
+    (if (file-remote-p default-directory)
+        (let ((prefix
+               ;; We cannot use `temporary-file-directory' as local part
+               ;; on the remote host, because it might be another OS
+               ;; there.  So we assume "/tmp", which ought to exist on
+               ;; relevant architectures.
+               (concat (file-remote-p default-directory)
+                       ;; REPLACE temporary-file-directory with /tmp:
+                       (expand-file-name prefix "/tmp/"))))
+          (make-temp-file prefix nil suffix))
+      (let ((temporary-file-directory
+             (or (and (boundp 'org-babel-temporary-directory)
+                      (file-exists-p org-babel-temporary-directory)
+                      org-babel-temporary-directory)
+                 temporary-file-directory)))
+        (make-temp-file prefix nil suffix))))
 
-;; enable task capture
-(define-key global-map (kbd "C-c c") 'org-capture)
-(setq org-export-coding-system 'utf-8)
-(setq org-log-done 'time)
+  (defun org-summary-todo (n-done n-not-done)
+    "Switch entry to DONE when all subentries are done, to TODO otherwise."
+    (let (org-log-done org-log-states)   ; turn off logging
+      (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
-;; enable languages
-(require 'org)
-(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
-(setq org-babel-languages
-      '((ditaa . t)
-        (dot . t)
-        (emacs-lisp . t)
-        (gnuplot . t)
-        (go . t)
-        (http . t)
-        (ipython . t)
-        (js . t)
-        (plantuml . t)
-        (python . t)
-        (shell . t)
-        (sql . t)
-        ))
-;; fix - remove sh when running on windows
-(when (string-equal system-type "windows-nt")
-  (assq-delete-all 'sh org-babel-languages))
-(org-babel-do-load-languages
- 'org-babel-load-languages
- org-babel-languages)
+  (defun shk-fix-inline-images ()
+    "Render images after executing org code"
+    (interactive)
+    (when org-inline-image-overlays
+      (org-redisplay-inline-images)))
+  
+  (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+  (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+  (advice-add 'org-latex--inline-image :around
+              (lambda (orig link info)
+                (concat
+                 "\\begin{center}"
+                 (funcall orig link info)
+                 "\\end{center}")))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages))
 
-;; home directory
-(global-set-key (kbd "C-c o") (lambda () (interactive) (find-file "~/organizer.org")))
+(use-package org-capture
+  :bind (("C-c c" . org-capture)
+         ("C-c o" . (lambda () (interactive) (find-file "~/organizer.org"))))
+  :config
+  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+  (setq org-default-notes-file "~/organizer.org")
+  (setq org-confirm-babel-evaluate nil)
+  (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
+  (set-register ?o (cons 'file "~/organizer.org")))
 
-;; set register
-(set-register ?o (cons 'file "~/organizer.org"))
-
-;; use org-refile to file or jump to headings
-(setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-
-;; save all capture to single file
-(setq org-default-notes-file "~/organizer.org")
-
-;; disable prompt on source block eval
-(setq org-confirm-babel-evaluate nil)
-
-;; display images in buffer after eval
-(add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
-
-;; center all images
-(advice-add 'org-latex--inline-image :around
-            (lambda (orig link info)
-              (concat
-               "\\begin{center}"
-               (funcall orig link info)
-               "\\end{center}")))
-
-;; set author
-(setq user-full-name "Jezrael Arciaga")
-(setq user-mail-address "jezarciaga@gmail.com")
-
-;; enable markdown export
-(eval-after-load "org" '(require 'ox-md nil t))
-
-;; ;; send html email using org mode
-;; (require 'org-mime)
-;; (setq org-mime-library 'mml)
-;; ;; set code blocks background to dark
-;; (add-hook 'org-mime-html-hook
-;;    (lambda ()
-;;      (org-mime-change-element-style
-;;       "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
-;;       "#E6E1DC" "#232323"))))
-;; ;; set block quotes offset
-;; (add-hook 'org-mime-html-hook
-;;    (lambda ()
-;;      (org-mime-change-element-style
-;;       "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
-
-;; org todo sequence
-(setq org-todo-keywords
-      '((sequence "TODO" "SCHEDULED" "|" "DONE")))
-
-;; update tasks state base on subtask
-(defun org-summary-todo (n-done n-not-done)
-  "Switch entry to DONE when all subentries are done, to TODO otherwise."
-  (let (org-log-done org-log-states)   ; turn off logging
-    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-
-;; syntax highlighting
-(setq org-src-fontify-natively t)
-
-;; inline image auto refresh
-(defun shk-fix-inline-images ()
-  (interactive)
-  (when org-inline-image-overlays
-    (org-redisplay-inline-images)))
-(add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
-
-;; auto fill mode on org mode
-(add-hook 'org-mode-hook 'auto-fill-mode)
-
-;; store link
-(define-key org-mode-map (kbd "C-c l") 'org-store-link)
+(use-package ox-md
+  :after org)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

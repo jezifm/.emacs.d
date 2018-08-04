@@ -493,18 +493,19 @@ Version 2017-09-01"
 
 (use-package helm
   :ensure t
-  :bind (("M-x"     . helm-M-x)
+  :bind (("C-c h" . helm-command-prefix)
+         ("C-h d" . helm-dash)
          ("C-x C-b" . helm-buffers-list)
-         ("C-x b"   . helm-buffers-list)
-         ("C-c h"   . helm-command-prefix)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)
          ("C-x p p" . helm-do-ag-project-root)
          ("C-x r b" . helm-filtered-bookmarks)
-         ("C-x C-f" . helm-find-files)
-         ("M-y"     . helm-show-kill-ring)
+         ("M-x" . helm-M-x)
+         ("M-y" . helm-show-kill-ring)
          :map helm-map
-         ("<tab>"   . helm-execute-persistent-action)
-         ("C-i"     . helm-execute-persistent-action)
-         ("C-z"     . helm-select-action))
+         ("<tab>" . helm-execute-persistent-action)
+         ("C-i" . helm-execute-persistent-action)
+         ("C-z" . helm-select-action))
   :config
   (helm-mode 1)
   (projectile-mode t)

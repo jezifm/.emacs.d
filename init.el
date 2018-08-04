@@ -635,6 +635,8 @@ of `org-babel-temporary-directory'."
     (when org-inline-image-overlays
       (org-redisplay-inline-images)))
 
+  (defun org-babel-execute:yaml (body params) body)
+
   (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
   (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
   (add-hook 'org-mode-hook 'auto-fill-mode)
@@ -850,29 +852,23 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; YAML mode
-
-;; (require 'org)
-(defun org-babel-execute:yaml (body params) body)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Swiper
 
-(require 'swiper)
-(setq ivy-re-builders-alist '((t . ivy--regex-plus)))
-
-(defun jez/swiper (args)
-  "Custom `swiper' that default to symbol on point if prefix was provided"
-  (interactive "p")
-  (let* ((prefix (>= args 4))
-         (symbol (symbol-at-point))
-         (symbol-name (symbol-name symbol)))
-    (if (and prefix symbol)
-        (swiper symbol-name)
-      (swiper))))
-
-(global-set-key (kbd "C-s") 'jez/swiper)
+(use-package swiper
+  :ensure t
+  :defer t
+  :bind ("C-s" . jez/swiper)
+  :config
+  (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
+  (defun jez/swiper (args)
+    "Custom `swiper' that default to symbol on point if prefix was provided"
+    (interactive "p")
+    (let* ((prefix (>= args 4))
+           (symbol (symbol-at-point))
+           (symbol-name (symbol-name symbol)))
+      (if (and prefix symbol)
+          (swiper symbol-name)
+        (swiper)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

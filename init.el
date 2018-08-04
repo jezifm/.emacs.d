@@ -642,20 +642,6 @@ of `org-babel-temporary-directory'."
   :bind (("C-c SPC" . ace-jump-mode)
          ("C-c C-SPC" . ace-jump-mode)))
 
-;; (require 'ace-jump-mode)
-
-;; (defun jez/ace-enable-key-bind ()
-;;   "Allow C-c C-SPC to trigger ace jump mode"
-;;   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-;;   (define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode))
-;; (jez/ace-enable-key-bind)
-
-;; issue 1 - `ace-jump-mode' not enabled in `org-mode'
-;; issue 2 - `org-mode' not working properly when `ace-jump-mode' was
-;;           enabled. specially when exporting to html
-;; when org-mode starts it (org-mode-map) overrides the ace-jump-mode.
-;; (add-hook 'org-mode-hook (jez/ace-enable-key-bind))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Trump Mode

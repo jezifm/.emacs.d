@@ -819,6 +819,7 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind (("M-1" . select-window-1)
          ("M-2" . select-window-2))
+  :commands window-numbering-remove-keymap
   :config
   (window-numbering-mode 1)
   (defun window-numbering-remove-keymap ()
@@ -827,7 +828,7 @@ of `org-babel-temporary-directory'."
     (mapc
      (lambda (num) (define-key magit-mode-map (kbd (format "M-%s" num)) nil))
      (number-sequence 1 5)))
-  (add-hook 'magit-mode-hook 'window-numbering-remove-keymap))
+  :hook (magit-mode . window-numbering-remove-keymap))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

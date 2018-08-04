@@ -1070,11 +1070,10 @@ to the current point of the cursor (default is above)."
   (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
   :bind (:map outline-minor-mode-map
-         ("C-c C-n" . outline-next-visible-heading)
-         ("C-c C-p" . outline-previous-visible-heading))
+         ("C-c n" . outline-next-visible-heading)
+         ("C-c p" . outline-previous-visible-heading))
   :config
-  (setq outshine-use-speed-commands t)
-  :after (:or outline org-mode))
+  (setq outshine-use-speed-commands t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

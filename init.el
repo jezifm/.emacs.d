@@ -401,41 +401,6 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; CSS Mode
-
-(use-package css-mode
-  :ensure t
-  :defer t
-  :commands jez/css-minify
-  :bind (:map css-mode-map ("C-c m" . jez/css-minify))
-  :config
-  (defun jez/css-minify-uglify ()
-    "CSS Minify current buffer using `uglify'"
-    (let ((minified (shell-command-to-string (format "uglifycss %s" buffer-file-name))))
-      (erase-buffer)
-      (insert minified)))
-  (defun jez/css-minify-requests ()
-    "CSS Minify current buffer via `cssminifier.com'"
-    (let ((url-request-method "POST")
-          (url-request-extra-headers
-           '(("Content-Type" . "application/x-www-form-urlencoded")))
-          (url-request-data (format "input=%s" (buffer-substring (point-min) (point-max)))))
-      (url-retrieve "https://cssminifier.com/raw"
-                    (lambda (status current-buffer)
-                      (let ((body (buffer-substring (1+ url-http-end-of-headers) (point-max))))
-                        (with-current-buffer current-buffer
-                          (erase-buffer)
-                          (insert body))))
-                    (list (buffer-name (current-buffer))))))
-  (defun jez/css-minify ()
-    "CSS Minify current buffer"
-    (interactive)
-    (if (executable-find "uglifycss")
-        (jez/css-minify-uglify)
-      (jez/css-minify-requests))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs GUI
 
 ;; ensure we have the theme
@@ -1054,6 +1019,41 @@ to the current point of the cursor (default is above)."
     (electric-pair-local-mode -1)
     (toggle-truncate-lines t))
   :hook ((web-mode . jez/web-mode-hook)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; CSS Mode
+
+(use-package css-mode
+  :ensure t
+  :defer t
+  :commands jez/css-minify
+  :bind (:map css-mode-map ("C-c m" . jez/css-minify))
+  :config
+  (defun jez/css-minify-uglify ()
+    "CSS Minify current buffer using `uglify'"
+    (let ((minified (shell-command-to-string (format "uglifycss %s" buffer-file-name))))
+      (erase-buffer)
+      (insert minified)))
+  (defun jez/css-minify-requests ()
+    "CSS Minify current buffer via `cssminifier.com'"
+    (let ((url-request-method "POST")
+          (url-request-extra-headers
+           '(("Content-Type" . "application/x-www-form-urlencoded")))
+          (url-request-data (format "input=%s" (buffer-substring (point-min) (point-max)))))
+      (url-retrieve "https://cssminifier.com/raw"
+                    (lambda (status current-buffer)
+                      (let ((body (buffer-substring (1+ url-http-end-of-headers) (point-max))))
+                        (with-current-buffer current-buffer
+                          (erase-buffer)
+                          (insert body))))
+                    (list (buffer-name (current-buffer))))))
+  (defun jez/css-minify ()
+    "CSS Minify current buffer"
+    (interactive)
+    (if (executable-find "uglifycss")
+        (jez/css-minify-uglify)
+      (jez/css-minify-requests))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

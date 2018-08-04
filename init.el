@@ -904,6 +904,7 @@ of `org-babel-temporary-directory'."
 (global-set-key (kbd "s-i") 'jez/copy-inner)
 (global-set-key (kbd "s-o") 'jez/copy-outer)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Hydra
 
@@ -1062,11 +1063,15 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Outshine
 
-(require 'outshine)
-(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
-(add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
-(defvar outline-minor-mode-prefix "\M-#")
-(setq outshine-use-speed-commands t)
+(use-package outshine
+  :ensure t
+  :init
+  (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+  :config
+  (setq outshine-use-speed-commands t)
+  ()
+  :after (:or outline org-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

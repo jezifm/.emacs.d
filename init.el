@@ -529,7 +529,6 @@ Version 2017-09-01"
          ("C-z" . helm-select-action))
   :config
   (helm-mode 1)
-  (projectile-mode t)
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
   (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
@@ -541,11 +540,17 @@ Version 2017-09-01"
 (use-package helm-projectile
   :ensure t
   :defer t
+  :commands helm-projectile-switch-project
+  :bind (("C-x p f" . helm-projectile-find-file)
+         ("C-c C-p p" . helm-projectile-switch-project))
   :config
   (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
-  :bind ("C-x p f" . helm-projectile-find-file)
-  :after helm)
+  (helm-projectile-on))
+
+(use-package projectile                 ; fix for `use-package' unable to override `projectile' keymap
+  :ensure t
+  :defer t
+  :bind ("C-c C-p p" . helm-projectile-switch-project))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

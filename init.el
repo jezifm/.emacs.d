@@ -1089,8 +1089,7 @@ to the current point of the cursor (default is above)."
 
 (defun jez/display-bookmarks ()
   (interactive)
-  (list-bookmarks)
-  (switch-to-buffer "*Bookmark List*"))
+  (call-interactively 'list-bookmarks))
 
 (defun startup ()
   (interactive)

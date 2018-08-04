@@ -708,11 +708,14 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Python Mode
 
-(defun jez/python-mode-hook ()
+(use-package python
+  :ensure t
+  :defer t
+  :mode (("\\.py\\'" . python-mode)
+         ("\\.tac\\'" . python-mode))
+  :config
   (setq truncate-lines t)
   (hs-minor-mode t))
-(add-hook 'python-mode-hook 'jez/python-mode-hook)
-(add-to-list 'auto-mode-alist '("\\.tac\\'" . python-mode))  ; twisted
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

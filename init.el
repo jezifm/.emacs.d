@@ -584,28 +584,16 @@ Version 2017-09-01"
 (use-package outshine
   :ensure t
   :defer t
-  :bind (:map outline-minor-mode-map
+  :bind (
+         :map outline-minor-mode-map
          ("C-c n" . outline-next-visible-heading)
-         ("C-c p" . outline-previous-visible-heading))
+         ("C-c p" . outline-previous-visible-heading)
+         ("C-<tab>" . outline-cycle))
   :init (require 'helm)
   :config
   (defun outshine-emacs-lisp-mode-hook ()
     (setq-local outshine-use-speed-commands t)
     (outline-minor-mode t))
-
-  (defun py-outline-level ()
-    (let (buffer-invisibility-spec)
-      (save-excursion
-        (skip-chars-forward "    ")
-        (current-column))))
-
-  (defun outshine-python-mode-hook ()
-    (outline-minor-mode t)
-    (setq-local outline-regexp "[ \t]*# \\|[ \t]+\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
-    (setq-local outline-level 'py-outline-level)
-    (setq-local outshine-use-speed-commands nil)
-    (define-key python-mode-map (kbd "<tab>") 'indent-for-tab-command)
-    (define-key python-mode-map (kbd "C-<tab>") 'outline-cycle))
 
   :hook ((outline-minor-mode . outshine-hook-function)
          (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)
@@ -763,9 +751,26 @@ of `org-babel-temporary-directory'."
   :defer t
   :mode (("\\.py\\'" . python-mode)
          ("\\.tac\\'" . python-mode))
+  :bind (
+         :map python-mode-map
+         ("<tab>" . indent-for-tab-command))
+
   :config
   (setq truncate-lines t)
-  (hs-minor-mode t))
+  (defun py-outline-level ()
+    "Return header level on current point"
+    (let (buffer-invisibility-spec)
+      (save-excursion
+        (skip-chars-forward "    ")
+        (current-column))))
+
+  (defun outshine-python-mode-hook ()
+    (outline-minor-mode t)
+    (setq-local outline-regexp "[ \t]*# \\|[ \t]+\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
+    (setq-local outline-level 'py-outline-level)
+    (setq-local outshine-use-speed-commands nil))
+
+  :hook (python-mode . outshine-python-mode-hook))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

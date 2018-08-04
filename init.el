@@ -1,12 +1,19 @@
 ;;; Initialize Variable
 
 (setq emacs-starttime (current-time))
-(setq mouse-wheel-progressive-speed nil)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-(setq ns-function-modifier 'control)
-(setq dired-dwim-target t)              ; default dest to other window
+(setq save-abbrevs 'silently)                                         ; abbrev warning
+(setq inhibit-startup-message t)                                      ; disable splash
+(setq ns-function-modifier 'control)                                  ; map modifier (fn) to control (ctrl)
+(setq make-backup-files nil)                                          ; remove backup
+(setq auto-save-default nil)                                          ; remove backup
+(setq mouse-wheel-progressive-speed nil)                              ; smooth scroll
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil))) ; smooth scroll
 
-(setq save-abbrevs 'silently)
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))                    ; remove menubar
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))                ; remove srollbar
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))                    ; remove toolbar
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))          ; maximize window
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -379,8 +386,11 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Dired Mode
 
-(setq dired-dwim-target t)              ; default dest to other window
-(add-hook 'dired-mode-hook (lambda () (setq truncate-lines t)))
+(use-package dired
+  :defer t
+  :config
+  (setq dired-dwim-target t)            ; default dest to other window
+  (setq truncate-lines t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -421,26 +431,12 @@ Version 2017-09-01"
 ;;; Emacs GUI
 
 ;; ensure we have the theme
-(load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
-(load-theme 'darkane t t)
-(enable-theme 'darkane)
-
-;; remove backup files
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-
-;; remove scrollbar, menu bars, and toolbars
-;; when is a special form of "if", with no else clause, it reads:
-;; (when <condition> <code-to-execute1> <code-to-execute2> ...)
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; maximize window
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; no splash screen
-(setq inhibit-startup-message t)
+(use-package custom
+  :defer 2
+  :config
+  (load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
+  (load-theme 'darkane t t)
+  (enable-theme 'darkane))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

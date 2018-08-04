@@ -440,7 +440,7 @@ Version 2017-09-01"
 
 (use-package multiple-cursors
   :ensure t
-  :preface
+  :config
   (defun jez/mark-word ()
     "Use to highlight a word"
     (interactive)
@@ -465,8 +465,9 @@ Version 2017-09-01"
         (jez/mark-word)
       (mc/mark-next-like-this arg)))
 
-  :config ((push 'jez/mark-multiple mc--default-cmds-to-run-once)
-           (remove-duplicates mc--default-cmds-to-run-once))
+  ;; update list multiple-cursors
+  (push 'jez/mark-multiple mc--default-cmds-to-run-once)
+  (remove-duplicates mc--default-cmds-to-run-once)
 
   :bind (("C-<" . mc/mark-previous-like-this)
          ("C->" . mc/mark-next-like-this)

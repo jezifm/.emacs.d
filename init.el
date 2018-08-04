@@ -1033,10 +1033,12 @@ to the current point of the cursor (default is above)."
          ("C-c d" . jez/describe-symbol-at-point)
 	 ("C-c C-d" . jez/describe-symbol-at-point))
   :init
-  (defun jez/describe-symbol-at-point ()
+  (defun jez/describe-symbol-at-point (arg)
     "Describe current symbol on point on other window"
-    (interactive)
-    (describe-symbol (symbol-at-point)))
+    (interactive "p")
+    (describe-symbol (symbol-at-point))
+    (when (< arg 4)
+      (other-window 1)))
 
   (defun jez/emacs-lisp-mode-hook ()
     (interactive)

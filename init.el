@@ -492,6 +492,7 @@ Version 2017-09-01"
 
 (use-package helm
   :ensure t
+  :defer t
   :bind (("C-c h" . helm-command-prefix)
          ("C-h d" . helm-dash)
          ("C-h m" . helm-describe-modes)
@@ -519,6 +520,7 @@ Version 2017-09-01"
 
 (use-package helm-projectile
   :ensure t
+  :defer t
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
@@ -605,7 +607,7 @@ of `org-babel-temporary-directory'."
     (interactive)
     (when org-inline-image-overlays
       (org-redisplay-inline-images)))
-  
+
   (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
   (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
   (add-hook 'org-mode-hook 'auto-fill-mode)
@@ -635,13 +637,18 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Ace Jump Mode
 
-(require 'ace-jump-mode)
+(use-package ace-jump-mode
+  :ensure t
+  :bind (("C-c SPC" . ace-jump-mode)
+         ("C-c C-SPC" . ace-jump-mode)))
 
-(defun jez/ace-enable-key-bind ()
-  "Allow C-c C-SPC to trigger ace jump mode"
-  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-  (define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode))
-(jez/ace-enable-key-bind)
+;; (require 'ace-jump-mode)
+
+;; (defun jez/ace-enable-key-bind ()
+;;   "Allow C-c C-SPC to trigger ace jump mode"
+;;   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;   (define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode))
+;; (jez/ace-enable-key-bind)
 
 ;; issue 1 - `ace-jump-mode' not enabled in `org-mode'
 ;; issue 2 - `org-mode' not working properly when `ace-jump-mode' was
@@ -1005,33 +1012,39 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs lisp mode
 
-(defun jez/describe-symbol-at-point ()
-  "Describe current symbol on point on other window"
-  (interactive)
-  (describe-symbol (symbol-at-point)))
+(use-package elisp-mode
+  :defer t
+  :bind (("C-c d" . jez/describe-symbol-at-point)
+	 ("C-c C-d" . jez/describe-symbol-at-point))
+  :init
+  (defun jez/describe-symbol-at-point ()
+    "Describe current symbol on point on other window"
+    (interactive)
+    (describe-symbol (symbol-at-point)))
 
-(defun jez/emacs-lisp-mode-hook ()
-  (interactive)
-  (setq indent-tabs-mode nil)
-  (define-key emacs-lisp-mode-map (kbd "C-c d") 'jez/describe-symbol-qa-point)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-d") 'jez/describe-symbol-at-point)
-  (toggle-truncate-lines t))
-(add-hook 'emacs-lisp-mode-hook 'jez/emacs-lisp-mode-hook)
+  (defun jez/emacs-lisp-mode-hook ()
+    (interactive)
+    (setq indent-tabs-mode nil)
+    (toggle-truncate-lines t))
+
+  :hook (emacs-lisp-mode . jez/emacs-lisp-mode-hook))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Outshine
+;;; Outshine Mode
+
+(use-package imenu :commands imenu-choose-buffer-index)
 
 (use-package outshine
   :ensure t
-  :init
-  (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
-  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+  :defer t
   :bind (:map outline-minor-mode-map
          ("C-c n" . outline-next-visible-heading)
          ("C-c p" . outline-previous-visible-heading))
-  :config
-  (setq outshine-use-speed-commands t))
+  :init (require 'helm)
+  :config (setq outshine-use-speed-commands t)
+  :hook ((outline-minor-mode . outshine-hook-function)
+         (emacs-lisp-mode . outline-minor-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

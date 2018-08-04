@@ -809,8 +809,13 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Plantuml - For diagram and UML
 
-(setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
-(setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+(use-package plantuml-mode
+  :ensure t
+  :defer t
+  :commands plantuml-mode
+  :config
+  (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+  (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

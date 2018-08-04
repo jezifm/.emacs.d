@@ -797,8 +797,13 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Window Numbering
 
-(require 'window-numbering)
-(window-numbering-mode 1)
+(use-package window-numbering
+  :ensure t
+  :defer t
+  :bind (("M-1" . select-window-1)
+         ("M-2" . select-window-2))
+  :config
+  (window-numbering-mode 1))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -186,7 +186,7 @@
   "Create shell buffer based on current buffer name"
   (interactive)
   (let* ((buffer-name-current (buffer-name (current-buffer)))
-	 (buffer-name-shell (format "sh-%s" buffer-name-current)))
+         (buffer-name-shell (format "sh-%s" buffer-name-current)))
     (save-current-buffer
       (shell buffer-name-shell))
     (when (equal (count-windows) 1)
@@ -198,9 +198,9 @@
   "Return name of buffer with 'sh-' as prefix"
   (interactive)
   (let* ((shell-pattern "^sh-.*")
-	 (buffers (--map (buffer-name it) (buffer-list)))
-	 (shell-buffers (--filter (string-match shell-pattern it)
-				  buffers)))
+         (buffers (--map (buffer-name it) (buffer-list)))
+         (shell-buffers (--filter (string-match shell-pattern it)
+                                  buffers)))
     (car shell-buffers)))
 
 (defun jez/join-line ()
@@ -214,15 +214,15 @@
   (back-to-indentation)
   (let ((column (current-column)))
     (while (progn
-	     (forward-line 1)
-	     (goto-char (line-beginning-position))
-	     (skip-chars-forward "[:space:]")
-	     (if (and (/= (current-column) column)
-		      (/= (point) (point-max)))
-		 (progn
-		   (delete-indentation)
-		   t)
-	       nil)))))
+             (forward-line 1)
+             (goto-char (line-beginning-position))
+             (skip-chars-forward "[:space:]")
+             (if (and (/= (current-column) column)
+                      (/= (point) (point-max)))
+                 (progn
+                   (delete-indentation)
+                   t)
+               nil)))))
 
 (defun align-repeat (start end regexp)
   "Repeat alignment with respect to
@@ -230,7 +230,7 @@
 Note: just like `align-regexp' but better"
   (interactive "r\nsAlign regexp: ")
   (align-regexp start end
-		(concat "\\(\\s-*\\)" regexp) 1 1 t))
+                (concat "\\(\\s-*\\)" regexp) 1 1 t))
 
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -250,18 +250,18 @@ Note: just like `align-regexp' but better"
 (defun jez/camelize (s)
   "Convert under_score string S to CamelCase string."
   (mapconcat 'identity (mapcar
-			#'(lambda (word) (capitalize (downcase word)))
-			(split-string s "_")) ""))
+                        #'(lambda (word) (capitalize (downcase word)))
+                        (split-string s "_")) ""))
 
 (defun jez/snake-case ()
   "Convert region to snake case"
   (interactive)
   (save-excursion
     (save-restriction
-     (narrow-to-region (region-beginning) (region-end))
-     (downcase-region (point-min) (point-max))
-     (goto-char (point-min))
-     (replace-string " " "_"))))
+      (narrow-to-region (region-beginning) (region-end))
+      (downcase-region (point-min) (point-max))
+      (goto-char (point-min))
+      (replace-string " " "_"))))
 
 (defun jez/abbreviate (string &optional separator)
   "Return first letter on each word of STRING using SEPERATOR"
@@ -273,10 +273,10 @@ Note: just like `align-regexp' but better"
   "Clears all buffer except from some default"
   (interactive)
   (let* ((ignore-list '("*scratch*" "*Messages*" "*Pymacs*" "init.el"))
-	 (buffer-list
-	  (seq-filter
-	   '(lambda (buffer) (not (member (buffer-name buffer) ignore-list)))
-	   (buffer-list))))
+         (buffer-list
+          (seq-filter
+           '(lambda (buffer) (not (member (buffer-name buffer) ignore-list)))
+           (buffer-list))))
     (mapc 'kill-buffer buffer-list)))
 
 (defun jez/insert-current-buffer-name ()
@@ -288,21 +288,21 @@ Note: just like `align-regexp' but better"
   "List lines containing REGEXP on current buffer"
   (interactive "sView lines matching: ")
   (let ((current-buffer (buffer-name))
-	(buffer-name (format "*occur*-%s" (buffer-name)))
-	(current-window (selected-window)))
+        (buffer-name (format "*occur*-%s" (buffer-name)))
+        (current-window (selected-window)))
     (switch-to-buffer-other-window buffer-name)
     (erase-buffer)
     (insert-buffer current-buffer)
     (keep-lines regexp)
-;;    (select-window current-window)
+    ;;    (select-window current-window)
     ))
 
 (defun jez/change-theme ()
   "Change current emacs theme without confirmation"
   (interactive)
   (let ((theme (intern (completing-read "Load custom theme: "
-				 (mapcar 'symbol-name
-					 (custom-available-themes))))))
+                                        (mapcar 'symbol-name
+                                                (custom-available-themes))))))
     (load-theme theme t)
     (enable-theme theme)))
 
@@ -353,7 +353,7 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Dired Mode
 
-(setq dired-dwim-target t)		; default dest to other window
+(setq dired-dwim-target t)              ; default dest to other window
 (add-hook 'dired-mode-hook (lambda () (setq truncate-lines t)))
 
 
@@ -370,16 +370,16 @@ Version 2017-09-01"
 (defun jez/css-minify-requests ()
   "CSS Minify current buffer via `cssminifier.com'"
   (let ((url-request-method "POST")
-	(url-request-extra-headers
-	 '(("Content-Type" . "application/x-www-form-urlencoded")))
-	(url-request-data (format "input=%s" (buffer-substring (point-min) (point-max)))))
+        (url-request-extra-headers
+         '(("Content-Type" . "application/x-www-form-urlencoded")))
+        (url-request-data (format "input=%s" (buffer-substring (point-min) (point-max)))))
     (url-retrieve "https://cssminifier.com/raw"
-		  (lambda (status current-buffer)
-		    (let ((body (buffer-substring (1+ url-http-end-of-headers) (point-max))))
-		      (with-current-buffer current-buffer
-			(erase-buffer)
-			(insert body))))
-		  (list (buffer-name (current-buffer))))))
+                  (lambda (status current-buffer)
+                    (let ((body (buffer-substring (1+ url-http-end-of-headers) (point-max))))
+                      (with-current-buffer current-buffer
+                        (erase-buffer)
+                        (insert body))))
+                  (list (buffer-name (current-buffer))))))
 
 (defun jez/css-minify ()
   "CSS Minify current buffer"
@@ -420,9 +420,14 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Expand Region
 
-(require 'expand-region)
-(global-set-key (kbd "C-=")  'er/expand-region)
-(global-set-key (kbd "M-=")  'er/contract-region)
+;; (require 'expand-region)
+;; (global-set-key (kbd "C-=")  'er/expand-region)
+;; (global-set-key (kbd "M-=")  'er/contract-region)
+
+(use-package expand-region
+  :bind (("C-=" . er/expand-region)
+         ("M-=" . er/contract-region))
+  :ensure t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -520,9 +525,9 @@ Version 2017-09-01"
 (defun ediff-copy-both-to-C ()
   (interactive)
   (ediff-copy-diff ediff-current-difference nil 'C nil
-		   (concat
-		    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-		    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+                   (concat
+                    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
@@ -538,19 +543,19 @@ value of `temporary-file-directory' temporarily set to the value
 of `org-babel-temporary-directory'."
   (if (file-remote-p default-directory)
       (let ((prefix
-	     ;; We cannot use `temporary-file-directory' as local part
-	     ;; on the remote host, because it might be another OS
-	     ;; there.  So we assume "/tmp", which ought to exist on
-	     ;; relevant architectures.
-	     (concat (file-remote-p default-directory)
-		     ;; REPLACE temporary-file-directory with /tmp:
-		     (expand-file-name prefix "/tmp/"))))
-	(make-temp-file prefix nil suffix))
+             ;; We cannot use `temporary-file-directory' as local part
+             ;; on the remote host, because it might be another OS
+             ;; there.  So we assume "/tmp", which ought to exist on
+             ;; relevant architectures.
+             (concat (file-remote-p default-directory)
+                     ;; REPLACE temporary-file-directory with /tmp:
+                     (expand-file-name prefix "/tmp/"))))
+        (make-temp-file prefix nil suffix))
     (let ((temporary-file-directory
-	   (or (and (boundp 'org-babel-temporary-directory)
-		    (file-exists-p org-babel-temporary-directory)
-		    org-babel-temporary-directory)
-	       temporary-file-directory)))
+           (or (and (boundp 'org-babel-temporary-directory)
+                    (file-exists-p org-babel-temporary-directory)
+                    org-babel-temporary-directory)
+               temporary-file-directory)))
       (make-temp-file prefix nil suffix))))
 
 ;; enable task capture
@@ -563,18 +568,18 @@ of `org-babel-temporary-directory'."
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 (setq org-babel-languages
       '((ditaa . t)
-	(dot . t)
-	(emacs-lisp . t)
-	(gnuplot . t)
-	(go . t)
-	(http . t)
-	(ipython . t)
-	(js . t)
-	(plantuml . t)
-	(python . t)
-	(shell . t)
-	(sql . t)
-	))
+        (dot . t)
+        (emacs-lisp . t)
+        (gnuplot . t)
+        (go . t)
+        (http . t)
+        (ipython . t)
+        (js . t)
+        (plantuml . t)
+        (python . t)
+        (shell . t)
+        (sql . t)
+        ))
 ;; fix - remove sh when running on windows
 (when (string-equal system-type "windows-nt")
   (assq-delete-all 'sh org-babel-languages))
@@ -602,11 +607,11 @@ of `org-babel-temporary-directory'."
 
 ;; center all images
 (advice-add 'org-latex--inline-image :around
-	    (lambda (orig link info)
-	      (concat
-	       "\\begin{center}"
-	       (funcall orig link info)
-	       "\\end{center}")))
+            (lambda (orig link info)
+              (concat
+               "\\begin{center}"
+               (funcall orig link info)
+               "\\end{center}")))
 
 ;; set author
 (setq user-full-name "Jezrael Arciaga")
@@ -620,15 +625,15 @@ of `org-babel-temporary-directory'."
 ;; (setq org-mime-library 'mml)
 ;; ;; set code blocks background to dark
 ;; (add-hook 'org-mime-html-hook
-;; 	  (lambda ()
-;; 	    (org-mime-change-element-style
-;; 	     "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
-;; 			   "#E6E1DC" "#232323"))))
+;;    (lambda ()
+;;      (org-mime-change-element-style
+;;       "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+;;       "#E6E1DC" "#232323"))))
 ;; ;; set block quotes offset
 ;; (add-hook 'org-mime-html-hook
-;; 	  (lambda ()
-;; 	    (org-mime-change-element-style
-;; 	     "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
+;;    (lambda ()
+;;      (org-mime-change-element-style
+;;       "blockquote" "border-left: 2px solid gray; padding-left: 4px;")))
 
 ;; org todo sequence
 (setq org-todo-keywords
@@ -683,9 +688,9 @@ of `org-babel-temporary-directory'."
 (setq tramp-default-method "ssh")
 ;; fix issue - sudo can only use the local host
 (add-to-list 'tramp-default-proxies-alist
-	     '(nil "\\`root\\'" "/ssh:%h:"))
+             '(nil "\\`root\\'" "/ssh:%h:"))
 (add-to-list 'tramp-default-proxies-alist
-	     '((regexp-quote (system-name)) nil nil))
+             '((regexp-quote (system-name)) nil nil))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -710,10 +715,10 @@ of `org-babel-temporary-directory'."
    two prefix arguments, write out the day and month name."
   (interactive "P")
   (let ((format (cond
-		 ((not prefix) "%Y-%m-%d")
-		 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
-		 ((equal prefix '(16)) "%A, %d. %B %Y")))
-	(system-time-locale "en_US"))
+                 ((not prefix) "%Y-%m-%d")
+                 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
+                 ((equal prefix '(16)) "%A, %d. %B %Y")))
+        (system-time-locale "en_US"))
     (insert (format-time-string format))))
 (global-set-key (kbd "C-c C-d") 'insert-date)
 
@@ -855,10 +860,10 @@ of `org-babel-temporary-directory'."
   "Custom `swiper' that default to symbol on point if prefix was provided"
   (interactive "p")
   (let* ((prefix (>= args 4))
-	 (symbol (symbol-at-point))
-	 (symbol-name (symbol-name symbol)))
+         (symbol (symbol-at-point))
+         (symbol-name (symbol-name symbol)))
     (if (and prefix symbol)
-	(swiper symbol-name)
+        (swiper symbol-name)
       (swiper))))
 
 (global-set-key (kbd "C-s") 'jez/swiper)
@@ -907,7 +912,7 @@ of `org-babel-temporary-directory'."
 ;;; Bash - run bash init script
 
 (ignore-errors
- (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -945,7 +950,7 @@ of `org-babel-temporary-directory'."
   (interactive
    (if sql-connection-alist
        (list (sql-read-connection "Connection: " nil '(nil))
-	     current-prefix-arg)
+             current-prefix-arg)
      (user-error "No SQL Connections defined")))
   (let ((buffer-name (format "*sql-%s*" connection)))
     (when (get-buffer buffer-name)
@@ -980,8 +985,8 @@ to the current point of the cursor (default is above)."
 ;;; Shell Mode
 
 (define-key shell-mode-map (kbd "s-k") '(lambda () (interactive)
-					  (erase-buffer)
-					  (comint-send-input)))
+                                          (erase-buffer)
+                                          (comint-send-input)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1051,8 +1056,8 @@ to the current point of the cursor (default is above)."
   ;; patch display message method
   (defun display-startup-echo-area-message ()
     (message "It took %.2f seconds to load emacs"
-	   (float-time
-	    (time-subtract (current-time) emacs-starttime)))))
+             (float-time
+              (time-subtract (current-time) emacs-starttime)))))
 
 (defun jez/display-bookmarks ()
   (interactive)

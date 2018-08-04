@@ -831,10 +831,13 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Prodigy
 
-(require 'prodigy)
-
-(when (file-exists-p "~/.emacs.d/prodigy-settings.el")
-  (load-file "~/.emacs.d/prodigy-settings.el"))
+(use-package prodigy
+  :commands prodigy
+  :ensure t
+  :defer t
+  :config
+  (when (file-exists-p "~/.emacs.d/prodigy-settings.el")
+    (load-file "~/.emacs.d/prodigy-settings.el")))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

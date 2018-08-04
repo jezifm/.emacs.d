@@ -706,6 +706,11 @@ of `org-babel-temporary-directory'."
          ("C-;" . hippie-expand-lines)
          ("C-," . completion-at-point)))
 
+(use-package auto-complete
+  :ensure t
+  :defer t
+  :config (global-auto-complete-mode -1))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Python Mode
@@ -935,15 +940,6 @@ of `org-babel-temporary-directory'."
          ("\\.mustache\\'"   . emmet-mode)
          ("\\.djhtml\\'"     . emmet-mode)
          ("\\.html?\\'"      . emmet-mode)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Auto-Complete
-
-(use-package auto-complete
-  :ensure t
-  :defer t
-  :config (global-auto-complete-mode -1))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

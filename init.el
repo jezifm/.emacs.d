@@ -495,6 +495,7 @@ Version 2017-09-01"
   :ensure t
   :bind (("C-c h" . helm-command-prefix)
          ("C-h d" . helm-dash)
+         ("C-h m" . helm-describe-modes)
          ("C-x C-b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
          ("C-x b" . helm-buffers-list)

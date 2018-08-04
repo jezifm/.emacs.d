@@ -378,6 +378,38 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Emacs GUI
+
+;; ensure we have the theme
+(use-package custom
+  :defer 2
+  :config
+  (load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
+  (load-theme 'darkane t t)
+  (enable-theme 'darkane))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Window Numbering
+
+(use-package window-numbering
+  :ensure t
+  :defer t
+  :bind (("M-1" . select-window-1)
+         ("M-2" . select-window-2))
+  :commands window-numbering-remove-keymap
+  :config
+  (window-numbering-mode 1)
+  (defun window-numbering-remove-keymap ()
+    "Fix keymap conflict with `magit'"
+    (interactive)
+    (mapc
+     (lambda (num) (define-key magit-mode-map (kbd (format "M-%s" num)) nil))
+     (number-sequence 1 5)))
+  :hook (magit-mode . window-numbering-remove-keymap))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Boookmark
 
 (use-package bookmark
@@ -398,18 +430,6 @@ Version 2017-09-01"
   :config
   (setq dired-dwim-target t)            ; default dest to other window
   (setq truncate-lines t))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Emacs GUI
-
-;; ensure we have the theme
-(use-package custom
-  :defer 2
-  :config
-  (load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
-  (load-theme 'darkane t t)
-  (enable-theme 'darkane))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -524,21 +544,23 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Magit Mode
+;;; Swiper
 
-(use-package magit
+(use-package swiper
   :ensure t
   :defer t
-  :bind ("C-x g" . magit-status)
+  :bind ("C-s" . jez/swiper)
   :config
-  (defun ediff-copy-both-to-C ()
-    (interactive)
-    (ediff-copy-diff ediff-current-difference nil 'C nil
-                     (concat
-                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
-  (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
-  (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
+  (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
+  (defun jez/swiper (args)
+    "Custom `swiper' that default to symbol on point if prefix was provided"
+    (interactive "p")
+    (let* ((prefix (>= args 4))
+           (symbol (symbol-at-point))
+           (symbol-name (symbol-name symbol)))
+      (if (and prefix symbol)
+          (swiper symbol-name)
+        (swiper)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -660,6 +682,24 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Magit Mode
+
+(use-package magit
+  :ensure t
+  :defer t
+  :bind ("C-x g" . magit-status)
+  :config
+  (defun ediff-copy-both-to-C ()
+    (interactive)
+    (ediff-copy-diff ediff-current-difference nil 'C nil
+                     (concat
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+  (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+  (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Ace Jump Mode
 
 (use-package ace-jump-mode
@@ -667,6 +707,22 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind (("C-c SPC" . ace-jump-mode)
          ("C-c C-SPC" . ace-jump-mode)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Keychord
+
+(use-package iy-go-to-char
+  :ensure t
+  :defer t
+  :commands (iy-go-to-char iy-go-to-char-backward))
+
+(use-package key-chord
+  :ensure t
+  :defer 2
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "fj" 'iy-go-to-char))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -799,22 +855,6 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Keychord
-
-(use-package iy-go-to-char
-  :ensure t
-  :defer t
-  :commands (iy-go-to-char iy-go-to-char-backward))
-
-(use-package key-chord
-  :ensure t
-  :defer 2
-  :config
-  (key-chord-mode 1)
-  (key-chord-define-global "fj" 'iy-go-to-char))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Undo Tree Mode
 
 (use-package undo-tree
@@ -823,26 +863,6 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind ("C-x u" . undo-tree-visualize)
   :config (undo-tree-mode t))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Window Numbering
-
-(use-package window-numbering
-  :ensure t
-  :defer t
-  :bind (("M-1" . select-window-1)
-         ("M-2" . select-window-2))
-  :commands window-numbering-remove-keymap
-  :config
-  (window-numbering-mode 1)
-  (defun window-numbering-remove-keymap ()
-    "Fix keymap conflict with `magit'"
-    (interactive)
-    (mapc
-     (lambda (num) (define-key magit-mode-map (kbd (format "M-%s" num)) nil))
-     (number-sequence 1 5)))
-  :hook (magit-mode . window-numbering-remove-keymap))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -886,26 +906,6 @@ of `org-babel-temporary-directory'."
   :commands hackernews
   :ensure t
   :defer t)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Swiper
-
-(use-package swiper
-  :ensure t
-  :defer t
-  :bind ("C-s" . jez/swiper)
-  :config
-  (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
-  (defun jez/swiper (args)
-    "Custom `swiper' that default to symbol on point if prefix was provided"
-    (interactive "p")
-    (let* ((prefix (>= args 4))
-           (symbol (symbol-at-point))
-           (symbol-name (symbol-name symbol)))
-      (if (and prefix symbol)
-          (swiper symbol-name)
-        (swiper)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

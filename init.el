@@ -601,6 +601,8 @@ Version 2017-09-01"
           ))
   (when (string-equal system-type "windows-nt")
     (assq-delete-all 'sh org-babel-languages))
+  (when (file-exists-p "~/.emacs.d/publish-settings.el")
+    (load-file "~/.emacs.d/publish-settings.el"))
 
   (defun org-babel-temp-file (prefix &optional suffix)
     "Create a temporary file in the `org-babel-temporary-directory'.
@@ -783,13 +785,6 @@ of `org-babel-temporary-directory'."
       (rename-buffer buffer-name)))
   (define-key sql-interactive-mode-map (kbd "RET") nil)
   (toggle-truncate-lines t))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Publish settings
-
-(when (file-exists-p "~/.emacs.d/publish-settings.el")
-  (load-file "~/.emacs.d/publish-settings.el"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -560,7 +560,7 @@ Version 2017-09-01"
   :ensure t
   :defer t
   :bind ("C-x g" . magit-status)
-  :preface
+  :config
   (defun ediff-copy-both-to-C ()
     (interactive)
     (ediff-copy-diff ediff-current-difference nil 'C nil
@@ -805,7 +805,14 @@ of `org-babel-temporary-directory'."
   :bind (("M-1" . select-window-1)
          ("M-2" . select-window-2))
   :config
-  (window-numbering-mode 1))
+  (window-numbering-mode 1)
+  (defun window-numbering-remove-keymap ()
+    "Fix keymap conflict with `magit'"
+    (interactive)
+    (mapc
+     (lambda (num) (define-key magit-mode-map (kbd (format "M-%s" num)) nil))
+     (number-sequence 1 5)))
+  (add-hook 'magit-mode-hook 'window-numbering-remove-keymap))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

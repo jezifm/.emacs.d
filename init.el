@@ -1061,6 +1061,16 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Outshine
+
+(require 'outshine)
+(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+(add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+(defvar outline-minor-mode-prefix "\M-#")
+(setq outshine-use-speed-commands t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup
 
 (defun jez/display-time-elapsed ()

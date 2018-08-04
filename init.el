@@ -529,17 +529,18 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Magit Mode
 
-(global-set-key (kbd "C-x g") 'magit-status)
-
-;; combine diff
-(defun ediff-copy-both-to-C ()
-  (interactive)
-  (ediff-copy-diff ediff-current-difference nil 'C nil
-                   (concat
-                    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-                    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
-(defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
-(add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status)
+  :preface
+  (defun ediff-copy-both-to-C ()
+    (interactive)
+    (ediff-copy-diff ediff-current-difference nil 'C nil
+                     (concat
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+  (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+  (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1068,9 +1069,11 @@ to the current point of the cursor (default is above)."
   :init
   (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+  :bind (:map outline-minor-mode-map
+         ("C-c C-n" . outline-next-visible-heading)
+         ("C-c C-p" . outline-previous-visible-heading))
   :config
   (setq outshine-use-speed-commands t)
-  ()
   :after (:or outline org-mode))
 
 

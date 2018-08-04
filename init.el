@@ -644,7 +644,7 @@ of `org-babel-temporary-directory'."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Trump Mode
+;;; Tramp Mode
 
 ;; (require 'tramp)
 ;; (setq tramp-default-method "ssh")

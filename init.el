@@ -376,11 +376,14 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Boookmark
 
-(require 'bookmark)
-(unless (assoc "init.el" bookmark-alist)
-  (find-file "~/.emacs.d/init.el")
-  (bookmark-set "init.el")
-  (kill-buffer))
+(use-package bookmark
+  :ensure t
+  :defer t
+  :config
+  (unless (assoc "init.el" bookmark-alist)
+    (find-file "~/.emacs.d/init.el")
+    (bookmark-set "init.el")
+    (kill-buffer)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

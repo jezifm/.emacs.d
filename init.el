@@ -769,14 +769,18 @@ of `org-babel-temporary-directory'."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Keychord
-;; move to char similar to "f" in vim, f+g forward, d+f backward
 
-(require 'key-chord)
-(require 'iy-go-to-char)
+(use-package iy-go-to-char
+  :ensure t
+  :defer t
+  :commands (iy-go-to-char iy-go-to-char-backward))
 
-(key-chord-mode 1)
-(key-chord-define-global "fj" 'iy-go-to-char)
-;; (key-chord-define-global "df" 'iy-go-to-char-backward)
+(use-package key-chord
+  :ensure t
+  :demand t
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "fj" 'iy-go-to-char))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1028,6 +1028,22 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs lisp mode
+
+(defun jez/describe-symbol-at-point ()
+  "Describe current symbol on point on other window"
+  (interactive)
+  (describe-symbol (symbol-at-point)))
+
+(defun jez/emacs-lisp-mode-hook ()
+  (interactive)
+  (setq indent-tabs-mode nil)
+  (define-key emacs-lisp-mode-map (kbd "C-c d") 'jez/describe-symbol-qa-point)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-d") 'jez/describe-symbol-at-point))
+(add-hook 'emacs-lisp-mode-hook 'jez/emacs-lisp-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Startup
 
 (defun jez/display-time-elapsed ()

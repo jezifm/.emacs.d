@@ -646,13 +646,6 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Tramp Mode
 
-;; (require 'tramp)
-;; (setq tramp-default-method "ssh")
-;; ;; fix issue - sudo can only use the local host
-;; (add-to-list 'tramp-default-proxies-alist
-;;              '(nil "\\`root\\'" "/ssh:%h:"))
-;; (add-to-list 'tramp-default-proxies-alist
-;;              '((regexp-quote (system-name)) nil nil))
 (use-package tramp
   :ensure t
   :defer t
@@ -673,6 +666,11 @@ of `org-babel-temporary-directory'."
 
 ;; fix indent line in python
 (setq yas-indent-line 'fixed)
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :config
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

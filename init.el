@@ -9,10 +9,6 @@
 (setq mouse-wheel-progressive-speed nil)                              ; smooth scroll
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil))) ; smooth scroll
 
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))                    ; remove menubar
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))                ; remove srollbar
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))                    ; remove toolbar
-
 (add-to-list 'default-frame-alist '(fullscreen . maximized))          ; maximize window
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -35,7 +31,6 @@
 (global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
 (global-set-key (kbd "M-i") 'back-to-indentation)
 
@@ -175,14 +170,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
-
-;; mode defaults
-(electric-pair-mode t)
-(recentf-mode t)
-(show-paren-mode t)
-
-;; mode properties
-(setq recentf-max-menu-items 25)
 
 ;; key bindings custom
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
@@ -394,6 +381,23 @@ Version 2017-09-01"
   :config
   (setq dired-dwim-target t)            ; default dest to other window
   (setq truncate-lines t))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Emacs Built-in Mode
+
+(use-package menu-bar   :defer 2 :config (menu-bar-mode -1))
+(use-package scroll-bar :defer 2 :config (scroll-bar-mode -1))
+(use-package tool-bar   :defer 2 :config (tool-bar-mode -1))
+(use-package elec-pair  :defer 2 :config (electric-pair-mode t))
+(use-package paren      :defer 2 :config (show-paren-mode t))
+
+(use-package recentf
+  :defer 2
+  :bind ("C-x C-r" . recentf-open-files)
+  :config
+  (recentf-mode t)
+  (setq recentf-max-menu-items 25))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

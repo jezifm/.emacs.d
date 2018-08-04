@@ -1,12 +1,45 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs Version
+;; Initialize Variable
 
-;; meta variables
 (setq emacs-starttime (current-time))
+(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq ns-function-modifier 'control)
+(setq dired-dwim-target t)              ; default dest to other window
+
+(setq save-abbrevs 'silently)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; key bindings unset
+(global-unset-key (kbd "C-x C-c"))  ; disable quit
+(global-unset-key (kbd "C-x c"))    ; disable quit
+(global-unset-key (kbd "C-z"))      ; disable minimize
+(global-unset-key (kbd "s-t"))      ; disable font-panel
+
+;; disable prompt
+(put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+;; core key bindings
+(global-set-key (kbd "<f5>") 'sort-lines)
+(global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
+(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+(global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
+(global-set-key (kbd "M-i") 'back-to-indentation)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs Version
 
 (when (version< emacs-version "26")
   (error (format "Emacs version %s not supported. Please update to 26 or higher."
-		 emacs-version)))
+                 emacs-version)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -28,7 +61,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - melpa
 
-(package-initialize) 			; fix issue package not yet initialize
+(package-initialize)            ; fix issue package not yet initialize
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
@@ -91,6 +124,7 @@
      swift-mode
      swiper
      undo-tree
+     use-package
      visual-regexp
      web-beautify
      web-mode
@@ -112,6 +146,9 @@
   (error
    (package-refresh-contents)
    (init--install-packages)))
+
+;; use package
+(require 'use-package)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

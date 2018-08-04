@@ -751,11 +751,13 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SQL Mode
 
-(require 'sql)
-(add-hook 'sql-mode-hook 'sqlup-mode)
-(add-hook 'sql-interactive-mode-hook 'sqlup-mode)
-(define-key sql-mode-map (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
-(define-key sql-mode-map (kbd "C-h s") 'sqlformat)
+(use-package sql
+  :ensure t
+  :defer t
+  :bind (("C-c u" . 'sqlup-capitalize-keywords-in-region)
+         ("C-h s" . 'sqlformat))
+  :hook ((sql-mode . sqlup-mode)
+         (sql-interactive-mode  . sqlup-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

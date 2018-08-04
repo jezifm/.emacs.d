@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Initialize Variable
+;;; Initialize Variable
 
 (setq emacs-starttime (current-time))
 (setq mouse-wheel-progressive-speed nil)
@@ -35,7 +35,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs Version
+;;; Emacs Version
 
 (when (version< emacs-version "26")
   (error (format "Emacs version %s not supported. Please update to 26 or higher."
@@ -152,7 +152,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Host Specific Customization
+;;; Host Specific Customization
 ;;
 ;; persist bookmarks and other customization when switching `.emacs.d'
 
@@ -1023,7 +1023,7 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Occur mode
+;;; Occur mode
 
 (defun jez/occur-prev ()
   (interactive)
@@ -1043,7 +1043,7 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs lisp mode
+;;; Emacs lisp mode
 
 (defun jez/describe-symbol-at-point ()
   "Describe current symbol on point on other window"
@@ -1060,7 +1060,7 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Startup
+;;; Startup
 
 (defun jez/display-time-elapsed ()
   (interactive)

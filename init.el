@@ -579,7 +579,9 @@ Version 2017-09-01"
          :map helm-map
          ("<tab>" . helm-execute-persistent-action)
          ("C-i" . helm-execute-persistent-action)
-         ("C-z" . helm-select-action))
+         ("C-z" . helm-select-action)
+         :map helm-projectile-projects-map
+         ("C-j" . helm-maybe-exit-minibuffer))
   :config
   (helm-mode 1)
   (projectile-mode)

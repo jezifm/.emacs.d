@@ -834,7 +834,7 @@ of `org-babel-temporary-directory'."
 
   (defun outshine-python-mode-hook ()
     (outline-minor-mode t)
-    (setq-local outline-regexp "[ \t]*# \\|[ \t]+\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
+    (setq-local outline-regexp "[ \t]*### \\|[ \t]*\\b\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
     (setq-local outline-level 'py-outline-level)
     (setq-local outshine-use-speed-commands nil))
 

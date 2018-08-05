@@ -473,7 +473,14 @@ Version 2017-09-01"
   (unless (assoc "init.el" bookmark-alist)
     (find-file "~/.emacs.d/init.el")
     (bookmark-set "init.el")
-    (kill-buffer)))
+    (kill-buffer))
+  ;; add bookmarks to projectile
+  (setq projectile-known-projects
+	(-distinct
+         (sort
+	  (union (projectile-relevant-known-projects)
+		 (mapcar (lambda (e) (cdr (assq 'filename (cdr e)))) bookmark-alist))
+	  'string<))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

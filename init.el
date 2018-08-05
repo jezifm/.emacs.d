@@ -556,8 +556,7 @@ Version 2017-09-01"
          ("C-S-c C-S-c" . mc/edit-lines)
          ("C-S-c C-S-e" . mc/edit-ends-of-lines)
          ("C-c C-<" . mc/mark-all-like-this)
-         ("s-d" . jez/mark-multiple))
-  :after expand-region)
+         ("s-d" . jez/mark-multiple)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -566,35 +566,27 @@ Version 2017-09-01"
          ("C-x r b" . helm-filtered-bookmarks)
          ("M-x" . helm-M-x)
          ("M-y" . helm-show-kill-ring)
+         ;; projectile
+         ("C-x p f" . helm-projectile-find-file)
+         ("C-c C-p p" . helm-projectile-switch-project)
          :map helm-map
          ("<tab>" . helm-execute-persistent-action)
          ("C-i" . helm-execute-persistent-action)
          ("C-z" . helm-select-action))
   :config
   (helm-mode 1)
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t))
+  (projectile-mode)
+  (helm-projectile-on)
+  (setq projectile-completion-system 'helm)
   (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
         helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
         helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
         helm-ff-file-name-history-use-recentf t))
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
 
-(use-package helm-projectile
-  :ensure t
-  :defer t
-  :commands helm-projectile-switch-project
-  :bind (("C-x p f" . helm-projectile-find-file)
-         ("C-c C-p p" . helm-projectile-switch-project))
-  :config
-  (projectile-global-mode)              ; fix issue - https://github.com/bbatsov/projectile/issues/496
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
-
-(use-package projectile                 ; fix for `use-package' unable to override `projectile' keymap
-  :ensure t
-  :defer t
-  :bind ("C-c C-p p" . helm-projectile-switch-project))
+(use-package helm-dash :ensure t :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

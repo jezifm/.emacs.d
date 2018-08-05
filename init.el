@@ -669,8 +669,11 @@ of `org-babel-temporary-directory'."
     (remove-duplicates mc--default-cmds-to-run-once))
 
   (jez/mc-add-cmds-once 'jez/mark-multiple)
-  (jez/mc-add-cmds-all 'paredit-backward-kill-word)
   (jez/mc-add-cmds-all 'org-self-insert-command)
+  ;; paredit
+  (jez/mc-add-cmds-all 'paredit-backward-kill-word)
+  (jez/mc-add-cmds-all 'paredit-open-parenthesis)
+  (jez/mc-add-cmds-all 'paredit-open-round)
 
   :bind (("C-<" . mc/mark-previous-like-this)
          ("C->" . mc/mark-next-like-this)

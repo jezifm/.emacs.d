@@ -656,18 +656,19 @@ of `org-babel-temporary-directory'."
         (jez/mark-word)
       (mc/mark-next-like-this arg)))
 
-  (defun jez/add-mc-once (func)
+  (defun jez/mc-add-cmds-once (func)
     "Add FUNC to `mc--default-cmds-to-run-once'. Prevent duplicate entry"
     (push func mc--default-cmds-to-run-once)
     (remove-duplicates mc--default-cmds-to-run-once))
 
-  (defun jez/add-mc-all (func)
+  (defun jez/mc-add-cmds-all (func)
     "Add FUNC to `mc--default-cmds-to-run-for-all'. Prevent duplicate entry"
     (push func mc--default-cmds-to-run-for-all)
     (remove-duplicates mc--default-cmds-to-run-once))
 
-  (jez/add-mc-once 'jez/mark-multiple)
-  (jez/add-mc-all 'paredit-backward-kill-word)
+  (jez/mc-add-cmds-once 'jez/mark-multiple)
+  (jez/mc-add-cmds-all 'paredit-backward-kill-word)
+  (jez/mc-add-cmds-all 'org-self-insert-command)
 
   :bind (("C-<" . mc/mark-previous-like-this)
          ("C->" . mc/mark-next-like-this)

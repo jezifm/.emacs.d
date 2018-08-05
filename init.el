@@ -828,6 +828,7 @@ of `org-babel-temporary-directory'."
          ("\\.tac\\'" . python-mode))
   :bind (
          :map python-mode-map
+         ("<tab>" . indent-for-tab-command)
          ("C-c #" . hydra-python-outline/body))
 
   :config

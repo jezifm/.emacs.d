@@ -384,7 +384,7 @@ Version 2017-09-01"
 (use-package color-theme-modern :ensure t :defer t)
 (use-package cyberpunk-theme :ensure t :defer t)
 (use-package zenburn-theme :ensure t :defer t)
-(load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
+(add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
 
 ;; ensure we have the theme
 (use-package custom

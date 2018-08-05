@@ -151,6 +151,9 @@
 ;; use package
 (require 'use-package)
 
+;; package to use
+(use-package help-fns+ :commands describe-keymap :defer t)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Host Specific Customization

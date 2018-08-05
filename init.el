@@ -1082,6 +1082,7 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Web Mode
 
+(use-package pug-mode :defer t :ensure t :mode ("\\.pug\\'"))
 (use-package web-mode
   :ensure t
   :defer t

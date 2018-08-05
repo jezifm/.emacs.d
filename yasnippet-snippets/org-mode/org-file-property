@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: org-file-property
+# key: orgp
+# --
+#+PROPERTY: header-args :eval never-export :results pp

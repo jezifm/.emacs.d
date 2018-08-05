@@ -647,6 +647,7 @@ Version 2017-09-01"
   (setq org-log-done 'time)
   (setq org-src-fontify-natively t)
   (setq org-todo-keywords '((sequence "TODO" "SCHEDULED" "|" "DONE")))
+  (setq org-confirm-babel-evaluate nil)
   (setq org-babel-languages
         '((ditaa . t)
           (dot . t)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hydra-key
+# key: hk
+# --
+("${1:<up>}" ${2:buffer-quit} "$2")

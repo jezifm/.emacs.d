@@ -89,8 +89,6 @@
      auctex
      avy
      change-inner
-     color-theme-modern
-     cyberpunk-theme
      dockerfile-mode
      ein
      emmet-mode
@@ -121,7 +119,6 @@
      quelpa
      redis
      restclient
-     sublime-themes
      swift-mode
      swiper
      undo-tree
@@ -383,13 +380,18 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs GUI
 
+;; theme candidates
+(use-package color-theme-modern :ensure t :defer t)
+(use-package cyberpunk-theme :ensure t :defer t)
+(use-package zenburn-theme :ensure t :defer t)
+(load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
+
 ;; ensure we have the theme
 (use-package custom
   :defer 2
   :config
-  (load-file (concat user-emacs-directory "custom-themes/emacs-darkane-theme/darkane-theme.el"))
-  (load-theme 'darkane t t)
-  (enable-theme 'darkane))
+  (load-theme 'zenburn t t)
+  (enable-theme 'zenburn))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

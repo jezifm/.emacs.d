@@ -382,9 +382,10 @@ Version 2017-09-01"
 
 (use-package powerline :ensure t :defer 2 :config (powerline-default-theme))
 ;; theme candidates
-(use-package color-theme-modern :ensure t :defer t)
 (use-package blackboard-theme :ensure t :defer t)
+(use-package color-theme-modern :ensure t :defer t)
 (use-package cyberpunk-theme :ensure t :defer t)
+(use-package solarized-theme :ensure t :defer t)
 (use-package zenburn-theme :ensure t :defer t)
 (add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
 
@@ -393,8 +394,8 @@ Version 2017-09-01"
   :defer 2
   :config
   (powerline-default-theme)
-  (load-theme 'blackboard t t)
-  (enable-theme 'blackboard))
+  (load-theme 'solarized-dark t t)
+  (enable-theme 'solarized-dark))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

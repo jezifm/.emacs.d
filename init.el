@@ -467,6 +467,125 @@ Version 2017-09-01"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Org Mode
+
+(use-package org
+  :ensure t
+  :defer t
+  :bind ("C-c l" . org-store-link)
+  :config
+  (setq user-full-name "Jezrael Arciaga")
+  (setq user-mail-address "jezarciaga@gmail.com")
+  (setq org-export-coding-system 'utf-8)
+  (setq org-log-done 'time)
+  (setq org-src-fontify-natively t)
+  (setq org-todo-keywords '((sequence "TODO" "SCHEDULED" "|" "DONE")))
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-babel-languages
+        '((ditaa . t)
+          (dot . t)
+          (emacs-lisp . t)
+          (gnuplot . t)
+          (go . t)
+          (http . t)
+          (ipython . t)
+          (js . t)
+          (plantuml . t)
+          (python . t)
+          (shell . t)
+          (sql . t)
+          ))
+  (when (string-equal system-type "windows-nt")
+    (assq-delete-all 'sh org-babel-languages))
+  (when (file-exists-p "~/.emacs.d/publish-settings.el")
+    (load-file "~/.emacs.d/publish-settings.el"))
+
+  (defun org-babel-temp-file (prefix &optional suffix)
+    "Create a temporary file in the `org-babel-temporary-directory'.
+Passes PREFIX and SUFFIX directly to `make-temp-file' with the
+value of `temporary-file-directory' temporarily set to the value
+of `org-babel-temporary-directory'."
+    (if (file-remote-p default-directory)
+        (let ((prefix
+               ;; We cannot use `temporary-file-directory' as local part
+               ;; on the remote host, because it might be another OS
+               ;; there.  So we assume "/tmp", which ought to exist on
+               ;; relevant architectures.
+               (concat (file-remote-p default-directory)
+                       ;; REPLACE temporary-file-directory with /tmp:
+                       (expand-file-name prefix "/tmp/"))))
+          (make-temp-file prefix nil suffix))
+      (let ((temporary-file-directory
+             (or (and (boundp 'org-babel-temporary-directory)
+                      (file-exists-p org-babel-temporary-directory)
+                      org-babel-temporary-directory)
+                 temporary-file-directory)))
+        (make-temp-file prefix nil suffix))))
+
+  (defun org-summary-todo (n-done n-not-done)
+    "Switch entry to DONE when all subentries are done, to TODO otherwise."
+    (let (org-log-done org-log-states)   ; turn off logging
+      (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+  (defun shk-fix-inline-images ()
+    "Render images after executing org code"
+    (interactive)
+    (when org-inline-image-overlays
+      (org-redisplay-inline-images)))
+
+  (defun org-babel-execute:yaml (body params) body)
+
+  (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+  (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+  (advice-add 'org-latex--inline-image :around
+              (lambda (orig link info)
+                (concat
+                 "\\begin{center}"
+                 (funcall orig link info)
+                 "\\end{center}")))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages))
+
+(use-package org-capture
+  :bind (("C-c c" . org-capture)
+         ("C-c o" . (lambda () (interactive) (find-file "~/organizer.org"))))
+  :config
+  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+  (setq org-default-notes-file "~/organizer.org")
+  (setq org-confirm-babel-evaluate nil)
+  (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
+  (set-register ?o (cons 'file "~/organizer.org")))
+
+(use-package ox-md
+  :after org)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Outshine Mode
+
+(use-package imenu :commands imenu-choose-buffer-index)
+
+(use-package outshine
+  :ensure t
+  :defer t
+  :bind (
+         :map outline-minor-mode-map
+         ("C-c n" . outline-next-visible-heading)
+         ("C-c p" . outline-previous-visible-heading)
+         ("C-<tab>" . outline-cycle))
+  :init (require 'helm)
+  :config
+  (defun outshine-emacs-lisp-mode-hook ()
+    (setq-local outshine-use-speed-commands t)
+    (outline-minor-mode t))
+
+  :hook ((outline-minor-mode . outshine-hook-function)
+         (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)
+         (python-mode . outshine-python-mode-hook)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Boookmark
 
 (use-package bookmark
@@ -618,125 +737,6 @@ Version 2017-09-01"
       (if (and prefix symbol)
           (swiper symbol-name)
         (swiper)))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Outshine Mode
-
-(use-package imenu :commands imenu-choose-buffer-index)
-
-(use-package outshine
-  :ensure t
-  :defer t
-  :bind (
-         :map outline-minor-mode-map
-         ("C-c n" . outline-next-visible-heading)
-         ("C-c p" . outline-previous-visible-heading)
-         ("C-<tab>" . outline-cycle))
-  :init (require 'helm)
-  :config
-  (defun outshine-emacs-lisp-mode-hook ()
-    (setq-local outshine-use-speed-commands t)
-    (outline-minor-mode t))
-
-  :hook ((outline-minor-mode . outshine-hook-function)
-         (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)
-         (python-mode . outshine-python-mode-hook)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Org Mode
-
-(use-package org
-  :ensure t
-  :defer t
-  :bind ("C-c l" . org-store-link)
-  :config
-  (setq user-full-name "Jezrael Arciaga")
-  (setq user-mail-address "jezarciaga@gmail.com")
-  (setq org-export-coding-system 'utf-8)
-  (setq org-log-done 'time)
-  (setq org-src-fontify-natively t)
-  (setq org-todo-keywords '((sequence "TODO" "SCHEDULED" "|" "DONE")))
-  (setq org-confirm-babel-evaluate nil)
-  (setq org-babel-languages
-        '((ditaa . t)
-          (dot . t)
-          (emacs-lisp . t)
-          (gnuplot . t)
-          (go . t)
-          (http . t)
-          (ipython . t)
-          (js . t)
-          (plantuml . t)
-          (python . t)
-          (shell . t)
-          (sql . t)
-          ))
-  (when (string-equal system-type "windows-nt")
-    (assq-delete-all 'sh org-babel-languages))
-  (when (file-exists-p "~/.emacs.d/publish-settings.el")
-    (load-file "~/.emacs.d/publish-settings.el"))
-
-  (defun org-babel-temp-file (prefix &optional suffix)
-    "Create a temporary file in the `org-babel-temporary-directory'.
-Passes PREFIX and SUFFIX directly to `make-temp-file' with the
-value of `temporary-file-directory' temporarily set to the value
-of `org-babel-temporary-directory'."
-    (if (file-remote-p default-directory)
-        (let ((prefix
-               ;; We cannot use `temporary-file-directory' as local part
-               ;; on the remote host, because it might be another OS
-               ;; there.  So we assume "/tmp", which ought to exist on
-               ;; relevant architectures.
-               (concat (file-remote-p default-directory)
-                       ;; REPLACE temporary-file-directory with /tmp:
-                       (expand-file-name prefix "/tmp/"))))
-          (make-temp-file prefix nil suffix))
-      (let ((temporary-file-directory
-             (or (and (boundp 'org-babel-temporary-directory)
-                      (file-exists-p org-babel-temporary-directory)
-                      org-babel-temporary-directory)
-                 temporary-file-directory)))
-        (make-temp-file prefix nil suffix))))
-
-  (defun org-summary-todo (n-done n-not-done)
-    "Switch entry to DONE when all subentries are done, to TODO otherwise."
-    (let (org-log-done org-log-states)   ; turn off logging
-      (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-
-  (defun shk-fix-inline-images ()
-    "Render images after executing org code"
-    (interactive)
-    (when org-inline-image-overlays
-      (org-redisplay-inline-images)))
-
-  (defun org-babel-execute:yaml (body params) body)
-
-  (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-  (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
-  (add-hook 'org-mode-hook 'auto-fill-mode)
-  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
-  (advice-add 'org-latex--inline-image :around
-              (lambda (orig link info)
-                (concat
-                 "\\begin{center}"
-                 (funcall orig link info)
-                 "\\end{center}")))
-  (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages))
-
-(use-package org-capture
-  :bind (("C-c c" . org-capture)
-         ("C-c o" . (lambda () (interactive) (find-file "~/organizer.org"))))
-  :config
-  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-  (setq org-default-notes-file "~/organizer.org")
-  (setq org-confirm-babel-evaluate nil)
-  (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
-  (set-register ?o (cons 'file "~/organizer.org")))
-
-(use-package ox-md
-  :after org)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

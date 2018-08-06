@@ -834,7 +834,7 @@ of `org-babel-temporary-directory'."
 
 (use-package setup-hippie
   :bind (("C-." . hippie-expand-no-case-fold)
-         ("C-;" . hippie-expand-lines)
+         ("C-:" . hippie-expand-lines)
          ("C-," . completion-at-point)))
 
 (use-package auto-complete

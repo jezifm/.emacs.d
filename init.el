@@ -1225,14 +1225,8 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Docker
 
-(use-package docker
-  :ensure t
-  :defer t)
-
-
-(use-package docker-tramp
-  :ensure t
-  :defer t)
+(use-package docker :ensure t :defer t)
+(use-package docker-tramp :ensure t :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

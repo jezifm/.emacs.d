@@ -734,6 +734,7 @@ of `org-babel-temporary-directory'."
 
 (use-package helm-dash :ensure t :defer t)
 (use-package helm-describe-modes :ensure t :defer t)
+(use-package helm-descbinds :ensure t :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

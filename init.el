@@ -621,11 +621,13 @@ of `org-babel-temporary-directory'."
     (kill-buffer))
   ;; add bookmarks to projectile
   (setq projectile-known-projects
-	(-distinct
-         (sort
-	  (union (projectile-relevant-known-projects)
-		 (mapcar (lambda (e) (cdr (assq 'filename (cdr e)))) bookmark-alist))
-	  'string<))))
+	(-filter
+         'file-directory-p
+         (-distinct
+          (sort
+           (union (projectile-relevant-known-projects)
+	          (mapcar (lambda (e) (cdr (assq 'filename (cdr e)))) bookmark-alist))
+           'string<)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

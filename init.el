@@ -720,6 +720,9 @@ of `org-babel-temporary-directory'."
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t)))
 
+(use-package helm-bookmark
+  :defer t
+  :bind (:map helm-bookmark-map ("C-j" . helm-maybe-exit-minibuffer)))
 (use-package helm-config :after helm)
 (use-package helm-dash :ensure t :after helm)
 (use-package helm-describe-modes :ensure t :after helm)

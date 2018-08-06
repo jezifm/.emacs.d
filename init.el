@@ -75,6 +75,7 @@
 
 (setq settings-dir (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
+(autoload 'packages-install "setup-package")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,7 +136,6 @@
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)
   (package-install 'dash))
-(require 'setup-package)
 
 ;; install missing packages
 (condition-case nil

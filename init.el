@@ -1,6 +1,5 @@
 ;;; Initialize Variable
 
-(setq emacs-starttime (current-time))
 (setq save-abbrevs 'silently)                                         ; abbrev warning
 (setq inhibit-startup-message t)                                      ; disable splash
 (setq ns-function-modifier 'control)                                  ; map modifier (fn) to control (ctrl)
@@ -1214,21 +1213,17 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup
 
-(defun jez/display-time-elapsed ()
-  (interactive)
-  ;; patch display message method
-  (defun display-startup-echo-area-message ()
-    (message "It took %.2f seconds to load emacs"
-             (float-time
-              (time-subtract (current-time) emacs-starttime)))))
-
-(defun jez/display-bookmarks ()
-  (interactive)
+(defun jez/show-bookmarks ()
   (call-interactively 'list-bookmarks))
 
-(defun startup ()
-  (interactive)
-  (jez/display-bookmarks)
-  (jez/display-time-elapsed))
+(defun jez/display-init-time ()
+  (defun jez/show-init-load-time ()
+    (message "It took %s to load emacs" (emacs-init-time)))
+  (advice-add 'display-startup-echo-area-message :after #'jez/show-init-load-time))
 
-(startup)
+(defun jez/startup ()
+  "Run after emacs init"
+  (jez/show-bookmarks)
+  (jez/display-init-time))
+
+(add-hook 'after-init-hook 'jez/startup)

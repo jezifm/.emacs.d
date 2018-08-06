@@ -724,6 +724,11 @@ of `org-babel-temporary-directory'."
 (use-package helm-dash :ensure t :after helm)
 (use-package helm-describe-modes :ensure t :after helm)
 (use-package helm-descbinds :ensure t :after helm)
+(use-package helm-tramp
+  :ensure t
+  :defer t
+  :bind ("C-c s" . helm-tramp)
+  :config (setq tramp-default-method "ssh"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1215,6 +1220,19 @@ to the current point of the cursor (default is above)."
     (toggle-truncate-lines t))
 
   :hook (emacs-lisp-mode . jez/emacs-lisp-mode-hook))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Docker
+
+(use-package docker
+  :ensure t
+  :defer t)
+
+
+(use-package docker-tramp
+  :ensure t
+  :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

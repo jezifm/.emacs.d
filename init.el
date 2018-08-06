@@ -61,8 +61,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - melpa
 
-(package-initialize)            ; fix issue package not yet initialize
-(require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
@@ -75,13 +73,14 @@
 
 (setq settings-dir (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
-(autoload 'packages-install "setup-package")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Install missing dependencies
 
 ;; package to install
+(autoload 'packages-install "setup-package")
+(autoload 'package-initialize "package")
 (defun init--install-packages ()
   (packages-install
    '(ace-jump-mode
@@ -133,6 +132,7 @@
      )))
 
 ;; prepare installer
+(package-initialize)
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)
   (package-install 'dash))
@@ -144,11 +144,10 @@
    (package-refresh-contents)
    (init--install-packages)))
 
-;; use package
-(require 'use-package)
-
-;; package to use
-(use-package help-fns+ :commands describe-keymap :defer t)
+;; load packages
+(autoload 'use-package "use-package-core")
+(use-package help-fns+ :defer t :commands describe-keymap)
+(use-package hydra :ensure t :defer t :commands defhydra)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -416,12 +415,6 @@ Version 2017-09-01"
   (powerline-default-theme)
   (load-theme 'solarized-dark t t)
   (enable-theme 'solarized-dark))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Hydra
-
-(use-package hydra :commands defhydra :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -597,6 +597,12 @@ of `org-babel-temporary-directory'."
     (setq-local outshine-use-speed-commands t)
     (outline-minor-mode t))
 
+  (defun outshine-python-mode-hook ()
+    (outline-minor-mode t)
+    (setq-local outline-regexp "[ \t]*# \\|[ \t]+\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
+    (setq-local outline-level 'py-outline-level)
+    (setq-local outshine-use-speed-commands nil))
+
   :hook ((outline-minor-mode . outshine-hook-function)
          (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)
          (python-mode . outshine-python-mode-hook)))
@@ -900,6 +906,7 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :config
+  (define-key elpy-mode-map (kbd "C-c C-p") nil)
   (defun jez/elpy-mode-hook ()
     "Disable company mode"
     (company-mode -1))

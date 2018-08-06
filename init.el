@@ -711,13 +711,8 @@ of `org-babel-temporary-directory'."
          ("C-x C-b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
          ("C-x b" . helm-buffers-list)
-         ("C-x p p" . helm-do-ag-project-root)
-         ("C-x r b" . helm-filtered-bookmarks)
          ("M-x" . helm-M-x)
          ("M-y" . helm-show-kill-ring)
-         ;; projectile
-         ("C-x p f" . helm-projectile-find-file)
-         ("C-c C-p p" . helm-projectile-switch-project)
          :map helm-map
          ("<tab>" . helm-execute-persistent-action)
          ("C-i" . helm-execute-persistent-action)

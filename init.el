@@ -804,21 +804,34 @@ of `org-babel-temporary-directory'."
 ;;; Yasnippet
 
 (use-package yasnippet
-  :ensure t
+  :diminish yas-minor-mode
   :defer 2
+  :bind (("C-c y d" . yas-load-directory)
+         ("C-c y i" . yas-insert-snippet)
+         ("C-c y f" . yas-visit-snippet-file)
+         ("C-c y n" . yas-new-snippet)
+         ("C-c y t" . yas-tryout-snippet)
+         ("C-c y l" . yas-describe-tables)
+         ("C-c y g" . yas/global-mode)
+         ("C-c y m" . yas/minor-mode)
+         ("C-c y a" . yas-reload-all)
+         ("C-c y x" . yas-expand))
+  :bind (:map yas-keymap
+              ("C-i" . yas-next-field-or-maybe-expand))
+  :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
   :config
   (setq yas-indent-line 'fixed)
   (setq yas-buffer-local-condition `always)
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
-  (yas-global-mode 1)
-  (yas-reload-all))
+  (yas-global-mode 1))
 
 (use-package auto-yasnippet
   :ensure t
   :defer t
   :bind (("C-c y a" . aya-create)
          ("C-c y e" . aya-expand)
-         ("C-c y o" . aya-open-line)))
+         ("C-c y o" . aya-open-line))
+  :after yasnippet)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

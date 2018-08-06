@@ -378,43 +378,21 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs GUI
 
-(use-package powerline :ensure t :defer 2 :config (powerline-default-theme))
-;; theme candidates
-(use-package blackboard-theme :ensure t :defer t)
-(use-package color-theme-modern :ensure t :defer t)
-(use-package cyberpunk-theme :ensure t :defer t)
-(use-package solarized-theme :ensure t :defer t)
-(use-package zenburn-theme :ensure t :defer t)
-(add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
 
 ;; ensure we have the theme
 (use-package custom
   :defer 2
   :config
-  ;; make the fringe stand out from the background
-  (setq solarized-distinct-fringe-background t)
-  ;; Don't change the font for some headings and titles
-  (setq solarized-use-variable-pitch nil)
-  ;; make the modeline high contrast
-  (setq solarized-high-contrast-mode-line t)
-  ;; Use less bolding
-  (setq solarized-use-less-bold t)
-  ;; Use more italics
-  (setq solarized-use-more-italic t)
-  ;; Use less colors for indicators such as git:gutter, flycheck and similar
-  (setq solarized-emphasize-indicators nil)
-  ;; Don't change size of org-mode headlines (but keep other size-changes)
-  (setq solarized-scale-org-headlines nil)
-  ;; Avoid all font-size changes
-  (setq solarized-height-minus-1 1.0)
-  (setq solarized-height-plus-1 1.0)
-  (setq solarized-height-plus-2 1.0)
-  (setq solarized-height-plus-3 1.0)
-  (setq solarized-height-plus-4 1.0)
+  (add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
+  (load-theme 'darkane t t)
+  (enable-theme 'darkane)
+  (powerline-default-theme))
 
-  (powerline-default-theme)
-  (load-theme 'solarized-dark t t)
-  (enable-theme 'solarized-dark))
+(use-package powerline
+  :ensure t
+  :defer t
+  :config (powerline-default-theme)
+  :after custom)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

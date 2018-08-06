@@ -833,6 +833,13 @@ of `org-babel-temporary-directory'."
   (yas-global-mode 1)
   (yas-reload-all))
 
+(use-package auto-yasnippet
+  :ensure t
+  :defer t
+  :bind (("C-c y a" . aya-create)
+         ("C-c y e" . aya-expand)
+         ("C-c y o" . aya-open-line)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Auto Complete

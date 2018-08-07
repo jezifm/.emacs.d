@@ -1175,25 +1175,27 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Occur mode
 
-(defun jez/occur-prev ()
-  (interactive)
-  (occur-prev)
-  (occur-mode-display-occurrence))
+(use-package replace
+  :defer t
+  :bind (:map occur-mode-map
+         ("p" . jez/occur-prev)
+         ("n" . jez/occur-next))
+  :config
+  (defun jez/occur-prev ()
+    "Same with `occur-prev' but also move to occurence"
+    (interactive)
+    (occur-prev)
+    (occur-mode-display-occurrence))
 
-(defun jez/occur-next ()
-  (interactive)
-  (occur-next)
-  (occur-mode-display-occurrence))
-
-(defun jez/occur-mode-hook ()
-  (define-key occur-mode-map (kbd "p") 'jez/occur-prev)
-  (define-key occur-mode-map (kbd "n") 'jez/occur-next))
-
-(add-hook 'occur-mode-hook 'jez/occur-mode-hook)
+  (defun jez/occur-next ()
+    "Same with `occur-next' but also move to occurence"
+    (interactive)
+    (occur-next)
+    (occur-mode-display-occurrence)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Emacs lisp mode
+;;; Elisp Mode
 
 (use-package elisp-mode
   :defer t

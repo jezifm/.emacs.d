@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-compose-run
+# key: dcr
+# --
+docker-compose run --rm $0

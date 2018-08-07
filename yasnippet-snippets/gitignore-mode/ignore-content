@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ignore-content
+# key: ic
+# --
+*
+*/
+!.gitignore

@@ -1138,6 +1138,15 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; JS Mode
+
+(use-package js2-mode
+  :ensure t
+  :defer t
+  :mode (("\\.js\\'" . js2-mode)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; CSS Mode
 
 (use-package css-mode

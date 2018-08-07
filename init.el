@@ -148,6 +148,7 @@
 (autoload 'use-package "use-package-core")
 (use-package help-fns+ :defer t :commands describe-keymap)
 (use-package hydra :ensure t :defer t :commands defhydra)
+(use-package gitignore-mode :ensure t :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -917,7 +918,7 @@ of `org-babel-temporary-directory'."
   :hook ((org-mode . jez/disable-elpy)
          (shell-mode . jez/disable-elpy)
          (python-mode . elpy-mode)
-         (python-mode . jez/python-disable-company-mode)))
+         (elpy-mode . jez/python-disable-company-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

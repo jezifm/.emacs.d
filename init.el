@@ -602,7 +602,8 @@ of `org-babel-temporary-directory'."
   :defer t
   :config
   (setq dired-dwim-target t)            ; default dest to other window
-  (setq truncate-lines t))
+  (setq truncate-lines t)
+  (setq dired-listing-switches "-lah"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

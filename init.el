@@ -570,21 +570,7 @@ of `org-babel-temporary-directory'."
          ("C-c p" . outline-previous-visible-heading)
          ("C-<tab>" . outline-cycle))
   :init (require 'helm)
-  :config
-  (defun outshine-emacs-lisp-mode-hook ()
-    (setq-local outshine-use-speed-commands t)
-    (outline-minor-mode t))
-
-  (defun outshine-python-mode-hook ()
-    (outline-minor-mode t)
-    (setq-local outline-regexp "[ \t]*# \\|[ \t]*\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
-    (setq-local outline-level 'py-outline-level)
-    (setq-local outshine-use-speed-commands nil)
-    (toggle-truncate-lines t))
-
-  :hook ((outline-minor-mode . outshine-hook-function)
-         (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)
-         (python-mode . outshine-python-mode-hook)))
+  :hook ((outline-minor-mode . outshine-hook-function)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -925,17 +911,12 @@ of `org-babel-temporary-directory'."
   :defer t
   :config
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
-  (defun jez/elpy-mode-hook ()
-    "Disable company mode"
-    (company-mode -1))
-
-  (defun jez/disable-elpy ()
-    "Ensure `elpy-mode' is disabled"
-    (ignore-errors (elpy-mode -1)))
-
+  (defun jez/python-disable-company-mode () (company-mode -1))
+  (defun jez/disable-elpy () (ignore-errors (elpy-mode -1)))
   :hook ((org-mode . jez/disable-elpy)
          (shell-mode . jez/disable-elpy)
-         (python-mode . elpy-mode)))
+         (python-mode . elpy-mode)
+         (python-mode . jez/python-disable-company-mode)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1151,7 +1132,8 @@ to the current point of the cursor (default is above)."
   (setq web-mode-enable-current-column-highlight nil)
   (defun jez/web-mode-hook ()
     (electric-pair-local-mode -1)
-    (toggle-truncate-lines t))
+    (toggle-truncate-lines t)
+    (web-mode-set-engine "django"))
   :hook ((web-mode . jez/web-mode-hook)))
 
 
@@ -1231,7 +1213,12 @@ to the current point of the cursor (default is above)."
     (setq indent-tabs-mode nil)
     (toggle-truncate-lines t))
 
-  :hook (emacs-lisp-mode . jez/emacs-lisp-mode-hook))
+  (defun outshine-emacs-lisp-mode-hook ()
+    (setq-local outshine-use-speed-commands t)
+    (outline-minor-mode t))
+
+  :hook ((emacs-lisp-mode . jez/emacs-lisp-mode-hook)
+         (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

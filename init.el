@@ -592,12 +592,26 @@ of `org-babel-temporary-directory'."
          ("C-c n" . outline-next-visible-heading)
          ("C-c p" . outline-previous-visible-heading)
          ("C-<tab>" . outline-cycle)
-         ("C-#" . hydra-outshine/body))
+         ("C-#" . hydra-outshine/body)
+         ("M-<up>" . jez/outline-move-subtree-up)
+         ("M-<down>" . jez/outline-move-subtree-down))
   :init (require 'helm)
   :config
+  (defun jez/outline-move-subtree-up (args)
+    "Same `outline-move-subtree-up' but will not expand"
+    (interactive "p")
+    (outline-move-subtree-up args)
+    (outline-hide-subtree))
+
+  (defun jez/outline-move-subtree-down (args)
+    "Same `outline-move-subtree-down' but will not expand"
+    (interactive "p")
+    (outline-move-subtree-down args)
+    (outline-hide-subtree))
+
   (defhydra hydra-outshine (:hint nil :columns 3)
     "Outshine Commands"
-    ;; Speed Commands
+    ;; navigation
     ("n" outline-next-visible-heading "outline-next-visible-heading")
     ("p" outline-previous-visible-heading "outline-previous-visible-heading")
     ("f" outline-forward-same-level "outline-forward-same-level")
@@ -608,14 +622,16 @@ of `org-babel-temporary-directory'."
     ("j" outshine-navi "outshine-navi")
     ("J" outshine-imenu "outshine-imenu")
     ("g" outshine-imenu "outshine-imenu")
-
+    ;; visibility
     ("c" outline-cycle "outline-cycle")
+    ("a" outline-show-all "outline-show-all")
+    ("l" outline-hide-sublevels "outline-hide-sublevels")
     ("C" (outshine-cycle-buffer) "outshine-cycle-buffer")
     ("r" outshine-narrow-to-subtree "outshine-narrow-to-subtree")
     ("w" widen "widen")
-
-    ("U" outline-move-subtree-up "outline-move-subtree-up")
-    ("D" outline-move-subtree-down "outline-move-subtree-down")
+    ;; editing
+    ("U" jez/outline-move-subtree-up "outline-move-subtree-up")
+    ("D" jez/outline-move-subtree-down "outline-move-subtree-down")
     ("+" outline-demote "outline-demote")
     ("-" outline-promote "outline-promote")
     ("i" outshine-insert-heading "outshine-insert-heading")

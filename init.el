@@ -396,13 +396,6 @@ Version 2017-09-01"
 (use-package elec-pair  :defer 2 :config (electric-pair-mode t))
 (use-package paren      :defer 2 :config (show-paren-mode t))
 
-(use-package recentf
-  :defer 2
-  :bind ("C-x C-r" . recentf-open-files)
-  :config
-  (recentf-mode t)
-  (setq recentf-max-menu-items 25))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs GUI
@@ -743,6 +736,7 @@ of `org-babel-temporary-directory'."
          ("C-h m" . helm-describe-modes)
          ("C-x C-b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
+         ("C-x C-r" . helm-recentf)
          ("C-x b" . helm-buffers-list)
          ("C-x r b" . helm-bookmarks)
          ("M-x" . helm-M-x)

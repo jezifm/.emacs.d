@@ -732,10 +732,10 @@ of `org-babel-temporary-directory'."
   :bind ("C-s" . jez/swiper)
   :config
   (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
-  (defun jez/swiper (args)
+  (defun jez/swiper (arg)
     "Custom `swiper' that default to symbol on point if prefix was provided"
     (interactive "p")
-    (let* ((prefix (>= args 4))
+    (let* ((prefix (/= arg 1))
            (symbol (symbol-at-point))
            (symbol-name (symbol-name symbol)))
       (if (and prefix symbol)

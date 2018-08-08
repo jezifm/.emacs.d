@@ -151,6 +151,7 @@
 (use-package help-fns+ :defer t :commands describe-keymap)
 (use-package hydra :ensure t :defer t :commands defhydra)
 (use-package gitignore-mode :ensure t :defer t)
+(use-package treemacs :ensure t :defer t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

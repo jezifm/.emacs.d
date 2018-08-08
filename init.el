@@ -1168,6 +1168,7 @@ to the current point of the cursor (default is above)."
 (use-package web-mode
   :ensure t
   :defer t
+  :bind ("C-<tab>" . web-mode-fold-or-unfold)
   :mode (("\\.phtml\\'"      . web-mode)
          ("\\.tpl\\.php\\'"  . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)

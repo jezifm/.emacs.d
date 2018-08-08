@@ -1111,7 +1111,8 @@ to the current point of the cursor (default is above)."
 
 (use-package shell
   :defer t
-  :bind ("s-k" . (lambda () (interactive) (erase-buffer) (comint-send-input))))
+  :config
+  :bind ("s-k" . comint-clear-buffer))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -402,6 +402,7 @@ Version 2017-09-01"
 
 
 ;; ensure we have the theme
+(use-package zenburn-theme :ensure t :defer t)
 (use-package custom
   :defer 2
   :config

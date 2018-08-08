@@ -73,6 +73,7 @@
 
 (setq settings-dir (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
+(autoload 'auto-capitalize-mode "auto-capitalize")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

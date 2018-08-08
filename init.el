@@ -1251,6 +1251,26 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; YAML Mode
+
+(use-package yaml-mode
+  :ensure t
+  :defer t
+  :mode ("\\.yml\\'" . yaml-mode)
+  :config
+  (defun yml-outline-level ()
+    (let (buffer-invisibility-spec)
+      (save-excursion
+        (skip-chars-forward (rx (repeat 2 space)))
+        (current-column))))
+  (defun jez/yaml-mode-hook ()
+    (outline-minor-mode t)
+    (setq outline-regexp (rx (* (group (repeat 2 space))) alnum))
+    (setq outline-level 'yml-outline-level))
+  :hook (yaml-mode . jez/yaml-mode-hook))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup
 
 (defun jez/show-bookmarks ()

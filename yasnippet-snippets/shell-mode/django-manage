@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: django-manage
-# key: py
+# name: python-manage
+# key: pm
 # --
 python manage.py $0

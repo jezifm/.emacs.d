@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-compose-build
+# key: dcb
+# --
+docker-compose build $0

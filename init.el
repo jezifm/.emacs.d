@@ -400,22 +400,23 @@ Version 2017-09-01"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs GUI
 
-
-;; ensure we have the theme
 (use-package zenburn-theme :ensure t :defer t)
+(use-package blackboard-theme :ensure t :defer t)
+(use-package smart-mode-line :ensure t :defer t)
+(use-package smart-mode-line-powerline-theme :ensure t :defer 2)
+(add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
 (use-package custom
   :defer 2
   :config
-  (add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
-  (load-theme 'darkane t t)
-  (enable-theme 'darkane)
-  (powerline-default-theme))
-
-(use-package powerline
-  :ensure t
-  :defer t
-  :config (powerline-default-theme)
-  :after custom)
+  ;; main-theme
+  (load-theme 'blackboard t t)
+  (enable-theme 'blackboard)
+  ;; mode-line
+  (require 'smart-mode-line)
+  (require 'smart-mode-line-powerline-theme)
+  (setq sml/no-confirm-load-theme t)
+  (setq sml/theme 'powerline)
+  (sml/setup))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

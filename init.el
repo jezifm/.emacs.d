@@ -581,6 +581,7 @@ of `org-babel-temporary-directory'."
 (use-package bookmark
   :ensure t
   :defer t
+  :init (require 'projectile)
   :config
   (unless (assoc "init.el" bookmark-alist)
     (find-file "~/.emacs.d/init.el")
@@ -695,7 +696,8 @@ of `org-babel-temporary-directory'."
          ("C-i" . helm-execute-persistent-action)
          ("C-z" . helm-select-action)
          :map helm-projectile-projects-map
-         ("C-j" . helm-maybe-exit-minibuffer))
+         ("C-j" . helm-maybe-exit-minibuffer)
+         ("C-l" . jez/erase-minibuffer))
   :config
   (helm-mode 1)
   (projectile-mode)
@@ -707,7 +709,12 @@ of `org-babel-temporary-directory'."
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
         helm-ff-file-name-history-use-recentf t)
   (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t)))
+    (setq helm-google-suggest-use-curl-p t))
+
+  (defun jez/erase-minibuffer (arg)
+    (interactive "p")
+    (move-beginning-of-line arg)
+    (delete-region (point) (point-max))))
 
 (use-package helm-bookmark
   :defer t

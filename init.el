@@ -570,8 +570,37 @@ of `org-babel-temporary-directory'."
          :map outline-minor-mode-map
          ("C-c n" . outline-next-visible-heading)
          ("C-c p" . outline-previous-visible-heading)
-         ("C-<tab>" . outline-cycle))
+         ("C-<tab>" . outline-cycle)
+         ("C-#" . hydra-outshine/body))
   :init (require 'helm)
+  :config
+  (defhydra hydra-outshine (:hint nil :columns 3)
+    "Outshine Commands"
+    ;; Speed Commands
+    ("n" outline-next-visible-heading "outline-next-visible-heading")
+    ("p" outline-previous-visible-heading "outline-previous-visible-heading")
+    ("f" outline-forward-same-level "outline-forward-same-level")
+    ("u" outline-up-heading "outline-up-heading")
+    ("b" outline-backward-same-level "outline-backward-same-level")
+    ("F" outshine-next-block "outshine-next-block")
+    ("B" outshine-previous-block "outshine-previous-block")
+    ("j" outshine-navi "outshine-navi")
+    ("J" outshine-imenu "outshine-imenu")
+    ("g" outshine-imenu "outshine-imenu")
+
+    ("c" outline-cycle "outline-cycle")
+    ("C" (outshine-cycle-buffer) "outshine-cycle-buffer")
+    ("r" outshine-narrow-to-subtree "outshine-narrow-to-subtree")
+    ("w" widen "widen")
+
+    ("U" outline-move-subtree-up "outline-move-subtree-up")
+    ("D" outline-move-subtree-down "outline-move-subtree-down")
+    ("+" outline-demote "outline-demote")
+    ("-" outline-promote "outline-promote")
+    ("i" outshine-insert-heading "outshine-insert-heading")
+    ("^" outshine-sort-entries "outshine-sort-entries")
+    ("m" outline-mark-subtree "outline-mark-subtree")
+    ("q" nil "leave"))
   :hook ((outline-minor-mode . outshine-hook-function)))
 
 
@@ -863,8 +892,7 @@ of `org-babel-temporary-directory'."
          ("\\.tac\\'" . python-mode))
   :bind (
          :map python-mode-map
-         ("<tab>" . indent-for-tab-command)
-         ("C-c #" . hydra-python-outline/body))
+         ("<tab>" . indent-for-tab-command))
 
   :config
   (setq truncate-lines t)
@@ -881,36 +909,8 @@ of `org-babel-temporary-directory'."
     (setq-local outline-level 'py-outline-level)
     (setq-local outshine-use-speed-commands nil))
 
-  (defhydra hydra-python-outline (:hint nil :columns 3)
-    "Python Outline"
-    ;; Speed Commands
-    ("n" outline-next-visible-heading "outline-next-visible-heading")
-    ("p" outline-previous-visible-heading "outline-previous-visible-heading")
-    ("f" outline-forward-same-level "outline-forward-same-level")
-    ("u" outline-up-heading "outline-up-heading")
-    ("b" outline-backward-same-level "outline-backward-same-level")
-    ("F" outshine-next-block "outshine-next-block")
-    ("B" outshine-previous-block "outshine-previous-block")
-    ("j" outshine-navi "outshine-navi")
-    ("J" outshine-imenu "outshine-imenu")
-    ("g" outshine-imenu "outshine-imenu")
-
-    ("c" outline-cycle "outline-cycle")
-    ("C" (outshine-cycle-buffer) "outshine-cycle-buffer")
-    ("r" outshine-narrow-to-subtree "outshine-narrow-to-subtree")
-    ("w" widen "widen")
-
-    ("U" outline-move-subtree-up "outline-move-subtree-up")
-    ("D" outline-move-subtree-down "outline-move-subtree-down")
-    ("+" outline-demote "outline-demote")
-    ("-" outline-promote "outline-promote")
-    ("i" outshine-insert-heading "outshine-insert-heading")
-    ("^" outshine-sort-entries "outshine-sort-entries")
-    ("m" outline-mark-subtree "outline-mark-subtree")
-    ("q" nil "leave"))
-
   (define-key python-mode-map (kbd "C-c C-p") nil)
-  :hook (python-mode . outshine-python-mode-hook))
+  :hook ((python-mode . outshine-python-mode-hook)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

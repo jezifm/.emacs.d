@@ -1176,7 +1176,18 @@ to the current point of the cursor (default is above)."
 (use-package shell
   :defer t
   :config
-  :bind ("s-k" . comint-clear-buffer))
+  (defun sh-outline-level ()
+    (save-excursion
+      (skip-chars-forward "#")
+      (current-column)))
+  (defun outshine-sh-mode-hook ()
+    (setq-local outshine-use-speed-commands t)
+    (outline-minor-mode t)
+    (setq-local outline-regexp "#")
+    (setq-local outline-level 'sh-outline-level)
+    (setq-local outshine-use-speed-commands nil))
+  :bind ("s-k" . comint-clear-buffer)
+  :hook (sh-mode . outshine-sh-mode-hook))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

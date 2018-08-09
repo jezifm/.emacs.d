@@ -1339,6 +1339,15 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Latex Mode
+
+(use-package latex-mode
+ :defer t
+ :config
+ (setq TeX-save-query nil)
+ (setq TeX-command-force "Latex"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup
 
 (defun jez/show-bookmarks ()

@@ -497,6 +497,7 @@ Version 2017-09-01"
   :config
   (setq user-full-name "Jezrael Arciaga")
   (setq user-mail-address "jezarciaga@gmail.com")
+  (setq org-use-speed-commands t)
   (setq org-export-coding-system 'utf-8)
   (setq org-log-done 'time)
   (setq org-src-fontify-natively t)

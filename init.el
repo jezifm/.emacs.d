@@ -556,9 +556,16 @@ of `org-babel-temporary-directory'."
 
   (defun org-babel-execute:yaml (body params) body)
 
-  (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-  (add-hook 'org-babel-after-execute-hook 'shk-fix-inline-images)
-  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (defun jez/org-disable-font-theme ()
+    "Remove font changes from current theme"
+    (interactive)
+    (dolist (face '(org-level-1
+		    org-level-2
+		    org-level-3
+		    org-level-4
+		    org-level-5))
+      (set-face-attribute face nil :weight 'normal :height 1.0)))
+
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   (advice-add 'org-latex--inline-image :around
               (lambda (orig link info)
@@ -566,7 +573,11 @@ of `org-babel-temporary-directory'."
                  "\\begin{center}"
                  (funcall orig link info)
                  "\\end{center}")))
-  (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages)
+  :hook ((org-after-todo-statistics . org-summary-todo)
+         (org-babel-after-execute . shk-fix-inline-images)
+         (org-mode . auto-fill-mode)
+         (org-mode . jez/org-disable-font-theme)))
 
 (use-package org-capture
   :bind (("C-c c" . org-capture)

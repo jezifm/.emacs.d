@@ -1301,7 +1301,7 @@ to the current point of the cursor (default is above)."
   :defer t
   :mode ("\\.yml\\'" . yaml-mode)
   :config
-  (defun yml-outline-level ()
+  (defun yaml-outline-level ()
     (let (buffer-invisibility-spec)
       (save-excursion
         (skip-chars-forward (rx (repeat 2 space)))
@@ -1309,7 +1309,7 @@ to the current point of the cursor (default is above)."
   (defun jez/yaml-mode-hook ()
     (outline-minor-mode t)
     (setq outline-regexp (rx (* (group (repeat 2 space))) alnum))
-    (setq outline-level 'yml-outline-level))
+    (setq outline-level 'yaml-outline-level))
   :hook (yaml-mode . jez/yaml-mode-hook))
 
 

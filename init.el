@@ -1341,11 +1341,14 @@ to the current point of the cursor (default is above)."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Latex Mode
 
-(use-package latex-mode
+(use-package tex-mode
  :defer t
  :config
- (setq TeX-save-query nil)
- (setq TeX-command-force "Latex"))
+ (defun jez/latex-mode-hook ()
+   (setq-local TeX-save-query nil)
+   (setq-local TeX-command-force "Latex"))
+ :hook ((latex-mode . jez/latex-mode-hook)
+        (LaTeX-mode . jez/latex-mode-hook)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup

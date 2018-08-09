@@ -7,7 +7,7 @@
 (setq auto-save-default nil)                                          ; remove backup
 (setq mouse-wheel-progressive-speed nil)                              ; smooth scroll
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil))) ; smooth scroll
-(setq split-width-threshold 1)                                        ; default split to vertical
+(setq split-width-threshold 160)                                      ; default split to vertical
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))          ; maximize window
 

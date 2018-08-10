@@ -363,7 +363,18 @@ Version 2017-09-01"
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
 
+(defun jez/outline-mode-adhoc (regex)
+  "Enable outline-mode using REGEX as pattern"
+  (interactive "sRegex: ")
+  (outline-minor-mode t)
+  (defun jez/outline-mode-adhoc-level ()
+    (skip-chars-forward (rx (not alnum)))
+    (current-column))
+  (setq-local outline-regexp regex)
+  (setq-local outline-level 'jez/outline-mode-adhoc-level))
+
 (defun toggle-window-split ()
+  "Change split orientation"
   (interactive)
   (if (= (count-windows) 2)
       (let* ((this-win-buffer (window-buffer))

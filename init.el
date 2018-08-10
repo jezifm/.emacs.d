@@ -505,7 +505,8 @@ Version 2017-09-01"
   (setq org-todo-keyword-faces
         '(("TODO" . "red")
           ("STARTED" . "orange")
-          ("WAITING" . "yellow")))
+          ("WAITING" . "yellow")
+          ("DONE" . "green")))
   (setq org-confirm-babel-evaluate nil)
   (setq org-babel-languages
         '((ditaa . t)

@@ -1359,6 +1359,20 @@ to the current point of the cursor (default is above)."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Markdown Mode
+
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :config
+  (defun jez/markdown-mode-hook ()
+    (toggle-truncate-lines t)
+    (jez/outline-mode-adhoc "#")
+    (setq-local outshine-use-speed-commands t))
+  :hook (markdown-mode . jez/markdown-mode-hook))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Latex Mode
 
 (use-package tex-mode

@@ -655,6 +655,7 @@ of `org-babel-temporary-directory'."
     ("g" outshine-imenu "outshine-imenu")
     ;; visibility
     ("c" outline-cycle "outline-cycle")
+    ("<tab>" outline-cycle "outline-cycle")
     ("a" outline-show-all "outline-show-all")
     ("l" outline-hide-sublevels "outline-hide-sublevels")
     ("C" (outshine-cycle-buffer) "outshine-cycle-buffer")

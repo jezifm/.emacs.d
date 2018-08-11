@@ -968,7 +968,9 @@ of `org-babel-temporary-directory'."
          ("<tab>" . indent-for-tab-command))
 
   :config
-  (setq truncate-lines t)
+  (defun jez/python-mode-hook ()
+    (setq truncate-lines t))
+
   (defun py-outline-level ()
     "Return header level on current point"
     (let (buffer-invisibility-spec)
@@ -983,7 +985,8 @@ of `org-babel-temporary-directory'."
     (setq-local outshine-use-speed-commands nil))
 
   (define-key python-mode-map (kbd "C-c C-p") nil)
-  :hook ((python-mode . outshine-python-mode-hook)))
+  :hook ((python-mode . outshine-python-mode-hook)
+         (python-mode . jez/python-mode-hook)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

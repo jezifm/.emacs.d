@@ -821,7 +821,8 @@ of `org-babel-temporary-directory'."
 
 (use-package helm-bookmark
   :defer t
-  :bind (:map helm-bookmark-map ("C-j" . helm-maybe-exit-minibuffer)))
+  :bind (:map helm-bookmark-map ("C-j" . helm-maybe-exit-minibuffer))
+  :after helm)
 (use-package helm-config :after helm)
 (use-package helm-dash :ensure t :after helm)
 (use-package helm-describe-modes :ensure t :after helm)
@@ -830,7 +831,8 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :bind ("C-c s" . helm-tramp)
-  :config (setq tramp-default-method "ssh"))
+  :config (setq tramp-default-method "ssh")
+  :after helm)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

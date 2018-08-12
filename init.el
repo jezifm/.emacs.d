@@ -629,7 +629,6 @@ of `org-babel-temporary-directory'."
          ("C-#" . hydra-outshine/body)
          ("M-<up>" . jez/outline-move-subtree-up)
          ("M-<down>" . jez/outline-move-subtree-down))
-  :init (require 'helm)
   :config
   (defun jez/outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
@@ -682,13 +681,13 @@ of `org-babel-temporary-directory'."
 (use-package bookmark
   :ensure t
   :defer t
-  :init (require 'projectile)
   :config
   (unless (assoc "init.el" bookmark-alist)
     (find-file "~/.emacs.d/init.el")
     (bookmark-set "init.el")
     (kill-buffer))
   ;; add bookmarks to projectile
+  (require 'projectile)
   (setq projectile-known-projects
 	(-filter
          'file-directory-p

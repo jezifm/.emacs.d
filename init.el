@@ -34,6 +34,9 @@
 (global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
 (global-set-key (kbd "M-i") 'back-to-indentation)
 
+;; registers
+(set-register ?i '(file . "~/.emacs.d/init.el"))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs Version

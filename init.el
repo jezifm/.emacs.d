@@ -517,10 +517,9 @@ Version 2017-09-01"
   (setq org-export-coding-system 'utf-8)
   (setq org-log-done 'time)
   (setq org-src-fontify-natively t)
-  (setq org-todo-keywords '((sequence "TODO" "STARTED" "WAITING" "|" "DONE")))
+  (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE")))
   (setq org-todo-keyword-faces
         '(("TODO" . "red")
-          ("STARTED" . "orange")
           ("WAITING" . "yellow")
           ("DONE" . "green")))
   (setq org-confirm-babel-evaluate nil)

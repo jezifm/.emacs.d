@@ -785,6 +785,21 @@ of `org-babel-temporary-directory'."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Helm Mode
 
+(use-package projectile
+ :defer t
+ :config
+ (defadvice projectile-on (around exlude-tramp activate)
+   "This should disable projectile when visiting a remote file"
+   (unless  (--any? (and it (file-remote-p it))
+                    (list
+                     (buffer-file-name)
+                     list-buffers-directory
+                     default-directory
+                     dired-directory))
+     ad-do-it))
+ (setq projectile-mode-line "Projectile")
+ (projectile-mode))
+
 (use-package helm
   :ensure t
   :defer t
@@ -806,8 +821,8 @@ of `org-babel-temporary-directory'."
          ("C-j" . helm-maybe-exit-minibuffer)
          ("C-l" . jez/erase-minibuffer))
   :config
+  (require 'projectile)
   (helm-mode 1)
-  (projectile-mode)
   (helm-projectile-on)
   (setq projectile-completion-system 'helm)
   (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window

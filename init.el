@@ -154,7 +154,6 @@
 (use-package gitignore-mode :ensure t :defer t)
 (use-package help-fns+      :defer t  :commands describe-keymap)
 (use-package hydra          :ensure t :defer t :commands defhydra)
-(use-package nginx-mode     :ensure t :defer t)
 (use-package treemacs       :ensure t :defer t)
 (use-package which-key      :ensure t :defer t)
 
@@ -1405,6 +1404,15 @@ to the current point of the cursor (default is above)."
    (setq-local TeX-command-force "Latex"))
  :hook ((latex-mode . jez/latex-mode-hook)
         (LaTeX-mode . jez/latex-mode-hook)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Nginx Mode
+
+(use-package nginx-mode
+  :ensure t
+  :defer t
+  :mode ("Caddyfile\\'" . nginx-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup

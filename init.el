@@ -162,9 +162,9 @@
   (make-directory custom-host-dir))
 
 ;; update variables to use host
-(defun jez/load-custom-initel ()
+(defun jez-load-custom-initel ()
   (load-file (expand-file-name "init.el" custom-host-dir)))
-(add-hook 'after-init-hook 'jez/load-custom-initel)
+(add-hook 'after-init-hook 'jez-load-custom-initel)
 (setq custom-file (expand-file-name "custom.el" custom-host-dir))
 (setq bookmark-default-file (expand-file-name "bookmarks" custom-host-dir))
 
@@ -172,9 +172,9 @@
 ;;; Emacs core
 
 ;; key bindings custom
-(global-set-key (kbd "C-z") 'jez/shell-shortcut)
-(global-set-key (kbd "M-J") 'jez/simplify)
-(global-set-key (kbd "M-j") 'jez/join-line)
+(global-set-key (kbd "C-z") 'jez-shell-shortcut)
+(global-set-key (kbd "M-J") 'jez-simplify)
+(global-set-key (kbd "M-j") 'jez-join-line)
 (global-set-key (kbd "C-c C-d") 'insert-date)
 (global-set-key (kbd "C-x |") 'toggle-window-split)
 
@@ -190,19 +190,19 @@
         (system-time-locale "en_US"))
     (insert (format-time-string format))))
 
-(defun jez/annotate ()
+(defun jez-annotate ()
   "Insert annotation for commenting"
   (interactive)
   (insert "--jez ")
   (insert-date nil))
 
-(defun jez/clear-font-properties ()
+(defun jez-clear-font-properties ()
   "Clear font properties"
   (interactive)
   (let ((inhibit-read-only t))
     (set-text-properties (point-min) (point-max) nil)))
 
-(defun jez/shell-shortcut ()
+(defun jez-shell-shortcut ()
   "Create shell buffer based on current buffer name"
   (interactive)
   (let* ((buffer-name-current (buffer-name (current-buffer)))
@@ -214,7 +214,7 @@
       (other-window 1))
     (switch-to-buffer buffer-name-shell)))
 
-(defun jez/guess-shell-buffer-name ()
+(defun jez-guess-shell-buffer-name ()
   "Return name of buffer with 'sh-' as prefix"
   (interactive)
   (let* ((shell-pattern "^sh-.*")
@@ -223,12 +223,12 @@
                                   buffers)))
     (car shell-buffers)))
 
-(defun jez/join-line ()
+(defun jez-join-line ()
   "Custom join line"
   (interactive)
   (join-line -1))
 
-(defun jez/simplify ()
+(defun jez-simplify ()
   "Combine multiline"
   (interactive)
   (back-to-indentation)
@@ -267,13 +267,13 @@ Note: just like `align-regexp' but better"
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-(defun jez/camelize (s)
+(defun jez-camelize (s)
   "Convert under_score string S to CamelCase string."
   (mapconcat 'identity (mapcar
                         #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
 
-(defun jez/snake-case ()
+(defun jez-snake-case ()
   "Convert region to snake case"
   (interactive)
   (save-excursion
@@ -283,13 +283,13 @@ Note: just like `align-regexp' but better"
       (goto-char (point-min))
       (replace-string " " "_"))))
 
-(defun jez/abbreviate (string &optional separator)
+(defun jez-abbreviate (string &optional separator)
   "Return first letter on each word of STRING using SEPERATOR"
   (interactive "s")
   (let* ((separator (or separator "_")))
     (s-join "" (--map (s-left 1 it) (s-split separator string)))))
 
-(defun jez/clear-buffers ()
+(defun jez-clear-buffers ()
   "Clears all buffer except from some default"
   (interactive)
   (let* ((ignore-list '("*scratch*" "*Messages*" "*Pymacs*" "init.el"))
@@ -299,12 +299,12 @@ Note: just like `align-regexp' but better"
            (buffer-list))))
     (mapc 'kill-buffer buffer-list)))
 
-(defun jez/insert-current-buffer-name ()
+(defun jez-insert-current-buffer-name ()
   "Insert name of current buffer"
   (interactive)
   (insert (buffer-name (current-buffer))))
 
-(defun jez/occur (regexp)
+(defun jez-occur (regexp)
   "List lines containing REGEXP on current buffer"
   (interactive "sView lines matching: ")
   (let ((current-buffer (buffer-name))
@@ -317,7 +317,7 @@ Note: just like `align-regexp' but better"
     ;;    (select-window current-window)
     ))
 
-(defun jez/change-theme ()
+(defun jez-change-theme ()
   "Change current emacs theme without confirmation"
   (interactive)
   (let ((theme (intern (completing-read "Load custom theme: "
@@ -359,15 +359,15 @@ Version 2017-09-01"
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
 
-(defun jez/outline-mode-adhoc (regex)
+(defun jez-outline-mode-adhoc (regex)
   "Enable outline-mode using REGEX as pattern"
   (interactive "sRegex: ")
   (outline-minor-mode t)
-  (defun jez/outline-mode-adhoc-level ()
+  (defun jez-outline-mode-adhoc-level ()
     (skip-chars-forward (rx (not alnum)))
     (current-column))
   (setq-local outline-regexp regex)
-  (setq-local outline-level 'jez/outline-mode-adhoc-level))
+  (setq-local outline-level 'jez-outline-mode-adhoc-level))
 
 (defun toggle-window-split ()
   "Change split orientation"
@@ -564,7 +564,7 @@ of `org-babel-temporary-directory'."
 
   (defun org-babel-execute:yaml (body params) body)
 
-  (defun jez/org-disable-font-theme ()
+  (defun jez-org-disable-font-theme ()
     "Remove font changes from current theme"
     (interactive)
     (dolist (face '(org-level-1
@@ -585,7 +585,7 @@ of `org-babel-temporary-directory'."
   :hook ((org-after-todo-statistics . org-summary-todo)
          (org-babel-after-execute . shk-fix-inline-images)
          (org-mode . auto-fill-mode)
-         (org-mode . jez/org-disable-font-theme)))
+         (org-mode . jez-org-disable-font-theme)))
 
 (use-package org-capture
   :bind (("C-c c" . org-capture)
@@ -614,17 +614,17 @@ of `org-babel-temporary-directory'."
          ("C-c p" . outline-previous-visible-heading)
          ("C-<tab>" . outline-cycle)
          ("C-#" . hydra-outshine/body)
-         ("M-<up>" . jez/outline-move-subtree-up)
-         ("M-<down>" . jez/outline-move-subtree-down))
+         ("M-<up>" . jez-outline-move-subtree-up)
+         ("M-<down>" . jez-outline-move-subtree-down))
   :init (require 'helm)
   :config
-  (defun jez/outline-move-subtree-up (args)
+  (defun jez-outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
     (interactive "p")
     (outline-move-subtree-up args)
     (outline-hide-subtree))
 
-  (defun jez/outline-move-subtree-down (args)
+  (defun jez-outline-move-subtree-down (args)
     "Same `outline-move-subtree-down' but will not expand"
     (interactive "p")
     (outline-move-subtree-down args)
@@ -652,8 +652,8 @@ of `org-babel-temporary-directory'."
     ("r" outshine-narrow-to-subtree "outshine-narrow-to-subtree")
     ("w" widen "widen")
     ;; editing
-    ("U" jez/outline-move-subtree-up "outline-move-subtree-up")
-    ("D" jez/outline-move-subtree-down "outline-move-subtree-down")
+    ("U" jez-outline-move-subtree-up "outline-move-subtree-up")
+    ("D" jez-outline-move-subtree-down "outline-move-subtree-down")
     ("+" outline-demote "outline-demote")
     ("-" outline-promote "outline-promote")
     ("i" outshine-insert-heading "outshine-insert-heading")
@@ -712,7 +712,7 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :config
-  (defun jez/mark-word ()
+  (defun jez-mark-word ()
     "Use to highlight a word"
     (interactive)
     (let ((non-word "[^[:alnum:]-_]"))
@@ -722,38 +722,38 @@ of `org-babel-temporary-directory'."
       (search-forward-regexp non-word)
       (backward-char)))
 
-  (defun jez/mark-multiple (arg)
+  (defun jez-mark-multiple (arg)
     "Simulate sublime function on multiple cursor"
     (interactive "p")
     (if (not (region-active-p))
-        (jez/mark-word)
+        (jez-mark-word)
       (mc/mark-next-like-this arg)))
 
-  (defun jez/mark-multiple (arg)
+  (defun jez-mark-multiple (arg)
     "Simulate sublime function on multiple cursor"
     (interactive "p")
     (if (not (region-active-p))
-        (jez/mark-word)
+        (jez-mark-word)
       (mc/mark-next-like-this arg)))
 
-  (defun jez/mc-add-cmds-once (func)
+  (defun jez-mc-add-cmds-once (func)
     "Add FUNC to `mc--default-cmds-to-run-once'. Prevent duplicate entry"
     (push func mc--default-cmds-to-run-once)
     (remove-duplicates mc--default-cmds-to-run-once))
 
-  (defun jez/mc-add-cmds-all (func)
+  (defun jez-mc-add-cmds-all (func)
     "Add FUNC to `mc--default-cmds-to-run-for-all'. Prevent duplicate entry"
     (push func mc--default-cmds-to-run-for-all)
     (remove-duplicates mc--default-cmds-to-run-once))
 
   ;; run once
-  (jez/mc-add-cmds-once 'jez/mark-multiple)
-  (jez/mc-add-cmds-once 'vr/mc-mark)
+  (jez-mc-add-cmds-once 'jez-mark-multiple)
+  (jez-mc-add-cmds-once 'vr/mc-mark)
   ;; run to all cursor
-  (jez/mc-add-cmds-all 'org-self-insert-command)
-  (jez/mc-add-cmds-all 'paredit-backward-kill-word)
-  (jez/mc-add-cmds-all 'paredit-open-parenthesis)
-  (jez/mc-add-cmds-all 'paredit-open-round)
+  (jez-mc-add-cmds-all 'org-self-insert-command)
+  (jez-mc-add-cmds-all 'paredit-backward-kill-word)
+  (jez-mc-add-cmds-all 'paredit-open-parenthesis)
+  (jez-mc-add-cmds-all 'paredit-open-round)
 
   :bind (("C-<" . mc/mark-previous-like-this)
          ("C->" . mc/mark-next-like-this)
@@ -761,7 +761,7 @@ of `org-babel-temporary-directory'."
          ("C-S-c C-S-c" . mc/edit-lines)
          ("C-S-c C-S-e" . mc/edit-ends-of-lines)
          ("C-c C-<" . mc/mark-all-like-this)
-         ("s-d" . jez/mark-multiple)))
+         ("s-d" . jez-mark-multiple)))
 
 
 ;;; Helm Mode
@@ -800,7 +800,7 @@ of `org-babel-temporary-directory'."
          ("C-z" . helm-select-action)
          :map helm-projectile-projects-map
          ("C-j" . helm-maybe-exit-minibuffer)
-         ("C-l" . jez/erase-minibuffer))
+         ("C-l" . jez-erase-minibuffer))
   :config
   (require 'projectile)
   (helm-mode 1)
@@ -814,7 +814,7 @@ of `org-babel-temporary-directory'."
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
 
-  (defun jez/erase-minibuffer (arg)
+  (defun jez-erase-minibuffer (arg)
     (interactive "p")
     (move-beginning-of-line arg)
     (delete-region (point) (point-max))))
@@ -840,10 +840,10 @@ of `org-babel-temporary-directory'."
 (use-package swiper
   :ensure t
   :defer t
-  :bind ("C-s" . jez/swiper)
+  :bind ("C-s" . jez-swiper)
   :config
   (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
-  (defun jez/swiper (arg)
+  (defun jez-swiper (arg)
     "Custom `swiper' that default to symbol on point if prefix was provided"
     (interactive "p")
     (let* ((prefix (/= arg 1))
@@ -963,7 +963,7 @@ of `org-babel-temporary-directory'."
          ("<tab>" . indent-for-tab-command))
 
   :config
-  (defun jez/python-mode-hook ()
+  (defun jez-python-mode-hook ()
     (setq truncate-lines t))
 
   (defun py-outline-level ()
@@ -981,7 +981,7 @@ of `org-babel-temporary-directory'."
 
   (define-key python-mode-map (kbd "C-c C-p") nil)
   :hook ((python-mode . outshine-python-mode-hook)
-         (python-mode . jez/python-mode-hook)))
+         (python-mode . jez-python-mode-hook)))
 
 
 ;;; Elpy
@@ -991,12 +991,12 @@ of `org-babel-temporary-directory'."
   :defer t
   :config
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
-  (defun jez/python-disable-company-mode () (company-mode -1))
-  (defun jez/disable-elpy () (ignore-errors (elpy-mode -1)))
-  :hook ((org-mode . jez/disable-elpy)
-         (shell-mode . jez/disable-elpy)
+  (defun jez-python-disable-company-mode () (company-mode -1))
+  (defun jez-disable-elpy () (ignore-errors (elpy-mode -1)))
+  :hook ((org-mode . jez-disable-elpy)
+         (shell-mode . jez-disable-elpy)
          (python-mode . elpy-mode)
-         (elpy-mode . jez/python-disable-company-mode)))
+         (elpy-mode . jez-python-disable-company-mode)))
 
 
 ;;; Email - GNUS
@@ -1030,7 +1030,7 @@ of `org-babel-temporary-directory'."
   :hook ((sql-mode . sqlup-mode)
          (sql-interactive-mode  . sqlup-mode))
   :config
-  (defun jez/sql-connect (connection &optional new-name)
+  (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
     (interactive
      (if sql-connection-alist
@@ -1118,8 +1118,8 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind (("M-I" . change-inner)
          ("M-O" . change-inner)
-         ("s-i" . jez/copy-inner)
-         ("s-o" . jez/copy-outer))
+         ("s-i" . jez-copy-inner)
+         ("s-o" . jez-copy-outer))
   :config
   (load-file "~/.emacs.d/custom-ci.el"))
 
@@ -1207,11 +1207,11 @@ to the current point of the cursor (default is above)."
   :config
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight nil)
-  (defun jez/web-mode-hook ()
+  (defun jez-web-mode-hook ()
     (electric-pair-local-mode -1)
     (toggle-truncate-lines t)
     (web-mode-set-engine "django"))
-  :hook ((web-mode . jez/web-mode-hook)))
+  :hook ((web-mode . jez-web-mode-hook)))
 
 
 ;;; JS Mode
@@ -1227,15 +1227,15 @@ to the current point of the cursor (default is above)."
 (use-package css-mode
   :ensure t
   :defer t
-  :commands jez/css-minify
-  :bind (:map css-mode-map ("C-c m" . jez/css-minify))
+  :commands jez-css-minify
+  :bind (:map css-mode-map ("C-c m" . jez-css-minify))
   :config
-  (defun jez/css-minify-uglify ()
+  (defun jez-css-minify-uglify ()
     "CSS Minify current buffer using `uglify'"
     (let ((minified (shell-command-to-string (format "uglifycss %s" buffer-file-name))))
       (erase-buffer)
       (insert minified)))
-  (defun jez/css-minify-requests ()
+  (defun jez-css-minify-requests ()
     "CSS Minify current buffer via `cssminifier.com'"
     (let ((url-request-method "POST")
           (url-request-extra-headers
@@ -1248,12 +1248,12 @@ to the current point of the cursor (default is above)."
                           (erase-buffer)
                           (insert body))))
                     (list (buffer-name (current-buffer))))))
-  (defun jez/css-minify ()
+  (defun jez-css-minify ()
     "CSS Minify current buffer"
     (interactive)
     (if (executable-find "uglifycss")
-        (jez/css-minify-uglify)
-      (jez/css-minify-requests))))
+        (jez-css-minify-uglify)
+      (jez-css-minify-requests))))
 
 
 ;;; Occur mode
@@ -1261,16 +1261,16 @@ to the current point of the cursor (default is above)."
 (use-package replace
   :defer t
   :bind (:map occur-mode-map
-         ("p" . jez/occur-prev)
-         ("n" . jez/occur-next))
+         ("p" . jez-occur-prev)
+         ("n" . jez-occur-next))
   :config
-  (defun jez/occur-prev ()
+  (defun jez-occur-prev ()
     "Same with `occur-prev' but also move to occurence"
     (interactive)
     (occur-prev)
     (occur-mode-display-occurrence))
 
-  (defun jez/occur-next ()
+  (defun jez-occur-next ()
     "Same with `occur-next' but also move to occurence"
     (interactive)
     (occur-next)
@@ -1282,17 +1282,17 @@ to the current point of the cursor (default is above)."
 (use-package elisp-mode
   :defer t
   :bind (:map emacs-lisp-mode-map
-         ("C-c d" . jez/describe-symbol-at-point)
-	 ("C-c C-d" . jez/describe-symbol-at-point))
+         ("C-c d" . jez-describe-symbol-at-point)
+	 ("C-c C-d" . jez-describe-symbol-at-point))
   :init
-  (defun jez/describe-symbol-at-point (arg)
+  (defun jez-describe-symbol-at-point (arg)
     "Describe current symbol on point on other window"
     (interactive "p")
     (describe-symbol (symbol-at-point))
     (when (< arg 4)
       (other-window 1)))
 
-  (defun jez/emacs-lisp-mode-hook ()
+  (defun jez-emacs-lisp-mode-hook ()
     (interactive)
     (setq indent-tabs-mode nil)
     (toggle-truncate-lines t))
@@ -1301,7 +1301,7 @@ to the current point of the cursor (default is above)."
     (setq-local outshine-use-speed-commands t)
     (outline-minor-mode t))
 
-  :hook ((emacs-lisp-mode . jez/emacs-lisp-mode-hook)
+  :hook ((emacs-lisp-mode . jez-emacs-lisp-mode-hook)
          (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)))
 
 
@@ -1323,11 +1323,11 @@ to the current point of the cursor (default is above)."
       (save-excursion
         (skip-chars-forward (rx (repeat 2 space)))
         (current-column))))
-  (defun jez/yaml-mode-hook ()
+  (defun jez-yaml-mode-hook ()
     (outline-minor-mode t)
     (setq outline-regexp (rx (* (group (repeat 2 space))) alnum))
     (setq outline-level 'yaml-outline-level))
-  :hook (yaml-mode . jez/yaml-mode-hook))
+  :hook (yaml-mode . jez-yaml-mode-hook))
 
 
 ;;; Markdown Mode
@@ -1336,11 +1336,11 @@ to the current point of the cursor (default is above)."
   :ensure t
   :defer t
   :config
-  (defun jez/markdown-mode-hook ()
+  (defun jez-markdown-mode-hook ()
     (toggle-truncate-lines t)
-    (jez/outline-mode-adhoc "#")
+    (jez-outline-mode-adhoc "#")
     (setq-local outshine-use-speed-commands t))
-  :hook (markdown-mode . jez/markdown-mode-hook))
+  :hook (markdown-mode . jez-markdown-mode-hook))
 
 
 ;;; Latex Mode
@@ -1348,11 +1348,11 @@ to the current point of the cursor (default is above)."
 (use-package tex-mode
  :defer t
  :config
- (defun jez/latex-mode-hook ()
+ (defun jez-latex-mode-hook ()
    (setq-local TeX-save-query nil)
    (setq-local TeX-command-force "Latex"))
- :hook ((latex-mode . jez/latex-mode-hook)
-        (LaTeX-mode . jez/latex-mode-hook)))
+ :hook ((latex-mode . jez-latex-mode-hook)
+        (LaTeX-mode . jez-latex-mode-hook)))
 
 
 ;;; Nginx Mode
@@ -1376,17 +1376,17 @@ to the current point of the cursor (default is above)."
 
 ;;; Startup
 
-(defun jez/show-bookmarks ()
+(defun jez-show-bookmarks ()
   (call-interactively 'list-bookmarks))
 
-(defun jez/display-init-time ()
-  (defun jez/show-init-load-time ()
+(defun jez-display-init-time ()
+  (defun jez-show-init-load-time ()
     (message "It took %s to load emacs" (emacs-init-time)))
-  (advice-add 'display-startup-echo-area-message :after #'jez/show-init-load-time))
+  (advice-add 'display-startup-echo-area-message :after #'jez-show-init-load-time))
 
-(defun jez/startup ()
+(defun jez-startup ()
   "Run after emacs init"
-  (jez/show-bookmarks)
-  (jez/display-init-time))
+  (jez-show-bookmarks)
+  (jez-display-init-time))
 
-(add-hook 'after-init-hook 'jez/startup)
+(add-hook 'after-init-hook 'jez-startup)

@@ -127,7 +127,6 @@
      swiper
      undo-tree
      use-package
-     visual-regexp
      web-beautify
      web-mode
      window-numbering
@@ -181,7 +180,6 @@
 
 ;; key bindings custom
 (global-set-key (kbd "C-z") 'jez/shell-shortcut)
-(global-set-key (kbd "M-%") 'vr/query-replace)
 (global-set-key (kbd "M-J") 'jez/simplify)
 (global-set-key (kbd "M-j") 'jez/join-line)
 (global-set-key (kbd "C-c C-d") 'insert-date)
@@ -1412,6 +1410,18 @@ to the current point of the cursor (default is above)."
   :ensure t
   :defer t
   :mode ("Caddyfile\\'" . nginx-mode))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Visual Regexp
+
+(use-package visual-regexp
+ :ensure t
+ :defer t
+ :bind (("C-c r" . vr/replace)
+        ("C-c %" . vr/query-replace)
+        ("M-%" . vr/query-replace)
+        ("C-M-/" . vr/mc-mark)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

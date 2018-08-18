@@ -38,7 +38,6 @@
 (set-register ?i '(file . "~/.emacs.d/init.el"))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs Version
 
 (when (version< emacs-version "26")
@@ -46,7 +45,6 @@
                  emacs-version)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - el-get
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -62,14 +60,12 @@
 (el-get 'sync)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Package Manager - melpa
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Local Dependencies
 ;;
 ;; dependencies included in `.emacs.d' but is not within package
@@ -80,7 +76,6 @@
 (autoload 'auto-capitalize-mode "auto-capitalize")
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Install missing dependencies
 
 ;; package to install
@@ -157,7 +152,6 @@
 (use-package which-key      :ensure t :defer t)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Host Specific Customization
 ;;
 ;; persist bookmarks and other customization when switching `.emacs.d'
@@ -175,7 +169,6 @@
 (setq bookmark-default-file (expand-file-name "bookmarks" custom-host-dir))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs core
 
 ;; key bindings custom
@@ -403,7 +396,6 @@ Version 2017-09-01"
       (if this-win-2nd (other-window 1))))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs Built-in Mode
 
 (use-package menu-bar   :defer 2 :config (menu-bar-mode -1))
@@ -413,7 +405,6 @@ Version 2017-09-01"
 (use-package paren      :defer 2 :config (show-paren-mode t))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs GUI
 
 (use-package zenburn-theme :ensure t :defer t)
@@ -435,7 +426,6 @@ Version 2017-09-01"
   (sml/setup))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Window Numbering
 
 (use-package window-numbering
@@ -501,7 +491,6 @@ Version 2017-09-01"
   :hook (magit-mode . window-numbering-remove-keymap))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Org Mode
 
 (use-package org
@@ -612,7 +601,6 @@ of `org-babel-temporary-directory'."
   :after org)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Outshine Mode
 
 (use-package imenu :commands imenu-choose-buffer-index)
@@ -675,7 +663,6 @@ of `org-babel-temporary-directory'."
   :hook ((outline-minor-mode . outshine-hook-function)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Boookmark
 
 (use-package bookmark
@@ -698,7 +685,6 @@ of `org-babel-temporary-directory'."
            'string<)))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Dired Mode
 
 (use-package dired
@@ -711,7 +697,6 @@ of `org-babel-temporary-directory'."
   (setq dired-listing-switches "-lah"))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Expand Region
 
 (use-package expand-region
@@ -721,7 +706,6 @@ of `org-babel-temporary-directory'."
          ("M-=" . er/contract-region)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Multiple Cursor
 
 (use-package multiple-cursors
@@ -780,7 +764,6 @@ of `org-babel-temporary-directory'."
          ("s-d" . jez/mark-multiple)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Helm Mode
 
 (use-package projectile
@@ -852,7 +835,6 @@ of `org-babel-temporary-directory'."
   :after helm)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Swiper
 
 (use-package swiper
@@ -872,7 +854,6 @@ of `org-babel-temporary-directory'."
         (swiper)))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Magit Mode
 
 (use-package magit
@@ -890,7 +871,6 @@ of `org-babel-temporary-directory'."
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Ace Jump Mode
 
 (use-package ace-jump-mode
@@ -900,7 +880,6 @@ of `org-babel-temporary-directory'."
          ("C-c C-SPC" . ace-jump-mode)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Keychord
 
 (use-package iy-go-to-char
@@ -916,7 +895,6 @@ of `org-babel-temporary-directory'."
   (key-chord-define-global "fj" 'iy-go-to-char))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Tramp Mode
 
 (use-package tramp
@@ -927,7 +905,6 @@ of `org-babel-temporary-directory'."
   (add-to-list 'tramp-default-proxies-alist '((regexp-quote (system-name)) nil nil)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Yasnippet
 
 (use-package yasnippet
@@ -961,7 +938,6 @@ of `org-babel-temporary-directory'."
   :after yasnippet)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Auto Complete
 
 (use-package setup-hippie
@@ -975,7 +951,6 @@ of `org-babel-temporary-directory'."
   :config (global-auto-complete-mode -1))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Python Mode
 
 (use-package python
@@ -1009,7 +984,6 @@ of `org-babel-temporary-directory'."
          (python-mode . jez/python-mode-hook)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Elpy
 
 (use-package elpy
@@ -1025,7 +999,6 @@ of `org-babel-temporary-directory'."
          (elpy-mode . jez/python-disable-company-mode)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Email - GNUS
 
 ;; always on topic mode
@@ -1044,7 +1017,6 @@ of `org-babel-temporary-directory'."
         gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SQL Mode
 
 (use-package sql
@@ -1074,7 +1046,6 @@ of `org-babel-temporary-directory'."
   (toggle-truncate-lines t))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Undo Tree Mode
 
 (use-package undo-tree
@@ -1085,7 +1056,6 @@ of `org-babel-temporary-directory'."
   :config (undo-tree-mode t))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Plantuml - For diagram and UML
 
 (use-package plantuml-mode
@@ -1097,7 +1067,6 @@ of `org-babel-temporary-directory'."
   (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar"))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Nyan Mode
 
 (use-package nyan-mode
@@ -1107,7 +1076,6 @@ of `org-babel-temporary-directory'."
   (nyan-mode 1))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Prodigy
 
 (use-package prodigy
@@ -1119,7 +1087,6 @@ of `org-babel-temporary-directory'."
     (load-file "~/.emacs.d/prodigy-settings.el")))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; HackerNews
 
 (use-package hackernews
@@ -1128,7 +1095,6 @@ of `org-babel-temporary-directory'."
   :defer t)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Paredit Mode
 
 (use-package paredit
@@ -1145,7 +1111,6 @@ of `org-babel-temporary-directory'."
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; VIM's - Change Inner
 
 (use-package change-inner
@@ -1159,7 +1124,6 @@ of `org-babel-temporary-directory'."
   (load-file "~/.emacs.d/custom-ci.el"))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Avy Zap
 
 (use-package avy-zap
@@ -1169,7 +1133,6 @@ of `org-babel-temporary-directory'."
          ("M-Z" . avy-zap-up-to-char-dwim)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Bash - run bash init script
 
 (use-package exec-path-from-shell
@@ -1179,7 +1142,6 @@ of `org-babel-temporary-directory'."
   (exec-path-from-shell-initialize))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emmet Mode
 
 (use-package emmet-mode
@@ -1190,7 +1152,6 @@ of `org-babel-temporary-directory'."
          (web-mode . emmet-mode)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
@@ -1210,7 +1171,6 @@ to the current point of the cursor (default is above)."
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Shell Mode
 
 (use-package shell
@@ -1229,7 +1189,6 @@ to the current point of the cursor (default is above)."
   :hook (sh-mode . outshine-sh-mode-hook))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Web Mode
 
 (use-package pug-mode :defer t :ensure t :mode ("\\.pug\\'"))
@@ -1255,7 +1214,6 @@ to the current point of the cursor (default is above)."
   :hook ((web-mode . jez/web-mode-hook)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; JS Mode
 
 (use-package js2-mode
@@ -1264,7 +1222,6 @@ to the current point of the cursor (default is above)."
   :mode (("\\.js\\'" . js2-mode)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; CSS Mode
 
 (use-package css-mode
@@ -1299,7 +1256,6 @@ to the current point of the cursor (default is above)."
       (jez/css-minify-requests))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Occur mode
 
 (use-package replace
@@ -1321,7 +1277,6 @@ to the current point of the cursor (default is above)."
     (occur-mode-display-occurrence)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Elisp Mode
 
 (use-package elisp-mode
@@ -1350,14 +1305,12 @@ to the current point of the cursor (default is above)."
          (emacs-lisp-mode . outshine-emacs-lisp-mode-hook)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Docker
 
 (use-package docker :ensure t :defer t)
 (use-package docker-tramp :ensure t :defer t)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; YAML Mode
 
 (use-package yaml-mode
@@ -1377,7 +1330,6 @@ to the current point of the cursor (default is above)."
   :hook (yaml-mode . jez/yaml-mode-hook))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Markdown Mode
 
 (use-package markdown-mode
@@ -1391,7 +1343,6 @@ to the current point of the cursor (default is above)."
   :hook (markdown-mode . jez/markdown-mode-hook))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Latex Mode
 
 (use-package tex-mode
@@ -1403,7 +1354,7 @@ to the current point of the cursor (default is above)."
  :hook ((latex-mode . jez/latex-mode-hook)
         (LaTeX-mode . jez/latex-mode-hook)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;;; Nginx Mode
 
 (use-package nginx-mode
@@ -1412,7 +1363,6 @@ to the current point of the cursor (default is above)."
   :mode ("Caddyfile\\'" . nginx-mode))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Visual Regexp
 
 (use-package visual-regexp
@@ -1424,7 +1374,6 @@ to the current point of the cursor (default is above)."
         ("C-M-/" . vr/mc-mark)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Startup
 
 (defun jez/show-bookmarks ()

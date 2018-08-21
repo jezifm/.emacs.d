@@ -1374,6 +1374,16 @@ to the current point of the cursor (default is above)."
         ("C-M-/" . vr/mc-mark)))
 
 
+;;; Avy
+
+(use-package avy
+  :ensure t
+  :defer t
+  :bind* ("M-/" . avy-goto-char-timer)
+  :config
+  (avy-setup-default))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

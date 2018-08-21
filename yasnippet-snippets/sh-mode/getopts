@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: getopts
+# key: getopts
+# --
+while getopts ":a:p:" opt; do
+  case $opt in
+    a) arg_1="$OPTARG"
+    ;;
+    p) p_out="$OPTARG"
+    ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+    ;;
+  esac
+done

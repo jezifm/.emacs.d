@@ -24,8 +24,8 @@
 
 ;;; Code:
 
-(defun jez/change-inner* (yank? search-forward-char)
-  "Custom version of change-inner* to work with `jez/copy-inner'
+(defun jez-change-inner* (yank? search-forward-char)
+  "Custom version of change-inner* to work with `jez-copy-inner'
 
 Works like vim's ci command. Takes a char, like ( or \" and
 kills the innards of the first ancestor semantic unit starting with that char."
@@ -58,8 +58,8 @@ kills the innards of the first ancestor semantic unit starting with that char."
               (goto-char starting-point))
           (kill-region (region-beginning) (region-end)))))))
 
-(defun jez/change-outer* (yank? search-forward-char)
-  "Custom version of change-inner* to work with `jez/copy-inner'
+(defun jez-change-outer* (yank? search-forward-char)
+  "Custom version of change-inner* to work with `jez-copy-inner'
 
 Works like vim's ci command. Takes a char, like ( or \" and
 kills the first ancestor semantic unit starting with that char."
@@ -91,7 +91,7 @@ kills the first ancestor semantic unit starting with that char."
               (goto-char starting-point))
           (kill-region (region-beginning) (region-end)))))))
 
-(defun jez/copy-inner ()
+(defun jez-copy-inner ()
   "Customize version of copy inner to work with single quote(')"
   (interactive)
   (let* ((symbol (char-to-string (read-char "Yank inner, starting with:"))))
@@ -101,9 +101,9 @@ kills the first ancestor semantic unit starting with that char."
 		 (end (1- (search-forward symbol nil nil 2))))
 	    (kill-ring-save start end)
 	    (message "Copied: %s" (buffer-substring start end))))
-      (jez/change-inner* t symbol))))
+      (jez-change-inner* t symbol))))
 
-(defun jez/copy-outer ()
+(defun jez-copy-outer ()
   "Customize version of copy inner to work with single quote(')"
   (interactive)
   (let* ((symbol (char-to-string (read-char "Yank outer, starting with:"))))
@@ -113,7 +113,7 @@ kills the first ancestor semantic unit starting with that char."
 		 (end (search-forward symbol nil nil 2)))
 	    (kill-ring-save start end)
 	    (message "Copied: %s" (buffer-substring start end))))
-      (jez/change-inner* t symbol))))
+      (jez-change-inner* t symbol))))
 
 (provide 'custom-ci)
 ;;; custom-ci.el ends here

@@ -150,12 +150,6 @@
 (use-package hydra          :ensure t :defer t :commands defhydra)
 (use-package treemacs       :ensure t :defer t)
 (use-package which-key      :ensure t :defer t)
-(use-package transpose-mark
-  :ensure t
-  :defer t
-  :commmands (transpose-mark
-              transpose-mark-line
-              transpose-mark-region))
 
 
 ;;; Host Specific Customization
@@ -1397,6 +1391,16 @@ to the current point of the cursor (default is above)."
   :bind* ("M-/" . avy-goto-char-timer)
   :config
   (avy-setup-default))
+
+
+;;; Transpose Mark
+
+(use-package transpose-mark
+  :ensure t
+  :defer t
+  :commmands (transpose-mark
+              transpose-mark-line
+              transpose-mark-region))
 
 
 ;;; Startup

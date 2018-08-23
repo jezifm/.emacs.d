@@ -283,6 +283,11 @@ Note: just like `align-regexp' but better"
                         #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
 
+(defun jez-slugify (text)
+  "Slufigy TEXT"
+  (let* ((sep "-"))
+    (s-replace-regexp "\[^a-zA-Z0-9_.-\]+" sep text)))
+
 (defun jez-snake-case ()
   "Convert region to snake case"
   (interactive)

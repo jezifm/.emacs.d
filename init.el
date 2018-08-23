@@ -150,6 +150,12 @@
 (use-package hydra          :ensure t :defer t :commands defhydra)
 (use-package treemacs       :ensure t :defer t)
 (use-package which-key      :ensure t :defer t)
+(use-package transpose-mark
+  :ensure t
+  :defer t
+  :commmands (transpose-mark
+              transpose-mark-line
+              transpose-mark-region))
 
 
 ;;; Host Specific Customization

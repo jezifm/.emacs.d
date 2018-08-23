@@ -1191,7 +1191,16 @@ to the current point of the cursor (default is above)."
 
 ;;; Web Mode
 
-(use-package pug-mode :defer t :ensure t :mode ("\\.pug\\'"))
+(use-package pug-mode
+  :defer t
+  :ensure t
+  :mode ("\\.pug\\'")
+  :config
+  (setq pug-tab-width 2)
+  (defun jez-pug-mode-hook ()
+    (setq-local indent-tabs-mode nil))
+  :hook (pug-mode . jez-pug-mode-hook))
+
 (use-package web-mode
   :ensure t
   :defer t

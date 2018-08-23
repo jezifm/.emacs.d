@@ -177,8 +177,11 @@
 (global-set-key (kbd "M-j") 'jez-join-line)
 (global-set-key (kbd "C-c C-d") 'insert-date)
 (global-set-key (kbd "C-x |") 'toggle-window-split)
-(global-set-key (kbd "C-x <right>") 'jez-hydra-window/next-buffer)
+;; window binding
 (global-set-key (kbd "C-x <left>") 'jez-hydra-window/previous-buffer)
+(global-set-key (kbd "C-x <right>") 'jez-hydra-window/next-buffer)
+(global-set-key (kbd "C-x C-<left>") 'jez-hydra-window/previous-buffer)
+(global-set-key (kbd "C-x C-<right>") 'jez-hydra-window/next-buffer)
 
 ;; local hydra
 (defhydra jez-hydra-window (:hint nil :columns 3)

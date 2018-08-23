@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: dolist
+# key: dolist
+# --
+(dolist (${1:VAR} ${2:LIST} nil)
+  )

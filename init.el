@@ -1413,9 +1413,9 @@ to the current point of the cursor (default is above)."
 (use-package transpose-mark
   :ensure t
   :defer t
-  :commmands (transpose-mark
-              transpose-mark-line
-              transpose-mark-region))
+  :commands (transpose-mark
+             transpose-mark-line
+             transpose-mark-region))
 
 
 ;;; Startup

@@ -410,6 +410,21 @@ Version 2017-09-01"
       (select-window first-win)
       (if this-win-2nd (other-window 1))))))
 
+(defun random-alnum ()
+  (let* ((alnum "abcdefghijklmnopqrstuvwxyz0123456789")
+         (i (% (abs (random)) (length alnum))))
+    (substring alnum i (1+ i))))
+
+(defun random-5-letter-string ()
+  (interactive)
+  (insert
+   (concat
+    (random-alnum)
+    (random-alnum)
+    (random-alnum)
+    (random-alnum)
+    (random-alnum))))
+
 
 ;;; Emacs Built-in Mode
 

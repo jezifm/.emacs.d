@@ -1439,6 +1439,8 @@ to the current point of the cursor (default is above)."
 (use-package dumb-jump
  :ensure t
  :defer t
+ :bind* ("C-M-g" . dumb-jump-go)
+ :config (setq dumb-jump-selector 'helm)
  :hook (python-mode . dumb-jump-mode))
 
 

@@ -1434,6 +1434,14 @@ to the current point of the cursor (default is above)."
              transpose-mark-region))
 
 
+;;; Dumb-Jump Mode
+
+(use-package dumb-jump
+ :ensure t
+ :defer t
+ :hook (python-mode . dumb-jump-mode))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-compose-stop
+# key: dcs
+# --
+docker-compose stop $0

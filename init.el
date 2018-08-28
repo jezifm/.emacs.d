@@ -965,6 +965,20 @@ of `org-babel-temporary-directory'."
   :bind (("C-c y a" . aya-create)
          ("C-c y e" . aya-expand)
          ("C-c y o" . aya-open-line))
+  :config
+  (defun python-args-to-docstring-numpy ()
+    "return docstring format for the python arguments in yas-text"
+    (let* ((indent (concat "\n" (make-string (current-column) 32)))
+           (args (python-split-args yas-text))
+           (format-arg (lambda(arg)
+                         (concat (nth 0 arg) " : " (if (nth 1 arg) ", optional") "\n")))
+           (formatted-params (mapconcat format-arg args indent))
+           (formatted-ret (mapconcat format-arg (list (list "out")) indent)))
+      (unless (string= formatted-params "")
+        (mapconcat 'identity
+                   (list (format "%sParameters%s---------" indent indent) formatted-params
+                         (format "%sReturns%s------" indent indent) formatted-ret)
+                   indent))))
   :after yasnippet)
 
 

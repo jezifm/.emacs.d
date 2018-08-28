@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: docker-compose-up-daemon
+# key: dcud
+# --
+docker-compose up -d $0

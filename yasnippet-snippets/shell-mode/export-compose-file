@@ -2,4 +2,4 @@
 # name: export-compose-file
 # key: ecf
 # --
-export COMPOSE_FILE=${1:local.yml}$0
+export COMPOSE_FILE=${1:$$(yas-choose-value '("local.yml" "production.yml"))}$0

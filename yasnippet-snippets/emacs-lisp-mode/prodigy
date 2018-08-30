@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: prodigy
+# key: prodigy
+# --
+(prodigy-define-service
+  :name "Philippine Jobs"
+  :command "docker-compose"
+  :args '("-f" "local.yml" "up")
+  :cwd "~/workspace/philippine-jobs/"
+  :tags '(docker-compose)
+  :stop-signal 'sigkill
+  :kill-process-buffer-on-stop t)

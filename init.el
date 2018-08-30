@@ -1272,6 +1272,8 @@ to the current point of the cursor (default is above)."
 (use-package js2-mode
   :ensure t
   :defer t
+  :bind (:map js2-mode-map
+              ("C-c n" . js2-next-error))
   :mode (("\\.js\\'" . js2-mode)))
 
 

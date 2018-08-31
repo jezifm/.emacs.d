@@ -425,6 +425,28 @@ Version 2017-09-01"
     (random-alnum)
     (random-alnum))))
 
+(defun jez-shell-command ()
+  "Run `jez-shell-command-command' on `jez-shell-command-buffer' buffer"
+  (interactive)
+  (if (buffer-file-name)
+      (save-buffer))
+  (with-current-buffer jez-shell-command-buffer
+    (erase-buffer)
+    (insert jez-shell-command-command)
+    (comint-send-input)))
+
+(defun jez-shell-command-bind (&optional command buffer)
+  "Bind wrapper for `jez-shell-command' to `C-r''"
+  (interactive)
+  (let ((command (or command
+                     (read-string (format "shell command (%s): " (car kill-ring))
+                                  nil nil (car kill-ring))))
+        (buffer (or buffer (helm-comp-read "shell buffer: " (mapcar 'buffer-name (buffer-list))))))
+    (setq jez-shell-command-buffer buffer)
+    (setq jez-shell-command-command command)
+    (global-set-key (kbd "C-r") 'jez-shell-command)
+    (message (format "C-r binded to %s: %s" buffer command))))
+
 
 ;;; Emacs Built-in Mode
 

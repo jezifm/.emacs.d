@@ -1435,7 +1435,8 @@ to the current point of the cursor (default is above)."
   :ensure t
   :defer t
   :bind* (("M-/" . avy-goto-char)
-          ("M-g f" . avy-goto-line))
+          ("M-g f" . avy-goto-line)
+          ("M-g y" . avy-copy-line))
   :config
   (avy-setup-default))
 

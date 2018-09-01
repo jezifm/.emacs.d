@@ -1408,7 +1408,8 @@ to the current point of the cursor (default is above)."
     (toggle-truncate-lines t)
     (jez-outline-mode-adhoc "#")
     (setq-local outshine-use-speed-commands t))
-  :hook (markdown-mode . jez-markdown-mode-hook))
+  :hook ((markdown-mode . jez-markdown-mode-hook)
+         (markdown-mode . auto-fill-mode)))
 
 
 ;;; Latex Mode

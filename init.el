@@ -429,10 +429,10 @@ Version 2017-09-01"
 (defun jez-shell-command-bind (&optional command buffer)
   "Bind wrapper for `jez-shell-command' to `C-r''"
   (interactive)
-  (let ((command (or command
-                     (read-string (format "shell command (%s): " (car kill-ring))
-                                  nil nil (car kill-ring))))
-        (buffer (or buffer (helm-comp-read "shell buffer: " (mapcar 'buffer-name (buffer-list))))))
+  (let* ((buffer (or buffer (helm-comp-read "shell buffer: " (mapcar 'buffer-name (buffer-list)))))
+         (command (or command (with-current-buffer buffer
+                                (read-string (format "shell command (%s): " (ring-ref comint-input-ring 0))
+                                             nil nil (car kill-ring))))))
     (setq jez-shell-command-buffer buffer)
     (setq jez-shell-command-command command)
     (global-set-key (kbd "C-r") 'jez-shell-command)

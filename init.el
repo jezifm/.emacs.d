@@ -422,7 +422,7 @@ Version 2017-09-01"
   (if (buffer-file-name)
       (save-buffer))
   (with-current-buffer jez-shell-command-buffer
-    (erase-buffer)
+    (comint-clear-buffer)
     (insert jez-shell-command-command)
     (comint-send-input)))
 

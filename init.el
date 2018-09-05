@@ -432,7 +432,7 @@ Version 2017-09-01"
   (let* ((buffer (or buffer (helm-comp-read "shell buffer: " (mapcar 'buffer-name (buffer-list)))))
          (command (or command (with-current-buffer buffer
                                 (read-string (format "shell command (%s): " (ring-ref comint-input-ring 0))
-                                             nil nil (car kill-ring))))))
+                                             nil nil (ring-ref comint-input-ring 0))))))
     (setq jez-shell-command-buffer buffer)
     (setq jez-shell-command-command command)
     (global-set-key (kbd "C-r") 'jez-shell-command)

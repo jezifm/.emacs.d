@@ -539,7 +539,8 @@ Version 2017-09-01"
 (use-package org
   :ensure t
   :defer t
-  :bind ("C-c l" . org-store-link)
+  :bind (("C-c l" . org-store-link)
+         ("C-c a" . org-agenda))
   :config
   (setq user-full-name "Jezrael Arciaga")
   (setq user-mail-address "jezarciaga@gmail.com")

@@ -1142,7 +1142,8 @@ of `org-babel-temporary-directory'."
   :defer t
   :config
   (when (file-exists-p "~/.emacs.d/prodigy-settings.el")
-    (load-file "~/.emacs.d/prodigy-settings.el")))
+    (load-file "~/.emacs.d/prodigy-settings.el"))
+  (setq prodigy-view-buffer-maximum-size t))
 
 
 ;;; HackerNews

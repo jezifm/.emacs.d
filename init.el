@@ -332,12 +332,11 @@ Note: just like `align-regexp' but better"
     ;;    (select-window current-window)
     ))
 
-(defun jez-change-theme ()
-  "Change current emacs theme without confirmation"
+(defun jez-change-theme (&optional theme)
+  "Load and enable THEME without confirmation"
   (interactive)
-  (let ((theme (intern (completing-read "Load custom theme: "
-                                        (mapcar 'symbol-name
-                                                (custom-available-themes))))))
+  (let* ((themes-available (mapcar 'symbol-name (custom-available-themes)))
+         (theme (or theme (intern (completing-read "Load custom theme: " themes-available)))))
     (load-theme theme t)
     (enable-theme theme)))
 
@@ -459,8 +458,7 @@ Version 2017-09-01"
   :defer 2
   :config
   ;; main-theme
-  (load-theme 'blackboard t t)
-  (enable-theme 'blackboard)
+  (jez-change-theme 'blackboard)
   ;; mode-line
   (require 'smart-mode-line)
   (require 'smart-mode-line-powerline-theme)

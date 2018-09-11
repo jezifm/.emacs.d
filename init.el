@@ -1141,7 +1141,6 @@ of `org-babel-temporary-directory'."
   :config
   (when (file-exists-p "~/.emacs.d/prodigy-settings.el")
     (load-file "~/.emacs.d/prodigy-settings.el"))
-  (setq prodigy-view-truncate-by-default t)
   (setq prodigy-view-buffer-maximum-size t))
 
 

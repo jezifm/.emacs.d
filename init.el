@@ -1,5 +1,4 @@
 ;;; Initialize Variable
-
 (setq save-abbrevs 'silently)                                         ; abbrev warning
 (setq inhibit-startup-message t)                                      ; disable splash
 (setq ns-function-modifier 'control)                                  ; map modifier (fn) to control (ctrl)
@@ -1473,6 +1472,13 @@ to the current point of the cursor (default is above)."
  :bind* ("C-M-g" . dumb-jump-go)
  :config (setq dumb-jump-selector 'helm)
  :hook (python-mode . dumb-jump-mode))
+
+
+;;; Terraform Mode
+(use-package terraform-mode
+ :ensure t
+ :defer t
+ :mode (("\\.tf\\'" . terraform-mode)))
 
 
 ;;; Startup

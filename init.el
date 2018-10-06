@@ -1341,7 +1341,12 @@ to the current point of the cursor (default is above)."
     "Same with `occur-next' but also move to occurence"
     (interactive)
     (occur-next)
-    (occur-mode-display-occurrence)))
+    (occur-mode-display-occurrence))
+
+  (defun jez-occur-mode-hook ()
+    (toggle-truncate-lines t))
+  :hook ((occur-mode . jez-occur-mode-hook)))
+
 
 
 ;;; Elisp Mode

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: provisioner
+# key: provf
+# --
+provisioner "file" {
+  source      = "$1"
+  destination = "${2:$1}"
+}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: move-backup
+# key: mvb
+# --
+mv $1 $1.bak

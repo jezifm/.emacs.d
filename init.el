@@ -463,7 +463,9 @@ Version 2017-09-01"
   (require 'smart-mode-line-powerline-theme)
   (setq sml/no-confirm-load-theme t)
   (setq sml/theme 'powerline)
-  (sml/setup))
+  (sml/setup)
+  (when (eq window-system 'w32)
+    (set-face-attribute 'default nil :family "Consolas" :height 110)))
 
 
 ;;; Window Numbering

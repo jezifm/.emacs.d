@@ -9,6 +9,8 @@
 (setq split-width-threshold 160)                                      ; default split to vertical
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))          ; maximize window
+(set-default 'truncate-lines t)
+(setq-default indent-tabs-mode nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 

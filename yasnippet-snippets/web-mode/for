@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: for
+# key: for
+# --
+for (var i=0; i<$2.length; i++) {
+    var $1 = $2[i];
+    $0
+}

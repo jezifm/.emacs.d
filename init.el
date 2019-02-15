@@ -234,6 +234,16 @@
                                   buffers)))
     (car shell-buffers)))
 
+(defun jez-shell-run-project ()
+  "Run shell on chosen directory"
+  (interactive)
+  (let* ((workspace "~/workspace/")
+         (directories (helm-list-directory  workspace))
+         (directories-relative (--map (s-replace-regexp ".*/\\(.*\\)$" "\\1" it) directories))
+         (directory-chosen (helm-comp-read "Choose directory:" directories-relative))
+         (default-directory (format "%s%s" workspace directory-chosen)))
+       (shell (format "*shell %s*" directory-chosen))))
+
 (defun jez-join-line ()
   "Custom join line"
   (interactive)

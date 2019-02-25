@@ -7,8 +7,8 @@
     (interactive)
     (if (buffer-file-name)
       (save-buffer))
-    (with-current-buffer "${1:`(or (jez/guess-shell-buffer-name) "sh-imfree")`}"
-      (erase-buffer)
+    (with-current-buffer "${1:`(jez-guess-shell-buffer-name)`}"
+      (comint-clear-buffer)
       (insert "${2:make test}")
       (comint-send-input)))
   (global-set-key (kbd "C-r") 'jez-shell-command))

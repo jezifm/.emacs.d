@@ -217,7 +217,7 @@
   "Create shell buffer based on current buffer name"
   (interactive)
   (let* ((buffer-name-current (buffer-name (current-buffer)))
-         (buffer-name-shell (format "sh-%s" buffer-name-current)))
+         (buffer-name-shell (format "*shell %s*" buffer-name-current)))
     (save-current-buffer
       (shell buffer-name-shell))
     (when (equal (count-windows) 1)
@@ -228,7 +228,7 @@
 (defun jez-guess-shell-buffer-name ()
   "Return name of buffer with 'sh-' as prefix"
   (interactive)
-  (let* ((shell-pattern "^sh-.*")
+  (let* ((shell-pattern "^\*shell .*\*")
          (buffers (--map (buffer-name it) (buffer-list)))
          (shell-buffers (--filter (string-match shell-pattern it)
                                   buffers)))

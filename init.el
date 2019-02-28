@@ -1287,6 +1287,22 @@ to the current point of the cursor (default is above)."
   :config
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight nil)
+  (defun jez-reindent-html-region ()
+    "Reindent currently selected region using web-mode"
+    (interactive)
+    (let ((start (region-beginning))
+          (end (region-end))
+          (current-buffer (current-buffer)))
+      (with-temp-buffer
+        (web-mode)
+        (insert-buffer-substring current-buffer start end)
+        ;; (mark-whole-buffer)
+        ;; (indent-for-tab-command)
+        (web-mode-dom-normalize)
+        (let ((temp-buffer (current-buffer)))
+          (with-current-buffer current-buffer
+            (delete-region start end)
+            (insert-buffer temp-buffer))))))
   (defun jez-web-mode-hook ()
     (electric-pair-local-mode -1)
     (toggle-truncate-lines t)

@@ -715,7 +715,7 @@ of `org-babel-temporary-directory'."
     ("^" outshine-sort-entries "outshine-sort-entries")
     ("m" outline-mark-subtree "outline-mark-subtree")
     ("q" nil "leave"))
-  :hook ((outline-minor-mode . outshine-hook-function)))
+  :hook ((outline-minor-mode . outshine-mode)))
 
 
 ;;; Boookmark
@@ -834,6 +834,7 @@ of `org-babel-temporary-directory'."
                      dired-directory))
      ad-do-it))
  (setq projectile-mode-line "Projectile")
+ (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
  (projectile-mode))
 
 (use-package helm

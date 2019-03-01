@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: forin
+# key: forin
+# --
+for (var ${1:property1} in ${2:object1}) {
+    $0
+}

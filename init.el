@@ -1317,6 +1317,8 @@ to the current point of the cursor (default is above)."
   :defer t
   :bind (:map js2-mode-map
               ("C-c n" . js2-next-error))
+  :config
+  (setq js-indent-level 2)
   :mode (("\\.js\\'" . js2-mode)))
 
 

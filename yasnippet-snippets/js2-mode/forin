@@ -2,6 +2,7 @@
 # name: forin
 # key: forin
 # --
-for (var ${1:property1} in ${2:object1}) {
-    $0
+for (var i in ${2:object1}) {
+  var ${1:item} = $2[i];
+  $0
 }

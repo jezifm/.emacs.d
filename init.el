@@ -244,10 +244,11 @@
          (default-directory (format "%s%s" workspace directory-chosen)))
        (shell (format "*shell %s*" directory-chosen))))
 
-(defun jez-join-line ()
+(defun jez-join-line (count)
   "Custom join line"
-  (interactive)
-  (join-line -1))
+  (interactive "p")
+  (dotimes (_ count nil)
+    (join-line -1)))
 
 (defun jez-simplify ()
   "Combine multiline"

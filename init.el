@@ -668,7 +668,7 @@ of `org-babel-temporary-directory'."
          :map outline-minor-mode-map
          ("C-c n" . outline-next-visible-heading)
          ("C-c p" . outline-previous-visible-heading)
-         ("C-<tab>" . outline-cycle)
+         ("C-<tab>" . outshine-cycle)
          ("C-#" . hydra-outshine/body)
          ("M-<up>" . jez-outline-move-subtree-up)
          ("M-<down>" . jez-outline-move-subtree-down))

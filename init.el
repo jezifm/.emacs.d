@@ -326,10 +326,15 @@ Note: just like `align-regexp' but better"
            (buffer-list))))
     (mapc 'kill-buffer buffer-list)))
 
-(defun jez-insert-current-buffer-name ()
+(defun jez-insert-buffer-name-current ()
   "Insert name of current buffer"
   (interactive)
   (insert (buffer-name (current-buffer))))
+
+(defun jez-insert-buffer-name ()
+  "Insert name of buffer"
+  (interactive)
+  (insert (helm-comp-read "Buffer: " (mapcar 'buffer-name (buffer-list)))))
 
 (defun jez-occur (regexp)
   "List lines containing REGEXP on current buffer"

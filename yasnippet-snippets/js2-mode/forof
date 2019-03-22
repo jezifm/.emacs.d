@@ -2,6 +2,6 @@
 # name: forof
 # key: forof
 # --
-for (let ${1:item} in ${2:items}) {
+for (let ${1:item} of ${2:items}) {
   $0
 }

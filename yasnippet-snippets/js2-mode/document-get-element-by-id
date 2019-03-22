@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: document-get-element-by-id
+# key: docid
+# --
+document.getElementById('$1');

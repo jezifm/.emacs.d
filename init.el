@@ -1264,7 +1264,8 @@ to the current point of the cursor (default is above)."
     (outline-minor-mode t)
     (setq-local outline-regexp "#")
     (setq-local outline-level 'sh-outline-level))
-  :bind ("s-k" . comint-clear-buffer)
+  :bind (("s-k" . comint-clear-buffer)
+         ("M-k" . comint-clear-buffer))
   :hook (sh-mode . outshine-sh-mode-hook))
 
 

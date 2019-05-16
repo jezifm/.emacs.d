@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: console-log-var-json
+# key: clvj
+# --
+console.log(\`$1: \${JSON.stringify($1)}\`);

@@ -462,7 +462,7 @@ Version 2017-09-01"
 (use-package tool-bar   :defer 2 :config (tool-bar-mode -1))
 (use-package elec-pair  :defer 2 :config (electric-pair-mode t))
 (use-package paren      :defer 2 :config (show-paren-mode t))
-
+(use-package recentf    :defer 2 :config (recentf-mode t))
 
 ;;; Emacs GUI
 

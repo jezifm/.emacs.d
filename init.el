@@ -1302,9 +1302,9 @@ to the current point of the cursor (default is above)."
       (with-temp-buffer
         (web-mode)
         (insert-buffer-substring current-buffer start end)
-        ;; (mark-whole-buffer)
-        ;; (indent-for-tab-command)
-        (web-mode-dom-normalize)
+        (mark-whole-buffer)
+        (indent-for-tab-command)
+        ;; (web-mode-dom-normalize)
         (let ((temp-buffer (current-buffer)))
           (with-current-buffer current-buffer
             (delete-region start end)

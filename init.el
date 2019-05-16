@@ -439,6 +439,7 @@ Version 2017-09-01"
       (save-buffer))
   (with-current-buffer jez-shell-command-buffer
     (comint-clear-buffer)
+    (goto-char (point-max))
     (insert jez-shell-command-command)
     (comint-send-input)))
 

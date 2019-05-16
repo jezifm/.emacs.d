@@ -432,6 +432,9 @@ Version 2017-09-01"
   (let ((prefix (or prefix "")))
     (insert (make-temp-name prefix))))
 
+(defvar jez-shell-command-command nil "string command to run on `jez-shell-command-buffer'")
+(defvar jez-shell-command-buffer nil "buffer name to run `jez-shell-command-command'")
+
 (defun jez-shell-command ()
   "Run `jez-shell-command-command' on `jez-shell-command-buffer' buffer"
   (interactive)
@@ -448,8 +451,9 @@ Version 2017-09-01"
   (interactive)
   (let* ((buffer (or buffer (helm-comp-read "shell buffer: " (mapcar 'buffer-name (buffer-list)))))
          (command (or command (with-current-buffer buffer
-                                (read-string (format "shell command (%s): " (ring-ref comint-input-ring 0))
-                                             nil nil (ring-ref comint-input-ring 0))))))
+                                (let* ((last-shell-command (ring-ref comint-input-ring 0))
+                                       (prompt-message (format "shell command (%s): " last-shell-command)))
+                                  (read-string prompt-message nil nil last-shell-command))))))
     (setq jez-shell-command-buffer buffer)
     (setq jez-shell-command-command command)
     (global-set-key (kbd "C-r") 'jez-shell-command)

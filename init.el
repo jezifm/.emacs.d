@@ -164,7 +164,9 @@
 
 ;; update variables to use host
 (defun jez-load-custom-initel ()
-  (load-file (expand-file-name "init.el" custom-host-dir)))
+  (let* ((file-directory (expand-file-name "init.el" custom-host-dir)))
+    (when (file-directory-p file-directory)
+      (load-file (expand-file-name "init.el" custom-host-dir)))))
 (add-hook 'after-init-hook 'jez-load-custom-initel)
 (setq custom-file (expand-file-name "custom.el" custom-host-dir))
 (setq bookmark-default-file (expand-file-name "bookmarks" custom-host-dir))
@@ -1267,7 +1269,8 @@ to the current point of the cursor (default is above)."
     (outline-minor-mode t)
     (setq-local outline-regexp "#")
     (setq-local outline-level 'sh-outline-level))
-  :bind ("s-k" . comint-clear-buffer)
+  :bind (("s-k" . comint-clear-buffer)
+         ("M-k" . comint-clear-buffer))
   :hook (sh-mode . outshine-sh-mode-hook))
 
 

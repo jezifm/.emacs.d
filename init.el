@@ -1201,7 +1201,7 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :bind (("M-I" . change-inner)
-         ("M-O" . change-inner)
+         ("M-O" . change-outer)
          ("s-i" . jez-copy-inner)
          ("s-o" . jez-copy-outer))
   :config

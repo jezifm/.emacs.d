@@ -178,7 +178,7 @@
 (global-set-key (kbd "C-z") 'jez-shell-shortcut)
 (global-set-key (kbd "M-J") 'jez-simplify)
 (global-set-key (kbd "M-j") 'jez-join-line)
-(global-set-key (kbd "C-c C-d") 'insert-date)
+(global-set-key (kbd "C-c C-d") 'jez-insert-date)
 (global-set-key (kbd "C-x |") 'toggle-window-split)
 ;; window binding
 (global-set-key (kbd "C-x <left>") 'jez-hydra-window/previous-buffer)
@@ -192,7 +192,7 @@
   ("<left>" previous-buffer "previous-buffer"))
 
 ;; Define local functions
-(defun insert-date (prefix)
+(defun jez-insert-date (prefix)
   "Insert the current date. With prefix-argument, use ISO format. With
    two prefix arguments, write out the day and month name."
   (interactive "P")
@@ -207,7 +207,7 @@
   "Insert annotation for commenting"
   (interactive)
   (insert "--jez ")
-  (insert-date nil))
+  (jez-insert-date nil))
 
 (defun jez-clear-font-properties ()
   "Clear font properties"

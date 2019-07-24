@@ -451,7 +451,8 @@ Version 2017-09-01"
 (defun jez-shell-command-bind (&optional command buffer)
   "Bind wrapper for `jez-shell-command' to `C-r''"
   (interactive)
-  (let* ((buffer (or buffer (helm-comp-read "shell buffer: " (mapcar 'buffer-name (buffer-list)))))
+  (let* ((default-buffer-name (jez-guess-shell-buffer-name))
+         (buffer (or buffer (helm-comp-read (format "shell buffer (%s): " default-buffer-name) (mapcar 'buffer-name (buffer-list)) :default default-buffer-name)))
          (command (or command (with-current-buffer buffer
                                 (let* ((last-shell-command (ring-ref comint-input-ring 0))
                                        (prompt-message (format "shell command (%s): " last-shell-command)))

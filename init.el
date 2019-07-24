@@ -299,8 +299,24 @@ Note: just like `align-regexp' but better"
 
 (defun jez-slugify (text)
   "Slufigy TEXT"
-  (let* ((sep "-"))
-    (s-replace-regexp "\[^a-zA-Z0-9_.-\]+" sep text)))
+  (let ((case-fold-search nil)
+        (regex-configs '(("\\([a-z]\\)\\([A-Z]\\)" . "\\1-\\2")
+                         ("[^a-zA-Z0-9_.-]+" . "-")
+                         ("[._-]+\\([._-]\\)" . "\\1"))))
+    (downcase
+     (loop for i in regex-configs
+           do (setq text (s-replace-regexp (car i) (cdr i) text))
+           finally return text))))
+
+(defun jez-slugify-selection (arg)
+  "Slugify text in region"
+  (interactive "P")
+  (let* ((start (region-beginning))
+         (end (region-end))
+         (text-old (buffer-substring start end))
+         (text-new (jez-slugify text-old)))
+    (delete-region start end)
+    (insert text-new)))
 
 (defun jez-snake-case ()
   "Convert region to snake case"

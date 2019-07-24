@@ -1076,9 +1076,11 @@ of `org-babel-temporary-directory'."
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
   (defun jez-python-disable-company-mode () (company-mode -1))
   (defun jez-disable-elpy () (ignore-errors (elpy-mode -1)))
+  (setq elpy-shell-echo-output nil)
   :hook ((org-mode . jez-disable-elpy)
          (shell-mode . jez-disable-elpy)
          (python-mode . elpy-mode)
+         (python-mode . flymake-mode)
          (elpy-mode . jez-python-disable-company-mode)))
 
 

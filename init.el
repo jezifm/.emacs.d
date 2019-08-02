@@ -1552,6 +1552,13 @@ to the current point of the cursor (default is above)."
  :mode (("\\.tf\\'" . terraform-mode)))
 
 
+;;; Synosaurus Mode
+(use-package synosaurus
+  :ensure t
+  :defer t
+  :hook (org-mode . synosaurus-mode))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

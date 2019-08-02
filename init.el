@@ -1094,6 +1094,15 @@ of `org-babel-temporary-directory'."
   (defun jez-python-disable-company-mode () (company-mode -1))
   (defun jez-disable-elpy () (ignore-errors (elpy-mode -1)))
   (setq elpy-shell-echo-output nil)
+  (defun jez-toggle-aggressive-pep8 (args)
+    "Toggle auto-pep8 on save"
+    (interactive "P")
+    (if (eq 'elpy-autopep8-fix-code (car before-save-hook))
+        (progn
+          (remove-hook 'before-save-hook 'elpy-autopep8-fix-code t)
+          (message "aggressive pep8 disabled"))
+      (add-hook 'before-save-hook 'elpy-autopep8-fix-code nil t)
+      (message "aggressive pep8 enabled")))
   :hook ((org-mode . jez-disable-elpy)
          (shell-mode . jez-disable-elpy)
          (python-mode . elpy-mode)

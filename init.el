@@ -581,7 +581,9 @@ Version 2017-09-01"
   :ensure t
   :defer t
   :bind (("C-c l" . org-store-link)
-         ("C-c a" . org-agenda))
+         ("C-c a" . org-agenda)
+         ("C-<right>" . org-todo)
+         ("C-<left>" . jez-org-todo-previous))
   :config
   (setq user-full-name "Jezrael Arciaga")
   (setq user-mail-address "jezarciaga@gmail.com")
@@ -658,6 +660,15 @@ of `org-babel-temporary-directory'."
 		    org-level-4
 		    org-level-5))
       (set-face-attribute face nil :weight 'normal :height 1.0)))
+
+  (defun jez-org-delete-trailing-whitespace-before-save ()
+    "Add hook delete trailing whitespace when saving in org mode"
+    (add-hook 'before-save-hook 'delete-trailing-whitespace nil t))
+
+  (defun jez-org-todo-previous (&optional arg)
+    (interactive)
+    "Same with `org-todo' but switch to previous set of keywords"
+    (org-todo 'previousset))
 
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   (advice-add 'org-latex--inline-image :around

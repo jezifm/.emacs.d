@@ -845,6 +845,7 @@ of `org-babel-temporary-directory'."
   ;; run once
   (jez-mc-add-cmds-once 'jez-mark-multiple)
   (jez-mc-add-cmds-once 'vr/mc-mark)
+  (jez-mc-add-cmds-once 'mc/insert-numbers)
   ;; run to all cursor
   (jez-mc-add-cmds-all 'org-self-insert-command)
   (jez-mc-add-cmds-all 'paredit-backward-kill-word)

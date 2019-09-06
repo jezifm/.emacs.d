@@ -1580,6 +1580,22 @@ to the current point of the cursor (default is above)."
   :hook (org-mode . synosaurus-mode))
 
 
+;;; PHP Mode
+(use-package php-mode
+  :defer
+  ;; :bind (:map
+  ;;        php-mode-map
+  ;;        ("C-." . hippie-expand-no-case-fold)
+  ;;        ("C-:" . hippie-expand-lines))
+  :config
+  (define-key php-mode-map (kbd "C-c .") nil)
+  (define-key php-mode-map (kbd "C-c :") nil)
+  (define-key php-mode-map (kbd "C-c ,") nil)
+  (defun jez-php-mode-hook ()
+    (setq-local c-basic-offset 4))
+  :hook (php-hook . jez-php-mode-hook))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

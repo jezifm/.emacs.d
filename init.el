@@ -1583,10 +1583,6 @@ to the current point of the cursor (default is above)."
 ;;; PHP Mode
 (use-package php-mode
   :defer
-  ;; :bind (:map
-  ;;        php-mode-map
-  ;;        ("C-." . hippie-expand-no-case-fold)
-  ;;        ("C-:" . hippie-expand-lines))
   :config
   (define-key php-mode-map (kbd "C-c .") nil)
   (define-key php-mode-map (kbd "C-c :") nil)

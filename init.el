@@ -1584,9 +1584,9 @@ to the current point of the cursor (default is above)."
 (use-package php-mode
   :defer
   :config
-  (define-key php-mode-map (kbd "C-c .") nil)
-  (define-key php-mode-map (kbd "C-c :") nil)
-  (define-key php-mode-map (kbd "C-c ,") nil)
+  (define-key php-mode-map (kbd "C-.") nil)
+  (define-key php-mode-map (kbd "C-:") nil)
+  (define-key php-mode-map (kbd "C-,") nil)
   (defun jez-php-mode-hook ()
     (setq-local c-basic-offset 4))
   :hook (php-hook . jez-php-mode-hook))

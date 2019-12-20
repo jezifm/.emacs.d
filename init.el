@@ -165,8 +165,12 @@
 ;; update variables to use host
 (defun jez-load-custom-initel ()
   (let* ((file-directory (expand-file-name "init.el" custom-host-dir)))
-    (when (file-directory-p file-directory)
-      (load-file (expand-file-name "init.el" custom-host-dir)))))
+    (if (file-exists-p file-directory)
+        (progn
+         (load-file file-directory)
+         (message "%s loaded" file-directory))
+      (message "no custom init file found"))))
+
 (add-hook 'after-init-hook 'jez-load-custom-initel)
 (setq custom-file (expand-file-name "custom.el" custom-host-dir))
 (setq bookmark-default-file (expand-file-name "bookmarks" custom-host-dir))

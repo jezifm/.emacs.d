@@ -152,6 +152,7 @@
 (use-package hydra          :ensure t :defer t :commands defhydra)
 (use-package treemacs       :ensure t :defer t)
 (use-package which-key      :ensure t :defer t)
+(use-package sqlup-mode     :ensure t :defer t)
 
 
 ;;; Host Specific Customization

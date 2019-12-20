@@ -484,6 +484,12 @@ Version 2017-09-01"
     (global-set-key (kbd "C-r") 'jez-shell-command)
     (message (format "C-r binded to %s: %s" buffer command))))
 
+(defun jez-fix-shell-buffer-name ()
+  "Rename shell buffer based on its current directory"
+  (interactive)
+  (let* ((current-directory (s-replace-regexp ".*/\\(.*\\)/?" "\\1" default-directory))
+         (new-name (format "*shell %s*" current-directory)))
+    (rename-buffer new-name)))
 
 ;;; Emacs Built-in Mode
 

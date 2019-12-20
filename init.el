@@ -19,6 +19,7 @@
 (global-unset-key (kbd "C-x c"))    ; disable quit
 (global-unset-key (kbd "C-z"))      ; disable minimize
 (global-unset-key (kbd "s-t"))      ; disable font-panel
+(global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
 
 ;; disable prompt
 (put 'downcase-region 'disabled nil)

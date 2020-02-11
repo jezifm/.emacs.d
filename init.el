@@ -1104,6 +1104,8 @@ of `org-babel-temporary-directory'."
     (setq-local outline-level 'py-outline-level)
     (setq-local outshine-use-speed-commands nil))
 
+  (setq python-shell-interpreter "python3")
+
   (define-key python-mode-map (kbd "C-c C-p") nil)
   :hook ((python-mode . outshine-python-mode-hook)
          (python-mode . jez-python-mode-hook)))

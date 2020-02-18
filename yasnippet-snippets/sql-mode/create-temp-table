@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: create-temp-table
+# key: ctt
+# --
+create temp table $1 as
+  ($0);

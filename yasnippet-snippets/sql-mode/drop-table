@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: drop-table
+# key: dt
+# --
+drop table $1;

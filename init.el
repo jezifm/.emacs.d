@@ -1163,10 +1163,11 @@ of `org-babel-temporary-directory'."
   :bind (
          :map sql-interactive-mode-map
          ("C-c u" . sqlup-capitalize-keywords-in-region)
-         ("C-h s" . sqlformat)
          ("M-<return>" . comint-send-input))
-  :hook ((sql-mode . sqlup-mode)
-         (sql-interactive-mode  . sqlup-mode))
+  :hook (
+         ;; (sql-mode . sqlup-mode)
+         ;; (sql-interactive-mode  . sqlup-mode)
+         )
   :config
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
@@ -1183,6 +1184,15 @@ of `org-babel-temporary-directory'."
   (define-key sql-interactive-mode-map (kbd "RET") nil)
   (toggle-truncate-lines t))
 
+
+(use-package sqlformat
+  :ensure t
+  ; brew install pgformatter
+  (setq sqlformat-command 'pgformatter)
+  (setq sqlformat-args '("--keyword-case" "1"))
+  :bind (:map sql-mode-map
+              ("C-c C-l f" . sqlformat-buffer)
+              ("C-c C-l r" . sqlformat-region)))
 
 ;;; Undo Tree Mode
 

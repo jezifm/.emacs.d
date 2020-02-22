@@ -1198,6 +1198,7 @@ of `org-babel-temporary-directory'."
   (setq sqlformat-command 'pgformatter) ; brew install pgformatter
   (setq sqlformat-args '("-g"
                          "--keyword-case" "1"))
+  :after sql
   :bind (:map sql-mode-map
               ("C-c C-l f" . sqlformat-buffer)
               ("C-c C-l r" . sqlformat-region)))

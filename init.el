@@ -1116,6 +1116,9 @@ of `org-babel-temporary-directory'."
 (use-package elpy
   :ensure t
   :defer t
+  :bind (
+         :map elpy-mode-map
+         ("C-c C-l f" . elpy-autopep8-fix-code))
   :config
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
   (defun jez-python-disable-company-mode () (company-mode -1))
@@ -1160,14 +1163,18 @@ of `org-babel-temporary-directory'."
 (use-package sql
   :ensure t
   :defer t
+  :mode ("\\.sqltemplate\\'")
   :bind (
          :map sql-interactive-mode-map
          ("C-c u" . sqlup-capitalize-keywords-in-region)
-         ("M-<return>" . comint-send-input))
-  :hook (
-         ;; (sql-mode . sqlup-mode)
-         ;; (sql-interactive-mode  . sqlup-mode)
+         ("M-<return>" . comint-send-input)
+         :map sql-mode-map
+         ("C-c C-l c" . sql-connect)
          )
+  ;; :hook (
+  ;;        (sql-mode . sqlup-mode)
+  ;;        (sql-interactive-mode  . sqlup-mode)
+  ;;        )
   :config
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
@@ -1187,9 +1194,10 @@ of `org-babel-temporary-directory'."
 
 (use-package sqlformat
   :ensure t
-  ; brew install pgformatter
-  (setq sqlformat-command 'pgformatter)
-  (setq sqlformat-args '("--keyword-case" "1"))
+  :config
+  (setq sqlformat-command 'pgformatter) ; brew install pgformatter
+  (setq sqlformat-args '("-g"
+                         "--keyword-case" "1"))
   :bind (:map sql-mode-map
               ("C-c C-l f" . sqlformat-buffer)
               ("C-c C-l r" . sqlformat-region)))

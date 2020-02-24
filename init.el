@@ -1164,10 +1164,10 @@ of `org-babel-temporary-directory'."
          :map sql-interactive-mode-map
          ("C-c u" . sqlup-capitalize-keywords-in-region)
          ("M-<return>" . comint-send-input))
-  :hook (
-         ;; (sql-mode . sqlup-mode)
-         ;; (sql-interactive-mode  . sqlup-mode)
-         )
+  ;; :hook (
+  ;;        ;; (sql-mode . sqlup-mode)
+  ;;        ;; (sql-interactive-mode  . sqlup-mode)
+  ;;        )
   :config
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
@@ -1181,13 +1181,16 @@ of `org-babel-temporary-directory'."
         (switch-to-buffer buffer-name))
       (sql-connect connection new-name)
       (rename-buffer buffer-name)))
+  (defun jez-sql-mode-hook ()
+     (setq-default tab-width 4))
   (define-key sql-interactive-mode-map (kbd "RET") nil)
-  (toggle-truncate-lines t))
-
+  (toggle-truncate-lines t)
+  :hook ((sql-mode . jez-sql-mode-hook)))
 
 (use-package sqlformat
   :ensure t
-  ; brew install pgformatter
+                                        ; brew install pgformatter
+  :config
   (setq sqlformat-command 'pgformatter)
   (setq sqlformat-args '("--keyword-case" "1"))
   :bind (:map sql-mode-map

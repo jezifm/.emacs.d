@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: create-index-on
+# key: cio
+# --
+create index if not exists
+    ${2:table}_${3:column}_idx
+on
+    ${1:schema}.$2("$3")
+;

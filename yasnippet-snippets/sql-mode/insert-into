@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: insert-into
+# key: in
+# --
+insert into ${1:bi_exports.netcore_users}
+select * from ${2:tmp_jez};

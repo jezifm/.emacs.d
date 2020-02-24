@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: createtemp
+# key: createtemp
+# --
+drop table if exists
+    $1
+;
+create temp table
+    $1
+as (
+    select
+        $0
+    from
+        $2
+);

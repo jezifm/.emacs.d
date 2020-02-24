@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: drop-temp-table
+# key: dtt
+# --
+drop table if exists tmp_$0;

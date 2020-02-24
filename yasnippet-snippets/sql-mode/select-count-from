@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: select-count-from
+# key: scf
+# --
+select count(*) from $1;

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: select-from-limit
+# key: sfl
+# --
+select * from $1 limit 1;

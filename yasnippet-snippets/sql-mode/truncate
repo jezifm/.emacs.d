@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: truncate
+# key: truncate
+# --
+truncate ${1:table};

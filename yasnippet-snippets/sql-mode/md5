@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: md5
+# key: md5
+# --
+('x'||md5(concat($1)))::bit(64)::bigint $1_hash

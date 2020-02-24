@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: ci
-# key: ci
+# name: createindex
+# key: createindex
 # --
 create index on
     ${1:tablename} (

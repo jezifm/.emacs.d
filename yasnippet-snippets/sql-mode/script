@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: script
+# key: script
+# --
+/*
+File = `(insert buffer-file-name)`
+Author = Lamudi BI
+Copyright = Copyright 2019, Lamudi Technical Services Corp.
+Version = 1.1
+Email = bi@lamudi.com
+Status = Production
+*/

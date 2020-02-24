@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: add-column
+# key: add-column
+# --
+alter table ${1:table} add column ${2:date_created} ${3:timestamp};

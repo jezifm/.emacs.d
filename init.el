@@ -1188,9 +1188,11 @@ of `org-babel-temporary-directory'."
         (switch-to-buffer buffer-name))
       (sql-connect connection new-name)
       (rename-buffer buffer-name)))
+  (defun jez-sql-mode-hook ()
+     (setq-default tab-width 4))
   (define-key sql-interactive-mode-map (kbd "RET") nil)
-  (toggle-truncate-lines t))
-
+  (toggle-truncate-lines t)
+  :hook ((sql-mode . jez-sql-mode-hook)))
 
 (use-package sqlformat
   :ensure t

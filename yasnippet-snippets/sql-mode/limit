@@ -2,4 +2,4 @@
 # name: limit
 # key: l
 # --
-LIMIT $1
+limit $1

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: createtempw
+# key: createtempw
+# --
+drop table if exists $1;
+create temp table
+    $1
+as (
+   select
+       $0
+   from
+       $2
+   ${3:where
+       event_type_id != 3}
+
+);

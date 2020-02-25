@@ -588,6 +588,12 @@ Version 2017-09-01"
   :hook (magit-mode . window-numbering-remove-keymap))
 
 
+;;; Ediff
+
+(use-package ediff-util
+  :config
+  (setq ediff-split-window-function 'split-window-horizontally))
+
 ;;; Org Mode
 
 (use-package org

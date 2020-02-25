@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: createindex
-# key: createindex
-# --
-create index on
-    ${1:tablename} (
-        ${2:columns}
-    )
-;

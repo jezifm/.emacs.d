@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: ci
+# key: createindex
 # key: ci
 # --
 create index on

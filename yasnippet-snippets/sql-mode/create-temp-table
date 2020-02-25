@@ -1,6 +1,16 @@
 # -*- mode: snippet -*-
 # name: create-temp-table
 # key: ctt
+# key: createtemp
 # --
-create temp table $1 as
-  ($0);
+drop table if exists
+    $1
+;
+create temp table
+    $1
+as (
+    select
+        $0
+    from
+        $2
+);

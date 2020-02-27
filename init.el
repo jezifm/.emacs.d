@@ -1484,8 +1484,7 @@ to the current point of the cursor (default is above)."
 (use-package elisp-mode
   :defer t
   :bind (:map emacs-lisp-mode-map
-         ("C-c d" . jez-describe-symbol-at-point)
-	 ("C-c C-d" . jez-describe-symbol-at-point))
+         ("C-x C-a d" . jez-describe-symbol-at-point))
   :init
   (defun jez-describe-symbol-at-point (arg)
     "Describe current symbol on point on other window"

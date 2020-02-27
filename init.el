@@ -929,23 +929,23 @@ of `org-babel-temporary-directory'."
 (use-package helm
   :ensure t
   :defer t
-  :bind (("C-c h" . helm-command-prefix)
-         ("C-h d" . helm-dash)
-         ("C-h m" . helm-describe-modes)
+  :bind (("C-c h"   . helm-command-prefix)
+         ("C-h d"   . helm-dash)
+         ("C-h m"   . helm-describe-modes)
          ("C-x C-b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
          ("C-x C-r" . helm-recentf)
-         ("C-x b" . helm-buffers-list)
+         ("C-x b"   . helm-buffers-list)
          ("C-x r b" . helm-bookmarks)
-         ("M-x" . helm-M-x)
-         ("M-y" . helm-show-kill-ring)
+         ("M-x"     . helm-M-x)
+         ("M-y"     . helm-show-kill-ring)
          :map helm-map
-         ("<tab>" . helm-execute-persistent-action)
-         ("C-i" . helm-execute-persistent-action)
-         ("C-z" . helm-select-action)
+         ("<tab>"   . helm-execute-persistent-action)
+         ("C-i"     . helm-execute-persistent-action)
+         ("C-z"     . helm-select-action)
          :map helm-projectile-projects-map
-         ("C-j" . helm-maybe-exit-minibuffer)
-         ("C-l" . jez-erase-minibuffer))
+         ("C-j"     . helm-maybe-exit-minibuffer)
+         ("C-l"     . jez-erase-minibuffer))
   :config
   (require 'projectile)
   (helm-mode 1)

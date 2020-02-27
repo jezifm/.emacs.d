@@ -491,7 +491,7 @@ to the current point of the cursor (default is above)."
 
 (use-package bind-key
   :ensure t
-  :init
+  :config
   ;; key bindings unset
   (global-unset-key (kbd "C-x C-c"))  ; disable quit
   (global-unset-key (kbd "C-x c"))    ; disable quit

@@ -487,6 +487,7 @@ to the current point of the cursor (default is above)."
 
 
 ;;; Emacs Global Keys
+;; makes it easier to see conflicting keys
 
 (use-package bind-key
   :ensure t
@@ -498,25 +499,27 @@ to the current point of the cursor (default is above)."
   (global-unset-key (kbd "s-t"))      ; disable font-panel
   (global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
 
-  (bind-keys ("<f5>"           . sort-lines)
-             ("C-c C-<return>" . delete-trailing-whitespace)
-             ("C-c t"          . toggle-truncate-lines)
-             ("C-x C-j"        . (lambda () (interactive) (dired default-directory)))
-             ("C-x r q"        . save-buffers-kill-terminal) ; remap quit-key
-             ("M-i"            . back-to-indentation)
-             ("C-z"            . jez-shell-shortcut)
-             ("M-J"            . jez-simplify)
-             ("M-j"            . jez-join-line)
-             ("C-c i d"        . jez-insert-date)
-             ("C-c i t"        . jez-insert-time)
-             ("C-x |"          . toggle-window-split)
-             ("<f12>"          . line-copy-char)
-             ("M-SPC"          . cycle-spacing)
-             ;; window binding
-             ("C-x <left>"     . jez-hydra-window/previous-buffer)
-             ("C-x <right>"    . jez-hydra-window/next-buffer)
-             ("C-x C-<left>"   . jez-hydra-window/previous-buffer)
-             ("C-x C-<right>"  . jez-hydra-window/next-buffer)))
+  (bind-keys
+   ("<f12>"          . line-copy-char)
+   ("<f5>"           . sort-lines)
+   ("C-c C-<return>" . delete-trailing-whitespace)
+   ("C-c i d"        . jez-insert-date)
+   ("C-c i t"        . jez-insert-time)
+   ("C-c t"          . toggle-truncate-lines)
+   ;; window binding
+   ("C-x <left>"     . jez-hydra-window/previous-buffer)
+   ("C-x <right>"    . jez-hydra-window/next-buffer)
+   ("C-x C-<left>"   . jez-hydra-window/previous-buffer)
+   ("C-x C-<right>"  . jez-hydra-window/next-buffer)
+
+   ("C-x C-j"        . (lambda () (interactive) (dired default-directory)))
+   ("C-x r q"        . save-buffers-kill-terminal) ; remap quit-key
+   ("C-x |"          . toggle-window-split)
+   ("C-z"            . jez-shell-shortcut)
+   ("M-J"            . jez-simplify)
+   ("M-SPC"          . cycle-spacing)
+   ("M-i"            . back-to-indentation)
+   ("M-j"            . jez-join-line)))
 
 
 ;;; Emacs Built-in Mode

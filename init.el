@@ -1126,6 +1126,7 @@ of `org-babel-temporary-directory'."
          :map elpy-mode-map
          ("C-c C-l f" . elpy-autopep8-fix-code))
   :config
+  (setq elpy-rpc-timeout 10)
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
   (defun jez-python-disable-company-mode () (company-mode -1))
   (defun jez-disable-elpy () (ignore-errors (elpy-mode -1)))

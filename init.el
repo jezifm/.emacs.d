@@ -14,27 +14,12 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; key bindings unset
-(global-unset-key (kbd "C-x C-c"))  ; disable quit
-(global-unset-key (kbd "C-x c"))    ; disable quit
-(global-unset-key (kbd "C-z"))      ; disable minimize
-(global-unset-key (kbd "s-t"))      ; disable font-panel
-(global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
-
 ;; disable prompt
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (put 'upcase-region 'disabled nil)
-
-;; core key bindings
-(global-set-key (kbd "<f5>") 'sort-lines)
-(global-set-key (kbd "C-c C-<return>") 'delete-trailing-whitespace)
-(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
-(global-set-key (kbd "C-x C-j") (lambda () (interactive) (dired default-directory)))
-(global-set-key (kbd "C-x r q") 'save-buffers-kill-terminal) ; remap quit-key
-(global-set-key (kbd "M-i") 'back-to-indentation)
 
 ;; registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
@@ -179,18 +164,6 @@
 
 
 ;;; Emacs core
-
-;; key bindings custom
-(global-set-key (kbd "C-z") 'jez-shell-shortcut)
-(global-set-key (kbd "M-J") 'jez-simplify)
-(global-set-key (kbd "M-j") 'jez-join-line)
-(global-set-key (kbd "C-c C-d") 'jez-insert-date)
-(global-set-key (kbd "C-x |") 'toggle-window-split)
-;; window binding
-(global-set-key (kbd "C-x <left>") 'jez-hydra-window/previous-buffer)
-(global-set-key (kbd "C-x <right>") 'jez-hydra-window/next-buffer)
-(global-set-key (kbd "C-x C-<left>") 'jez-hydra-window/previous-buffer)
-(global-set-key (kbd "C-x C-<right>") 'jez-hydra-window/next-buffer)
 
 ;; local hydra
 (defhydra jez-hydra-window (:hint nil :columns 3)
@@ -492,6 +465,54 @@ Version 2017-09-01"
            (new-name (format "*shell %s*" current-directory)))
       (rename-buffer new-name))))
 
+;;; Emacs - Nifty Tricks
+
+(defun line-copy-char (&optional b)
+  "Copy a character exactly below/above the point
+to the current point of the cursor (default is above)."
+  (interactive "p")
+  (let (p col s)
+    (setq p (point))
+    (setq col (current-column))
+    (forward-line (if b -1 1))
+    (move-to-column col)
+    (setq s (buffer-substring (point) (+ (point) 1)))
+    (goto-char p)
+    (insert s)))
+
+
+;;; Emacs Global Keys
+
+(use-package bind-key
+  :ensure t
+  :init
+  ;; key bindings unset
+  (global-unset-key (kbd "C-x C-c"))  ; disable quit
+  (global-unset-key (kbd "C-x c"))    ; disable quit
+  (global-unset-key (kbd "C-z"))      ; disable minimize
+  (global-unset-key (kbd "s-t"))      ; disable font-panel
+  (global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
+
+  (bind-keys ("<f5>"           . sort-lines)
+             ("C-c C-<return>" . delete-trailing-whitespace)
+             ("C-c t"          . toggle-truncate-lines)
+             ("C-x C-j"        . (lambda () (interactive) (dired default-directory)))
+             ("C-x r q"        . save-buffers-kill-terminal) ; remap quit-key
+             ("M-i"            . back-to-indentation)
+             ("C-z"            . jez-shell-shortcut)
+             ("M-J"            . jez-simplify)
+             ("M-j"            . jez-join-line)
+             ("C-c C-d"        . jez-insert-date)
+             ("C-x |"          . toggle-window-split)
+             ("<f12>"          . line-copy-char)
+             ("M-SPC"          . cycle-spacing)
+             ;; window binding
+             ("C-x <left>"     . jez-hydra-window/previous-buffer)
+             ("C-x <right>"    . jez-hydra-window/next-buffer)
+             ("C-x C-<left>"   . jez-hydra-window/previous-buffer)
+             ("C-x C-<right>"  . jez-hydra-window/next-buffer)))
+
+
 ;;; Emacs Built-in Mode
 
 (use-package menu-bar   :defer 2 :config (menu-bar-mode -1))
@@ -500,6 +521,7 @@ Version 2017-09-01"
 (use-package elec-pair  :defer 2 :config (electric-pair-mode t))
 (use-package paren      :defer 2 :config (show-paren-mode t))
 (use-package recentf    :defer 2 :config (recentf-mode t))
+
 
 ;;; Emacs GUI
 
@@ -1317,25 +1339,6 @@ of `org-babel-temporary-directory'."
   :hook ((sgml-mode . emmet-mode)
          (css-mode . emmet-mode)
          (web-mode . emmet-mode)))
-
-
-;;; Emacs - Nifty Tricks
-
-(defun line-copy-char (&optional b)
-  "Copy a character exactly below/above the point
-to the current point of the cursor (default is above)."
-  (interactive "p")
-  (let (p col s)
-    (setq p (point))
-    (setq col (current-column))
-    (forward-line (if b -1 1))
-    (move-to-column col)
-    (setq s (buffer-substring (point) (+ (point) 1)))
-    (goto-char p)
-    (insert s)))
-(define-key global-map [f12] 'line-copy-char)
-(define-key global-map [(shift f12)] '(lambda ()(interactive)(line-copy-char nil)))
-(global-set-key (kbd "M-SPC") 'cycle-spacing)
 
 
 ;;; Shell Mode

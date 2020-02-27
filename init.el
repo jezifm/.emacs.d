@@ -1249,8 +1249,12 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :config
+  ;; we are now moving to .emacs.d.local
   (when (file-exists-p "~/.emacs.d/prodigy-settings.el")
-    (load-file "~/.emacs.d/prodigy-settings.el"))
+    (ignore-errors
+     (copy-file "~/.emacs.d/prodigy-settings.el" "~/.emacs.d.local/")))
+  (when (file-exists-p "~/.emacs.d.local/prodigy-settings.el")
+    (load-file "~/.emacs.d.local/prodigy-settings.el"))
   (setq prodigy-view-buffer-maximum-size t))
 
 

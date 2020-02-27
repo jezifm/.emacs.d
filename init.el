@@ -182,6 +182,11 @@
         (system-time-locale "en_US"))
     (insert (format-time-string format))))
 
+(defun jez-insert-time ()
+  "Inserts time"
+  (interactive)
+  (jez-insert-date '(4)))
+
 (defun jez-annotate ()
   "Insert annotation for commenting"
   (interactive)
@@ -502,7 +507,8 @@ to the current point of the cursor (default is above)."
              ("C-z"            . jez-shell-shortcut)
              ("M-J"            . jez-simplify)
              ("M-j"            . jez-join-line)
-             ("C-c C-d"        . jez-insert-date)
+             ("C-c i d"        . jez-insert-date)
+             ("C-c i t"        . jez-insert-time)
              ("C-x |"          . toggle-window-split)
              ("<f12>"          . line-copy-char)
              ("M-SPC"          . cycle-spacing)

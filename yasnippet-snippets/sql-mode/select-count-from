@@ -2,4 +2,7 @@
 # name: select-count-from
 # key: scf
 # --
-select count(*) from $1;
+select
+    count(*)
+from
+    $1;

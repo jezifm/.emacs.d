@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: select-from-duplicate
+# key: sfd
+# --
+select
+    ${2:id},
+    count(*)
+from
+    ${1:dwh_aggregate.users_pablo}
+group by
+    1
+having
+    count(*) > 1
+limit 1;

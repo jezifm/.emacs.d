@@ -838,7 +838,7 @@ of `org-babel-temporary-directory'."
   :config
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'always)
-  (setq dired-dwim-target t)            ; default dest to other window
+  (setq dired-dwim-target nil)            ; default dest to other window
   (setq truncate-lines t)
   (setq dired-listing-switches "-lah"))
 
@@ -1207,13 +1207,74 @@ of `org-babel-temporary-directory'."
          ("C-c u" . sqlup-capitalize-keywords-in-region)
          ("M-<return>" . comint-send-input)
          :map sql-mode-map
+         ("C-c C-c" . jez-sql-send-paragraph)
          ("C-c C-l c" . sql-connect)
+         ("C-c C-l d" . jez-sql-view-columns)
+         ("C-c C-l e" . jez-sql-explain-region)
+         ("C-c C-l a" . jez-sql-explain-analyze-region)
+         ("C-c C-l x" . jez-sql-expand)
+         ("C-c C-l 1" . jez-sql-view-single-record)
+         ("C-c C-l r" . jez-sql-count-table)
          )
   ;; :hook (
   ;;        (sql-mode . sqlup-mode)
   ;;        (sql-interactive-mode  . sqlup-mode)
   ;;        )
   :config
+  (defun jez-sql-view-columns ()
+    "view column of table under cursor"
+    (interactive)
+    (let ((table (thing-at-point 'line)))
+      (sql-send-string (concat "\\d " table))))
+
+  (defun jez-sql-view-single-record ()
+    "view a single record of table under cursor"
+    (interactive)
+    (let ((table (thing-at-point 'line)))
+      (sql-send-string (concat "select * from " table " limit 1;"))))
+
+  (defun jez-sql-count-table ()
+    "view a single record of table under cursor"
+    (interactive)
+    (let ((table (thing-at-point 'line)))
+      (sql-send-string (concat "select count(*) from " table ";"))))
+
+  (defun jez-sql-explain-region (start end)
+    "run explain on region"
+    (interactive "r")
+    (sql-send-string (concat "explain " (buffer-substring-no-properties start end) ";")))
+
+  (defun jez-sql-explain-analyze-region (start end)
+    "run explain on region"
+    (interactive "r")
+    (sql-send-string (concat "explain analyze " (buffer-substring-no-properties start end) ";")))
+
+  (defun jez-sql-expand ()
+    "toggle expand on sql buffer"
+    (interactive)
+    (sql-send-string "\\x"))
+
+  (defun jez-sql-send-paragraph ()
+    "Send the current paragraph to the SQL process."
+    (interactive)
+    (sql-send-paragraph))
+
+  (defun jez-sqlformat-buffer (&optional DISPLAY-ERRORS)
+    (interactive)
+    (sqlformat-buffer 'DISPLAY-ERRORS)
+    (save-excursion
+      (replace-regexp "drop table if exists \\(.*\\);" (format "drop table if exists\n    \\1\n;") nil (point-min) (point-max))
+      (replace-regexp "drop table \\(.*\\);" (format "drop table if exists\n    \\1\n;") nil (point-min) (point-max))
+      (replace-regexp "create temp table \\(.*\\) as (" (format "create temp table\n    \\1\nas (") nil (point-min) (point-max))
+      (replace-regexp "create table if not exists \\(.*\\) (" (format "create table if not exists\n    \\1\n (") nil (point-min) (point-max))
+      (replace-regexp "^\\( *\\)join \\(.*\\) on \\(.*\\)" (format "\\1join\n\\1    \\2\n\\1on\n\\1    \\3") nil (point-min) (point-max))
+      (replace-regexp "\\(.*\\)left join \\(.*\\) on \\(.*\\)" (format "\\1left join\n\\1    \\2\n\\1on\n\\1    \\3") nil (point-min) (point-max))
+      (replace-regexp "create index on \\(.*\\) (\\(.*\\));" (format "create index on\n    \\1 (\n        \\2\n    )\n;") nil (point-min) (point-max))
+      (replace-regexp "alter table \\(.*\\) rename to \\(.*\\);" (format "alter table\n    \\1\nrename to\n    \\2\n;") nil (point-min) (point-max))
+      (replace-regexp "alter index \\(.*\\) rename to \\(.*\\);" (format "alter index\n    \\1\nrename to\n    \\2\n;") nil (point-min) (point-max))
+      (replace-regexp "\\(.+\\);" (format "\\1\n;") nil (point-min) (point-max))
+      ))
+
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
     (interactive
@@ -1240,7 +1301,7 @@ of `org-babel-temporary-directory'."
                          "--keyword-case" "1"))
   :after sql
   :bind (:map sql-mode-map
-              ("C-c C-l f" . sqlformat-buffer)
+              ("C-c C-l f" . jez-sqlformat-buffer)
               ("C-c C-l r" . sqlformat-region)))
 
 ;;; Undo Tree Mode

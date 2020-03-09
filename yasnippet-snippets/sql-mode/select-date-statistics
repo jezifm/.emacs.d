@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: select-date-statistics
+# key: sds
+# --
+select
+    date_trunc('day', ${2:date}) date_hour,
+    '$1' as table,
+    count(*)
+from
+    ${1:dwh_aggregate.events_ga_web}
+where
+    $2 >= '`(string-trim (shell-command-to-string "date -d 'week ago' '+%Y-%m-%d'"))`'
+    and $2 < '`(string-trim (shell-command-to-string "date '+%Y-%m-%d'"))`'
+group by
+    1
+order by
+    1;

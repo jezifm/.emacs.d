@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: drop-table-if-exists
+# key: dti
+# --
+drop table if exists
+    $1
+;

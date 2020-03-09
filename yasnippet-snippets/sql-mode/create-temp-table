@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: create-temp-table
-# key: ctt
+# name: createtemp
 # key: createtemp
+# key: ctt
 # --
 drop table if exists
     $1

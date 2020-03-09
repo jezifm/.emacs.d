@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: select-distinct-from
+# key: sdf
+# --
+select distinct($1) from $2;

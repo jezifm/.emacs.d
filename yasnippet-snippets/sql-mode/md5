@@ -2,4 +2,4 @@
 # name: md5
 # key: md5
 # --
-('x'||md5(concat($1)))::bit(64)::bigint $1_hash
+('x'||md5(concat_ws('|',$1)))::bit(64)::bigint

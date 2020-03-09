@@ -2,4 +2,7 @@
 # name: select-from
 # key: sf
 # --
-select * from $1;
+select
+    *
+from
+    $1;

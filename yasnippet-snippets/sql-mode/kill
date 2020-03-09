@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: kill
+# key: kill
+# --
+select pg_terminate_backend($1);

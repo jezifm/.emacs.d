@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: column-name
+# key: column-name
+# --
+select distinct on (table_schema, regexp_replace(table_name, '_[\d]{2,}', ''))
+    table_schema,
+    regexp_replace(table_name, '_[\d]{2,}', '') table_name,
+    column_name
+from
+    information_schema.columns
+where
+    column_name like '%${1:columnname}%'
+limit 50;

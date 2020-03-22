@@ -3,6 +3,8 @@
 # key: create-table
 # key: ct
 # --
-create table $1(
+create table
+    $1
+(
     $0
 );

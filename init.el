@@ -135,7 +135,6 @@
 (use-package gitignore-mode :ensure t :defer t)
 (use-package help-fns+      :defer t  :commands describe-keymap)
 (use-package hydra          :ensure t :defer t :commands defhydra)
-(use-package treemacs       :ensure t :defer t)
 (use-package which-key      :ensure t :defer t)
 (use-package sqlup-mode     :ensure t :defer t)
 
@@ -626,6 +625,14 @@ to the current point of the cursor (default is above)."
     ("q" nil))
 
   :hook (magit-mode . window-numbering-remove-keymap))
+
+
+;;; Treemacs
+(use-package treemacs
+  :ensure t
+  :defer t
+  :commands treemacs-add-project-to-workspace
+  )
 
 
 ;;; Ediff

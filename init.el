@@ -1238,40 +1238,54 @@ of `org-babel-temporary-directory'."
          ("C-c C-l a" . jez-sql-explain-analyze-region)
          ("C-c C-l x" . jez-sql-expand)
          ("C-c C-l 1" . jez-sql-view-single-record)
-         ("C-c C-l r" . jez-sql-count-table)
+         ("C-c C-l l" . jez-sql-count-table)
+         ("C-c C-l z" . jez-sql-view-table-size)
          )
   ;; :hook (
   ;;        (sql-mode . sqlup-mode)
   ;;        (sql-interactive-mode  . sqlup-mode)
   ;;        )
   :config
+  (defun jez-sql-table-at-line ()
+    "Extract table name in current line"
+    (interactive)
+    (let* ((table (thing-at-point 'line))
+           (table (s-trim table))
+           (table (s-replace-regexp " .*" "" table)))
+      table))
+
+  (defun jez-sql-view-table-size ()
+    (interactive)
+    (let* ((table (jez-sql-table-at-line)))
+      (sql-send-string (format "select '%s' tablename, pg_size_pretty(pg_total_relation_size('%s')) size;" table table))))
+
   (defun jez-sql-view-columns ()
     "view column of table under cursor"
     (interactive)
-    (let ((table (thing-at-point 'line)))
-      (sql-send-string (concat "\\d " table))))
+    (let ((table (jez-sql-table-at-line)))
+      (sql-send-string (format "\\d %s" table))))
 
   (defun jez-sql-view-single-record ()
     "view a single record of table under cursor"
     (interactive)
-    (let ((table (thing-at-point 'line)))
-      (sql-send-string (concat "select * from " table " limit 1;"))))
+    (let ((table (jez-sql-table-at-line)))
+      (sql-send-string (format "select * from  %s  limit 1;" table)
 
   (defun jez-sql-count-table ()
     "view a single record of table under cursor"
     (interactive)
-    (let ((table (thing-at-point 'line)))
-      (sql-send-string (concat "select count(*) from " table ";"))))
+    (let ((table (jez-sql-table-at-line)))
+      (sql-send-string (format "select count(*) from  %s ;" table)
 
   (defun jez-sql-explain-region (start end)
     "run explain on region"
     (interactive "r")
-    (sql-send-string (concat "explain " (buffer-substring-no-properties start end) ";")))
+    (sql-send-string (format "explain  %s;" (buffer-substring-no-properties start end))
 
   (defun jez-sql-explain-analyze-region (start end)
     "run explain on region"
     (interactive "r")
-    (sql-send-string (concat "explain analyze " (buffer-substring-no-properties start end) ";")))
+    (sql-send-string (format "explain analyze  %s;" (buffer-substring-no-properties start end))
 
   (defun jez-sql-expand ()
     "toggle expand on sql buffer"

@@ -1727,6 +1727,12 @@ of `org-babel-temporary-directory'."
   :hook (php-hook . jez-php-mode-hook))
 
 
+;;; Jenkins
+(use-package jenkins
+  :ensure t
+  :defer t
+  :commands butler-server-list)
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

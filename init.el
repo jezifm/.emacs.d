@@ -351,11 +351,20 @@ Note: just like `align-regexp' but better"
     ;;    (select-window current-window)
     ))
 
+(defun jez-reset-themes ()
+  "Remove all enabled themes"
+  (interactive)
+  (let* ((always-on-themes '(smart-mode-line-powerline))
+           (predicate (lambda (theme) (not (member theme always-on-themes))))
+           (themes-to-disable (seq-filter predicate custom-enabled-themes)))
+      (mapcar 'disable-theme themes-to-disable)))
+
 (defun jez-change-theme (&optional theme)
   "Load and enable THEME without confirmation"
   (interactive)
   (let* ((themes-available (mapcar 'symbol-name (custom-available-themes)))
          (theme (or theme (intern (completing-read "Load custom theme: " themes-available)))))
+    (jez-reset-themes)
     (load-theme theme t)
     (enable-theme theme)))
 

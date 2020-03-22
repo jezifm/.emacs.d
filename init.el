@@ -227,7 +227,14 @@
          (directories-relative (--map (s-replace-regexp ".*/\\(.*\\)$" "\\1" it) directories))
          (directory-chosen (helm-comp-read "Choose directory:" directories-relative))
          (default-directory (format "%s%s" workspace directory-chosen)))
-       (shell (format "*shell %s*" directory-chosen))))
+    (shell (format "*shell %s*" directory-chosen))))
+
+(defun jez-create-shell-buffer (&optional name)
+  "Create shell buffer using NAME"
+  (interactive)
+  (unless name
+    (setq name (helm-read-string "buffer name: ")))
+  (shell (format "*shell %s*" name)))
 
 (defun jez-join-line (count)
   "Custom join line"
@@ -511,8 +518,9 @@ to the current point of the cursor (default is above)."
    ("<f12>"          . line-copy-char)
    ("<f5>"           . sort-lines)
    ("C-c C-<return>" . delete-trailing-whitespace)
-   ("C-c i d"        . jez-insert-date)
-   ("C-c i t"        . jez-insert-time)
+   ("C-c j d"        . jez-insert-date)
+   ("C-c j t"        . jez-insert-time)
+   ("C-c j z"        . jez-create-shell-buffer)
    ("C-c t"          . toggle-truncate-lines)
    ;; window binding
    ("C-x <left>"     . jez-hydra-window/previous-buffer)

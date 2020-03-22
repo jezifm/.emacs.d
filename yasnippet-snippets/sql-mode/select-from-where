@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: select-from-where
+# key: sfw
+# --
+select
+    *
+from
+    ${1:bi_exports.angi_users}
+where
+    true
+    and ${2:id = 1}
+;

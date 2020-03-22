@@ -361,9 +361,9 @@ Note: just like `align-regexp' but better"
   "Remove all enabled themes"
   (interactive)
   (let* ((always-on-themes '(smart-mode-line-powerline))
-           (predicate (lambda (theme) (not (member theme always-on-themes))))
-           (themes-to-disable (seq-filter predicate custom-enabled-themes)))
-      (mapcar 'disable-theme themes-to-disable)))
+         (predicate (lambda (theme) (not (member theme always-on-themes))))
+         (themes-to-disable (seq-filter predicate custom-enabled-themes)))
+    (mapcar 'disable-theme themes-to-disable)))
 
 (defun jez-change-theme (&optional theme)
   "Load and enable THEME without confirmation"

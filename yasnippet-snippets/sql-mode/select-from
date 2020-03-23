@@ -5,4 +5,5 @@
 select
     *
 from
-    $1;
+    $1
+;

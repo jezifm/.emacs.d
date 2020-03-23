@@ -1320,6 +1320,8 @@ of `org-babel-temporary-directory'."
              ("\\(.*\\)alter table \\(.*\\)" . "\\1alter table\n\\1    \\2")
              ("\\(.*\\)    add column \\(.*\\)" . "\\1add column\n\\1    \\2")
              (" \\{1\\}::" "::")
+             ("generate_series\\(.*\\)\n)" "generate_series\\1)")
+             ("row_number() over\\(.*\\)\n)" "row_number() over\\1)")
              )))
       (save-excursion
         (loop for i in regex-configs

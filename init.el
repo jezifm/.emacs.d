@@ -1269,23 +1269,23 @@ of `org-babel-temporary-directory'."
     "view a single record of table under cursor"
     (interactive)
     (let ((table (jez-sql-table-at-line)))
-      (sql-send-string (format "select * from  %s  limit 1;" table)
+      (sql-send-string (format "select * from  %s  limit 1;" table))))
 
   (defun jez-sql-count-table ()
     "view a single record of table under cursor"
     (interactive)
     (let ((table (jez-sql-table-at-line)))
-      (sql-send-string (format "select count(*) from  %s ;" table)
+      (sql-send-string (format "select count(*) from  %s ;" table))))
 
   (defun jez-sql-explain-region (start end)
     "run explain on region"
     (interactive "r")
-    (sql-send-string (format "explain  %s;" (buffer-substring-no-properties start end))
+    (sql-send-string (format "explain  %s;" (buffer-substring-no-properties start end))))
 
   (defun jez-sql-explain-analyze-region (start end)
     "run explain on region"
     (interactive "r")
-    (sql-send-string (format "explain analyze  %s;" (buffer-substring-no-properties start end))
+    (sql-send-string (format "explain analyze  %s;" (buffer-substring-no-properties start end))))
 
   (defun jez-sql-expand ()
     "toggle expand on sql buffer"

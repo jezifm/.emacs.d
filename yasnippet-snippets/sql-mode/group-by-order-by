@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: group-by-order-by
+# key: go
+# --
+group by
+    $1
+order by
+    $1

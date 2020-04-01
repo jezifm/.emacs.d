@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: group
+# key: g
+# --
+group by
+    $1
+$0

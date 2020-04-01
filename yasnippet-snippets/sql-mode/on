@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: on
+# key: on
+# --
+on
+    $0

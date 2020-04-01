@@ -5,3 +5,4 @@
 where
     true
     and $1
+$0

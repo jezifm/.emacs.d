@@ -1231,7 +1231,7 @@ of `org-babel-temporary-directory'."
          ("C-c u" . sqlup-capitalize-keywords-in-region)
          ("M-<return>" . comint-send-input)
          :map sql-mode-map
-         ("C-c C-c" . jez-sql-send-paragraph)
+         ("C-c C-c" . jez-sql-send-paragraph-move-forward)
          ("C-c C-l c" . sql-connect)
          ("C-c C-l d" . jez-sql-view-columns)
          ("C-c C-l e" . jez-sql-explain-region)
@@ -1292,16 +1292,12 @@ of `org-babel-temporary-directory'."
     (interactive)
     (sql-send-string "\\x"))
 
-  (defun jez-sql-send-paragraph ()
-    "Send the current paragraph to the SQL process."
-    (interactive)
-    (sql-send-paragraph))
-
   (defun jez-sqlformat-buffer (&optional DISPLAY-ERRORS)
     (interactive)
     (sqlformat-buffer 'DISPLAY-ERRORS)
     (let ((regex-configs
-           '(("drop table if exists \\(.*\\);" . "drop table if exists\n    \\1\n;")
+           '(
+             ("drop table if exists \\(.*\\);" . "drop table if exists\n    \\1\n;")
              ("drop table \\(.*\\);" . "drop table if exists\n    \\1\n;")
              ("create temp table \\(.*\\) as (" . "create temp table\n    \\1\nas (")
              ("create table if not exists \\(.*\\) (" . "create table if not exists\n    \\1\n (")
@@ -1312,11 +1308,12 @@ of `org-babel-temporary-directory'."
              ("alter table \\(.*\\) rename to \\(.*\\);" . "alter table\n    \\1\nrename to\n    \\2\n;")
              ("alter index \\(.*\\) rename to \\(.*\\);" . "alter index\n    \\1\nrename to\n    \\2\n;")
              ("\\(.*\\)limit \\(.*\\)" . "\\1limit\n\\1    \\2")
-             ("\\(.+\\);" . "\\1\n;")
-             (")\n;" . ");")
-             ("commit\n;" . "commit;")
-             ("begin\n;" . "begin;")
+             ("\\([[:alnum:]]+\\);" . "\\1\n;")
+             ("\\(commit\\|begin\\|end\\)\n;" . "\\1;")
+             ;; ("begin\n;" . "begin;")
              (" -> " . "->")
+             (" ->> " . "->>")
+             ("\\()\\|'\\);" . "\\1\n;")
              ("\\(.*\\)alter table \\(.*\\)" . "\\1alter table\n\\1    \\2")
              ("\\(.*\\)    add column \\(.*\\)" . "\\1add column\n\\1    \\2")
              (" \\{1\\}::" "::")
@@ -1327,6 +1324,32 @@ of `org-babel-temporary-directory'."
         (loop for i in regex-configs
               do (replace-regexp (car i) (cdr i) nil (point-min) (point-max)))))
     )
+
+  (defun jez-sql-send-paragraph ()
+    (interactive)
+    (let ((start (save-excursion
+                   (condition-case nil
+                       (progn
+                         (search-backward ";")
+                         (forward-char 1)
+                         (point))
+                     (error
+                      (point-min)))))
+          (end (save-excursion
+                 (condition-case nil
+                     (progn
+                       (search-forward ";")
+                       (point))
+                   (error
+                    (point-max))))))
+      (sql-send-region start end)))
+
+  (defun jez-sql-send-paragraph-move-forward ()
+    (interactive)
+    (jez-sql-send-paragraph)
+    (search-forward ";")
+    (next-line)
+    (back-to-indentation))
 
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"

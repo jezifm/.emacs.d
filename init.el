@@ -1298,10 +1298,11 @@ of `org-babel-temporary-directory'."
     (let ((regex-configs
            '(
              ("drop table if exists \\(.*\\);" . "drop table if exists\n    \\1\n;")
-             ("drop table \\(.*\\);" . "drop table if exists\n    \\1\n;")
+             ("drop table \\(.*\\);" . "drop table\n    \\1\n;")
              ("create temp table \\(.*\\) as (" . "create temp table\n    \\1\nas (")
              ("create table if not exists \\(.*\\) (" . "create table if not exists\n    \\1\n (")
              ("create table \\(.*\\) (" . "create table \n    \\1\n (")
+             ("create table \\(.*\\) as" . "create table \n    \\1\nas")
              ("\\( *\\)    join \\(.*\\) on \\(.*\\)" . "\\1join\n\\1    \\2\n\\1on\n\\1    \\3")
              ("\\(.*\\)    left join \\(.*\\) on \\(.*\\)" . "\\1left join\n\\1    \\2\n\\1on\n\\1    \\3")
              ("create index on \\(.*\\) (\\(.*\\));" . "create index on\n    \\1 (\n        \\2\n    )\n;")

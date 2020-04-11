@@ -1309,17 +1309,21 @@ of `org-babel-temporary-directory'."
              ("alter table \\(.*\\) rename to \\(.*\\);" . "alter table\n    \\1\nrename to\n    \\2\n;")
              ("alter index \\(.*\\) rename to \\(.*\\);" . "alter index\n    \\1\nrename to\n    \\2\n;")
              ("\\(.*\\)limit \\(.*\\)" . "\\1limit\n\\1    \\2")
-             ("\\([[:alnum:]]+\\);" . "\\1\n;")
-             ("\\(commit\\|begin\\|end\\)\n;" . "\\1;")
              ;; ("begin\n;" . "begin;")
              (" -> " . "->")
              (" ->> " . "->>")
-             ("\\()\\|'\\);" . "\\1\n;")
+             ("\\(.*\\)alter table \\(.*\\) set schema \\(.*\\)" . "\\1alter table\n\\1    \\2\nset schema\n    \\3")
              ("\\(.*\\)alter table \\(.*\\)" . "\\1alter table\n\\1    \\2")
              ("\\(.*\\)    add column \\(.*\\)" . "\\1add column\n\\1    \\2")
+             ("\\(.*\\)    add primary key \\(.*\\)" . "\\1add primary key\n\\1    \\2")
              (" \\{1\\}::" "::")
              ("generate_series\\(.*\\)\n)" "generate_series\\1)")
              ("row_number() over\\(.*\\)\n)" "row_number() over\\1)")
+             ("create schema \\(.*\\);" "create schema\n    \\1\n;")
+             ("\\()\\|'\\);" . "\\1\n;")
+             ("^)\n;" . ");")
+             ("\\([[:alnum:]]+\\);" . "\\1\n;")
+             ("\\(commit\\|begin\\|end\\)\n;" . "\\1;")
              )))
       (save-excursion
         (loop for i in regex-configs
@@ -1349,8 +1353,10 @@ of `org-babel-temporary-directory'."
     (interactive)
     (jez-sql-send-paragraph)
     (search-forward ";")
-    (next-line)
-    (back-to-indentation))
+    (ignore-errors
+        (progn
+          (next-line)
+          (back-to-indentation))))
 
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"

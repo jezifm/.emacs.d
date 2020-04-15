@@ -1324,6 +1324,8 @@ of `org-babel-temporary-directory'."
              ("^)\n;" . ");")
              ("\\([[:alnum:]]+\\);" . "\\1\n;")
              ("\\(commit\\|begin\\|end\\)\n;" . "\\1;")
+             ("delete from \\(.*\\)" . "delete from\n    \\1")
+             ("where \\(.*\\)" . "where\n    \\1")
              )))
       (save-excursion
         (loop for i in regex-configs

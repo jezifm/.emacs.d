@@ -150,6 +150,7 @@
 
 ;; update variables to use host
 (defun jez-load-custom-initel ()
+  (interactive)
   (let* ((file-directory (expand-file-name "init.el" custom-host-dir)))
     (if (file-exists-p file-directory)
         (progn
@@ -1489,7 +1490,9 @@ of `org-babel-temporary-directory'."
 (use-package avy-zap
   :ensure t
   :defer t
-  :bind (("M-z" . avy-zap-to-char-dwim)
+  :bind (
+         ;; ("M-z" . avy-zap-to-char-dwim)
+         ("M-z" . zap-to-char)
          ("M-Z" . avy-zap-up-to-char-dwim)))
 
 
@@ -1744,7 +1747,7 @@ of `org-babel-temporary-directory'."
 (use-package visual-regexp
  :ensure t
  :defer t
- :bind (("C-c r" . vr/replace)
+ :bind (("C-c r" . replace-regexp)
         ("C-c %" . vr/query-replace)
         ("M-%" . vr/query-replace)
         ("C-M-/" . vr/mc-mark)))

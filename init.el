@@ -1491,7 +1491,6 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :bind (
-         ;; ("M-z" . avy-zap-to-char-dwim)
          ("M-z" . zap-to-char)
          ("M-Z" . avy-zap-up-to-char-dwim)))
 

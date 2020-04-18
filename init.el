@@ -506,6 +506,9 @@ to the current point of the cursor (default is above)."
 
 (use-package bind-key
   :ensure t
+  :bind ((:map isearch-mode-map
+               ("s-s" . isearch-repeat-forward)
+               ("s-r" . isearch-repeat-backward)))
   :config
   ;; key bindings unset
   (global-unset-key (kbd "C-x C-c"))  ; disable quit
@@ -522,12 +525,10 @@ to the current point of the cursor (default is above)."
    ("C-c j t"        . jez-insert-time)
    ("C-c j z"        . jez-create-shell-buffer)
    ("C-c t"          . toggle-truncate-lines)
-   ;; window binding
    ("C-x <left>"     . jez-hydra-window/previous-buffer)
    ("C-x <right>"    . jez-hydra-window/next-buffer)
    ("C-x C-<left>"   . jez-hydra-window/previous-buffer)
    ("C-x C-<right>"  . jez-hydra-window/next-buffer)
-
    ("C-x C-j"        . (lambda () (interactive) (dired default-directory)))
    ("C-x r q"        . save-buffers-kill-terminal) ; remap quit-key
    ("C-x |"          . toggle-window-split)
@@ -535,7 +536,12 @@ to the current point of the cursor (default is above)."
    ("M-J"            . jez-simplify)
    ("M-SPC"          . cycle-spacing)
    ("M-i"            . back-to-indentation)
-   ("M-j"            . jez-join-line)))
+   ("M-j"            . jez-join-line)
+   ("M-n"            . (lambda () (interactive) (next-line 4)))
+   ("M-p"            . (lambda () (interactive) (previous-line 4)))
+   ("s-r"            . isearch-backward-regexp)
+   ("s-s"            . isearch-forward-regexp)
+   ))
 
 
 ;;; Emacs Built-in Mode

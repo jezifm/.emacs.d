@@ -1306,6 +1306,7 @@ of `org-babel-temporary-directory'."
              ("\\( *\\)    join \\(.*\\) on \\(.*\\)" . "\\1join\n\\1    \\2\n\\1on\n\\1    \\3")
              ("\\(.*\\)    left join \\(.*\\) on \\(.*\\)" . "\\1left join\n\\1    \\2\n\\1on\n\\1    \\3")
              ("create index on \\(.*\\) (\\(.*\\));" . "create index on\n    \\1 (\n        \\2\n    )\n;")
+             ("create index \\(.*\\) on \\(.*\\) using \\(.*\\)" . "create index\n    \\1\non\n    \\2\nusing\n    \\3")
              ("alter table \\(.*\\) rename to \\(.*\\);" . "alter table\n    \\1\nrename to\n    \\2\n;")
              ("alter index \\(.*\\) rename to \\(.*\\);" . "alter index\n    \\1\nrename to\n    \\2\n;")
              ("\\(.*\\)limit \\(.*\\)" . "\\1limit\n\\1    \\2")

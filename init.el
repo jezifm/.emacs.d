@@ -1354,7 +1354,12 @@ of `org-babel-temporary-directory'."
   (defun jez-sql-send-paragraph-move-forward ()
     (interactive)
     (jez-sql-send-paragraph)
-    (search-forward ";")
+    (condition-case nil
+        (search-forward ";")
+      (error
+       (save-excursion
+         (search-backward ";" nil nil 2)
+         (jez-sql-send-paragraph))))
     (ignore-errors
         (progn
           (next-line)

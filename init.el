@@ -700,7 +700,9 @@ to the current point of the cursor (default is above)."
 
 (use-package ediff-util
   :config
-  (setq ediff-split-window-function 'split-window-horizontally))
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (winner-mode)
+  :hook (ediff-after-quit-hook-internal . winner-undo))
 
 ;;; Org Mode
 

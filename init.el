@@ -1006,7 +1006,12 @@ of `org-babel-temporary-directory'."
          ("M-x"     . helm-select-action)
          :map helm-projectile-projects-map
          ("C-j"     . helm-maybe-exit-minibuffer)
-         ("C-l"     . jez-erase-minibuffer))
+         ("C-l"     . jez-erase-minibuffer)
+         :map shell-mode-map
+         ("C-c C-l" . 'helm-comint-input-ring)
+         :map minibuffer-local-map
+         ("C-c C-l" . 'helm-minibuffer-history)
+         )
   :config
   (require 'projectile)
   (helm-mode 1)

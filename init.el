@@ -358,6 +358,26 @@ Note: just like `align-regexp' but better"
     ;;    (select-window current-window)
     ))
 
+(defun jez-black-theme ()
+  "Simple black theme"
+  (interactive)
+  (set-background-color "black")
+  (set-foreground-color "white")
+  (set-face-background 'mode-line "black")
+  (set-face-foreground 'mode-line "white")
+  (set-face-foreground 'region "black")
+  (set-face-background 'region "white")
+  ;; (set-face-foreground 'text-cursor "black")
+  ;; Set mouse color
+  (set-mouse-color "navy")
+  ;; Set highlighting colors for isearch and drag
+  (set-face-foreground 'highlight "white")
+  (set-face-background 'highlight "blue")
+  (set-face-foreground 'region "cyan")
+  (set-face-background 'region "blue")
+  (set-face-foreground 'secondary-selection "skyblue")
+  (set-face-background 'secondary-selection "darkblue"))
+
 (defun jez-reset-themes ()
   "Remove all enabled themes"
   (interactive)

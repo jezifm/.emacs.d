@@ -486,6 +486,31 @@ Version 2017-09-01"
            (new-name (format "*shell %s*" current-directory)))
       (rename-buffer new-name))))
 
+(defun jez-package-install (pkg &optional dont-select)
+  (interactive
+   (progn
+     ;; Initialize the package system to get the list of package
+     ;; symbols for completion.
+     (unless package--initialized
+       (package-initialize t))
+     (unless package-archive-contents
+       (package-refresh-contents))
+     (list (intern (completing-read
+                    "Install package: "
+                    (delq nil
+                          (mapcar (lambda (elt)
+                                    (unless (package-installed-p (car elt))
+                                      (symbol-name (car elt))))
+                                  package-archive-contents))
+                    nil t))
+           nil)))
+  (condition-case nil
+      (package-install pkg dont-select)
+    (error
+     (progn
+       (package-refresh-contents)
+       (package-install pkg dont-select)))))
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)

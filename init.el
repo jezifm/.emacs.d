@@ -487,6 +487,7 @@ Version 2017-09-01"
       (rename-buffer new-name))))
 
 (defun jez-package-install (pkg &optional dont-select)
+  "Modified version of package-install. When failed, run refresh content and try again"
   (interactive
    (progn
      ;; Initialize the package system to get the list of package

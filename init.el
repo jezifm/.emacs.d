@@ -1035,6 +1035,7 @@ of `org-babel-temporary-directory'."
          ("C-c C-l" . 'helm-minibuffer-history)
          )
   :config
+  (require 'shell)
   (require 'projectile)
   (helm-mode 1)
   (helm-projectile-on)

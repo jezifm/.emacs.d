@@ -993,10 +993,10 @@ of `org-babel-temporary-directory'."
          ("C-c h"   . helm-command-prefix)
          ("C-h d"   . helm-dash)
          ("C-h m"   . helm-describe-modes)
-         ("C-x C-b" . helm-buffers-list)
+         ("C-x C-b" . helm-mini)
          ("C-x C-f" . helm-find-files)
          ("C-x C-r" . helm-recentf)
-         ("C-x b"   . helm-buffers-list)
+         ("C-x b"   . helm-mini)
          ("C-x r b" . helm-bookmarks)
          ("M-x"     . helm-M-x)
          ("M-y"     . helm-show-kill-ring)
@@ -1019,6 +1019,10 @@ of `org-babel-temporary-directory'."
         helm-ff-file-name-history-use-recentf t)
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match    t)
+
 
   (defun jez-erase-minibuffer (arg)
     (interactive "p")

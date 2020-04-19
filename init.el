@@ -989,7 +989,8 @@ of `org-babel-temporary-directory'."
 (use-package helm
   :ensure t
   :defer t
-  :bind (("C-c h"   . helm-command-prefix)
+  :bind (
+         ("C-c h"   . helm-command-prefix)
          ("C-h d"   . helm-dash)
          ("C-h m"   . helm-describe-modes)
          ("C-x C-b" . helm-buffers-list)
@@ -1002,7 +1003,7 @@ of `org-babel-temporary-directory'."
          :map helm-map
          ("<tab>"   . helm-execute-persistent-action)
          ("C-i"     . helm-execute-persistent-action)
-         ("C-z"     . helm-select-action)
+         ("M-x"     . helm-select-action)
          :map helm-projectile-projects-map
          ("C-j"     . helm-maybe-exit-minibuffer)
          ("C-l"     . jez-erase-minibuffer))

@@ -1297,7 +1297,7 @@ of `org-babel-temporary-directory'."
          ("C-c u" . sqlup-capitalize-keywords-in-region)
          ("M-<return>" . comint-send-input)
          :map sql-mode-map
-         ("C-c C-c" . jez-sql-send-paragraph-move-forward)
+         ("C-c C-c" . jez-sql-send-paragraph)
          ("C-c C-l c" . sql-connect)
          ("C-c C-l d" . jez-sql-view-columns)
          ("C-c C-l e" . jez-sql-explain-region)
@@ -1874,6 +1874,13 @@ of `org-babel-temporary-directory'."
   :ensure t
   :defer t
   :commands butler-server-list)
+
+
+;;; Ein
+(use-package ein
+  :ensure t
+  :commands (ein:notebooklist-open))
+
 
 ;;; Startup
 

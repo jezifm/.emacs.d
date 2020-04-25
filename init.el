@@ -1339,6 +1339,7 @@ using the specified hippie-expand function."
          ("M-<return>" . comint-send-input)
          :map sql-mode-map
          ("C-c C-c" . jez-sql-send-paragraph)
+         ("C-c C-n" . jez-sql-send-paragraph-move-forward)
          ("C-c C-l c" . sql-connect)
          ("C-c C-l d" . jez-sql-view-columns)
          ("C-c C-l e" . jez-sql-explain-region)

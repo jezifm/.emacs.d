@@ -1109,6 +1109,11 @@ of `org-babel-temporary-directory'."
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 
 
+;;; Git Timemachine
+(use-package git-timemachine
+  :ensure t
+  :defer t)
+
 ;;; Ace Jump Mode
 
 (use-package ace-jump-mode

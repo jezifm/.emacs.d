@@ -1195,7 +1195,7 @@ of `org-babel-temporary-directory'."
 (use-package setup-hippie
   :bind (("C-." . hippie-expand-no-case-fold)
          ("C-:" . hippie-expand-lines)
-         ("C-," . my-helm-hippie-expand))
+         ("C-," . jez-helm-hippie-expand))
 
   :config
   ;; https://stackoverflow.com/questions/6515009/how-to-configure-emacs-to-have-it-complete-the-path-automatically-like-vim/6556788#6556788

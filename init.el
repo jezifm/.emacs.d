@@ -1920,7 +1920,23 @@ using the specified hippie-expand function."
 (use-package jenkins
   :ensure t
   :defer t
-  :commands butler-server-list)
+  :commands butler-server-list
+  :bind (:map
+         jenkins-mode-map
+         ("t" . jez-jenkins--visit-trend-from-main-screen)
+         ("c" . jez-jenkins--visit-config-from-main-screen))
+  :config
+  (defun jez-jenkins--visit-trend-from-main-screen ()
+    "Open browser trend for current job"
+    (interactive)
+    (let ((jobname (tabulated-list-get-id)))
+      (browse-url (format "%sjob/%s/buildTimeTrend" (get-jenkins-url) jobname))))
+  (defun jez-jenkins--visit-config-from-main-screen ()
+    "Open browser trend for current job"
+    (interactive)
+    (let ((jobname (tabulated-list-get-id)))
+      (browse-url (format "%sjob/%s/configure" (get-jenkins-url) jobname)))))
+
 
 
 ;;; Ein

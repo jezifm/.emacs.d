@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: logger
+# key: logger
+# --
+logger = logging.getLogger('${1:logger_name}')
+logger.setLevel(os.environ.get('LOG_LEVEL', 'INFO'))
+handler = logging.StreamHandler()
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)

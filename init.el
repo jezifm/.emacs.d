@@ -23,6 +23,7 @@
 
 ;; registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
+(set-register ?b '(file . "~/.bashrc"))
 
 
 ;;; Emacs Version

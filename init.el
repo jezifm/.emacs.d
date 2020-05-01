@@ -1964,7 +1964,7 @@ using the specified hippie-expand function."
   (dimmer-mode)
   :config
   ;TODO: exclude dimmer on swiper
-  (setq dimmer-exclusion-predicates '(helm--alive-p window-minibuffer-p))
+  (setq dimmer-prevent-dimming-predicates '(helm--alive-p window-minibuffer-p))
   (setq dimmer-exclusion-regexp-list
         '(
           " \\*\\(LV\\|transient\\)\\*"
@@ -1975,6 +1975,7 @@ using the specified hippie-expand function."
           "^\\*Minibuf-[0-9]+\\*"
           "^\\*[h|H]elm.*\\*"
           ".*magit-diff.*"
+          "\\*Help\\*"
           ))
   (setq dimmer-fraction 0.50))
 
@@ -1993,10 +1994,11 @@ using the specified hippie-expand function."
 (use-package beacon
   :ensure t
   :defer t
+  :init
+  (beacon-mode 1)
   :config
   (setq-default beacon-lighter "")
-  (setq-default beacon-size 20)
-  (beacon-mode 1))
+  (setq-default beacon-size 20))
 
 ;;; Startup
 

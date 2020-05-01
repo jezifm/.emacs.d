@@ -2008,6 +2008,8 @@ using the specified hippie-expand function."
   :ensure t
   :config
   (keyfreq-mode 1)
+  (make-directory "~/.emacs.d/data" :parent)
+  (setq keyfreq-file "~/.emacs.d/data/keyfreq")
   (keyfreq-autosave-mode 1))
 
 

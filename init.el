@@ -1,3 +1,4 @@
+
 ;;; Initialize Variable
 (setq save-abbrevs 'silently)                                         ; abbrev warning
 (setq inhibit-startup-message t)                                      ; disable splash
@@ -1961,7 +1962,8 @@ using the specified hippie-expand function."
   :ensure t
   :defer t
   :init
-  (dimmer-mode)
+  ;TODO: performance issue. lag when switching app
+  (dimmer-mode -1)
   :config
   ;TODO: exclude dimmer on swiper
   (setq dimmer-prevent-dimming-predicates '(helm--alive-p window-minibuffer-p))

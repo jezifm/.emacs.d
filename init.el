@@ -2002,6 +2002,15 @@ using the specified hippie-expand function."
   (setq-default beacon-lighter "")
   (setq-default beacon-size 20))
 
+
+;;; Keyfreq
+(use-package keyfreq
+  :ensure t
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

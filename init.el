@@ -1964,6 +1964,16 @@ using the specified hippie-expand function."
   (dimmer-activate))
 
 
+;;; Uniquify
+(use-package emacs
+  :ensure t
+  :defer t
+  :config
+  (setq uniquify-buffer-name-style 'reverse)
+  (setq uniquify-after-kill-buffer-p t)
+  (setq uniquify-ignore-buffers-re "^\\*"))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

@@ -1961,7 +1961,22 @@ using the specified hippie-expand function."
   :ensure t
   :defer t
   :init
-  (dimmer-activate))
+  (dimmer-mode)
+  :config
+  ;TODO: exclude dimmer on swiper
+  (setq dimmer-exclusion-predicates '(helm--alive-p window-minibuffer-p))
+  (setq dimmer-exclusion-regexp-list
+        '(
+          " \\*\\(LV\\|transient\\)\\*"
+          "*LV*"
+          "^*Messages*"
+          "^.\\*Echo.*\\*"
+          "^.\\*which-key\\*$"
+          "^\\*Minibuf-[0-9]+\\*"
+          "^\\*[h|H]elm.*\\*"
+          ".*magit-diff.*"
+          ))
+  (setq dimmer-fraction 0.50))
 
 
 ;;; Uniquify
@@ -1973,6 +1988,15 @@ using the specified hippie-expand function."
   (setq uniquify-after-kill-buffer-p t)
   (setq uniquify-ignore-buffers-re "^\\*"))
 
+
+;;; Beacon
+(use-package beacon
+  :ensure t
+  :defer t
+  :config
+  (setq-default beacon-lighter "")
+  (setq-default beacon-size 20)
+  (beacon-mode 1))
 
 ;;; Startup
 

@@ -1946,6 +1946,14 @@ using the specified hippie-expand function."
   :commands (ein:notebooklist-open))
 
 
+;;; Dimmer
+(use-package dimmer
+  :ensure t
+  :defer t
+  :init
+  (dimmer-activate))
+
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

@@ -4,11 +4,11 @@
 # key: ctt
 # --
 drop table if exists
-    tmp_`(jez-abbreviate (buffer-name (current-buffer)))`_$1
+    tmp_`(jez-buffer-abbreviate)`_$1
 ;
 
 create temp table
-    tmp_`(jez-abbreviate (buffer-name (current-buffer)))`_$1
+    tmp_`(jez-buffer-abbreviate)`_$1
 as (
     select
         $0

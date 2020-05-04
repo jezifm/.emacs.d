@@ -1179,6 +1179,15 @@ of `org-babel-temporary-directory'."
               ("C-i" . yas-next-field-or-maybe-expand))
   :mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
   :config
+  (defun jez-buffer-abbreviate ()
+    "docstring"
+    (interactive)
+    (let ((directory-name (file-name-nondirectory (directory-file-name (file-name-directory buffer-file-name))))
+          (buffer-abbrev (jez-abbreviate (buffer-name (current-buffer)))))
+      (if (string-match "[[:alpha:]]" buffer-abbrev)
+          buffer-abbrev
+        directory-name)))
+
   (setq yas-indent-line 'fixed)
   (setq yas-buffer-local-condition `always)
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")

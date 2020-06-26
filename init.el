@@ -508,7 +508,11 @@ Version 2017-09-01"
     (setq jez-shell-command-buffer buffer)
     (setq jez-shell-command-command command)
     (global-set-key (kbd "C-r") 'jez-shell-command)
-    (message (format "C-r binded to %s: %s" buffer command))))
+    (condition-case nil
+        (message (format "C-r binded to %s: %s" buffer command))
+      (error
+       (message "C-r binded to %s" buffer)))
+    ))
 
 (defun jez-fix-shell-buffer-name ()
   "Rename shell buffer based on its current directory"
@@ -2020,6 +2024,13 @@ using the specified hippie-expand function."
   (make-directory "~/.emacs.d/data" :parent)
   (setq keyfreq-file "~/.emacs.d/data/keyfreq")
   (keyfreq-autosave-mode 1))
+
+
+;;; Jinja
+(use-package jinja2-mode
+  :ensure t
+  :mode (("\\.j2\\'" . jinja2-mode)
+         ("\\.jinja2\\'"  . jinja2-mode)))
 
 
 ;;; Startup

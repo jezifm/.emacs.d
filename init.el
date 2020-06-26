@@ -2029,6 +2029,7 @@ using the specified hippie-expand function."
 ;;; Jinja
 (use-package jinja2-mode
   :ensure t
+  :defer t
   :mode (("\\.j2\\'" . jinja2-mode)
          ("\\.jinja2\\'"  . jinja2-mode)))
 

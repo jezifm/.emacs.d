@@ -1,0 +1,80 @@
+# -*- mode: snippet -*-
+# name: index-kpi
+# key: index-kpi
+# --
+-- Short summary of indexes main KPIs.
+with
+    table_stats
+as (
+    select
+        psut.schemaname,
+        psut.relname,
+        psut.n_live_tup,
+        psut.n_dead_tup,
+        1.0 * psut.idx_scan / greatest(1, psut.seq_scan + psut.idx_scan) as index_use_ratio
+    from
+        pg_stat_user_tables psut
+),
+table_io as (
+    select
+        psiut.schemaname,
+        psiut.relname,
+        sum(psiut.heap_blks_read) as table_page_read,
+        sum(psiut.heap_blks_hit)  as table_page_hit,
+        sum(psiut.heap_blks_hit) / greatest(1, sum(psiut.heap_blks_hit) + sum(psiut.heap_blks_read)) as table_hit_ratio
+    from
+        pg_statio_user_tables psiut
+    group by
+        psiut.schemaname,
+        psiut.relname
+    order by
+        table_page_read desc
+),
+index_io as (
+    select
+        psiui.schemaname,
+        psiui.relname,
+        psiui.indexrelname,
+        sum(psiui.idx_blks_read) as idx_page_read,
+        sum(psiui.idx_blks_hit) as idx_page_hit,
+        1.0 * sum(psiui.idx_blks_hit) / greatest(1.0, sum(psiui.idx_blks_hit) + sum(psiui.idx_blks_read)) as idx_hit_ratio
+    from
+        pg_statio_user_indexes psiui
+    group by
+        psiui.schemaname,
+        psiui.relname,
+        psiui.indexrelname
+)
+select
+    ts.schemaname,
+    ts.relname,
+    ts.n_live_tup,
+    ts.n_dead_tup,
+    ti.table_page_read,
+    ti.table_page_hit,
+    ti.table_hit_ratio,
+    ts.index_use_ratio,
+    ii.indexrelname,
+    ii.idx_page_read,
+    ii.idx_page_hit,
+    ii.idx_hit_ratio
+from
+    table_stats ts
+left outer join
+    table_io ti
+on
+    ti.relname = ts.relname
+    and ti.schemaname = ts.schemaname
+left outer join
+    index_io ii
+on
+    ii.relname = ts.relname
+    and ii.schemaname = ts.schemaname
+where
+    ts.schemaname = 'load_kinesis'
+--    and ts.relname like 'kinesis%'
+order by
+    ts.schemaname,
+    ts.relname,
+    ii.indexrelname asc
+;

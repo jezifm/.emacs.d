@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: select-from-date-count
+# key: sfdate
+# --
+select
+    ${1:date}::date, count(*)
+from
+    ${2:table}
+where
+    $1 >= '$3'
+group by
+    1
+order by
+    1
+;
+
+
+

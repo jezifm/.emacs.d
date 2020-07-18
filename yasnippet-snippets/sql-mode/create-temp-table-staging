@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: create-temp-staging
+# key: ctts
+# --
+drop table if exists
+    tmp_`(jez-buffer-abbreviate)`_staging_$1
+;
+
+create temp table
+    tmp_`(jez-buffer-abbreviate)`_staging_$1
+as (
+    select
+        $0
+    from
+        $2
+);

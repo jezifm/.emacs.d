@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: case-field
+# key: casef
+# --
+case when $1 then 1 else 0 end

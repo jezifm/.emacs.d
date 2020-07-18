@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sumf
+# key: sumf
+# --
+sum(case when $1 is null then 0 else 1 end) $1

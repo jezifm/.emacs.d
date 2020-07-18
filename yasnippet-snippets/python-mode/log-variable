@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: log-variable
-# key: lv
+# key: logv
 # --
-logger.info('$1: %s' % $1)
+logger.debug('$1: %s', $1)

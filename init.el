@@ -1463,7 +1463,9 @@ using the specified hippie-expand function."
              ("^)\n;" . ");")
              ("\\([[:alnum:]]+\\);" . "\\1\n;")
              ("\\(commit\\|begin\\|end\\)\n;" . "\\1;")
+             ("delete from \\(.*\\) using \\(.*\\)" . "delete from\n    \\1\nusing\n    \\2")
              ("delete from \\(.*\\)" . "delete from\n    \\1")
+             ("insert into \\(.*\\)" . "insert into\n    \\1")
              ("where \\(.*\\)" . "where\n    \\1")
              )))
       (save-excursion

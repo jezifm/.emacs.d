@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
 # name: log-function-call
-# key: plf
+# key: logf
 # --
-print("`(python-info-current-defun)` was called")
-$0
+logger.info("`(python-info-current-defun)` was called")

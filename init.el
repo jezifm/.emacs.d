@@ -1122,6 +1122,16 @@ of `org-babel-temporary-directory'."
                       (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
                       (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
   (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+  (defun jez-magit-visit-branch-url ()
+  "Build the URL or the pull requestion on GitHub corresponding
+to the current branch. Uses Magit."
+  (interactive)
+  (browse-url
+   (format "%s/branch/%s"
+           (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
+                                     "https://bitbucket.org/\\1"
+                                     (magit-get "remote" (magit-get-current-remote) "url"))
+           (magit-get-current-branch))))
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 
 

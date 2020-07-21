@@ -1734,7 +1734,7 @@ using the specified hippie-expand function."
   :bind (:map js2-mode-map
               ("C-c n" . js2-next-error))
   :config
-  (setq js-indent-level 2)
+  (setq js-indent-level 4)
   :mode (("\\.js\\'" . js2-mode)))
 
 

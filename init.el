@@ -1450,20 +1450,28 @@ using the specified hippie-expand function."
     (let ((table (jez-sql-table-at-line)))
       (sql-send-string (format "select count(*) from  %s ;" table))))
 
-  (defun jez-sql-explain-region (start end)
+  (defun jez-sql-explain-region (arg)
     "run explain on region"
-    (interactive "r")
+    (interactive "P")
     (let ((paragraph (if mark-active
-                         (buffer-substring-no-properties start end)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
                        (jez-sql-paragraph-at-point))))
+      (when arg
+        (with-current-buffer sql-buffer
+          (goto-char (point-max))
+          (comint-clear-buffer)))
       (jez-sql-send-string (format "explain %s" paragraph))))
 
-  (defun jez-sql-explain-analyze-region (start end)
+  (defun jez-sql-explain-analyze-region (arg)
     "run explain on region"
-    (interactive "r")
+    (interactive "P")
     (let ((paragraph (if mark-active
-                         (buffer-substring-no-properties start end)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
                        (jez-sql-paragraph-at-point))))
+      (when arg
+        (with-current-buffer sql-buffer
+          (goto-char (point-max))
+          (comint-clear-buffer)))
       (jez-sql-send-string (format "explain analyze %s" paragraph))))
 
   (defun jez-sql-expand ()

@@ -1402,6 +1402,31 @@ using the specified hippie-expand function."
            (table (s-replace-regexp " .*" "" table)))
       table))
 
+  (defun jez-sql-paragraph-at-point ()
+    (interactive)
+    (let ((start (save-excursion
+                   (condition-case nil
+                       (progn
+                         (search-backward ";")
+                         (forward-char 1)
+                         (point))
+                     (error
+                      (point-min)))))
+          (end (save-excursion
+                 (condition-case nil
+                     (progn
+                       (search-forward ";")
+                       (point))
+                   (error
+                    (point-max))))))
+      (buffer-substring-no-properties start end)))
+
+  (defun jez-sql-send-string (sql)
+    "Send string to sql-buffer and ensures semicolon"
+    (interactive)
+    (let ((sql-trimmed (s-replace-regexp ";+$" "" sql)))
+      (sql-send-string (format "%s;" sql-trimmed))))
+
   (defun jez-sql-view-table-size ()
     (interactive)
     (let* ((table (jez-sql-table-at-line)))
@@ -1428,12 +1453,18 @@ using the specified hippie-expand function."
   (defun jez-sql-explain-region (start end)
     "run explain on region"
     (interactive "r")
-    (sql-send-string (format "explain  %s;" (buffer-substring-no-properties start end))))
+    (let ((paragraph (if mark-active
+                         (buffer-substring-no-properties start end)
+                       (jez-sql-paragraph-at-point))))
+      (jez-sql-send-string (format "explain %s" paragraph))))
 
   (defun jez-sql-explain-analyze-region (start end)
     "run explain on region"
     (interactive "r")
-    (sql-send-string (format "explain analyze  %s;" (buffer-substring-no-properties start end))))
+    (let ((paragraph (if mark-active
+                         (buffer-substring-no-properties start end)
+                       (jez-sql-paragraph-at-point))))
+      (jez-sql-send-string (format "explain analyze %s" paragraph))))
 
   (defun jez-sql-expand ()
     "toggle expand on sql buffer"
@@ -1485,22 +1516,8 @@ using the specified hippie-expand function."
 
   (defun jez-sql-send-paragraph ()
     (interactive)
-    (let ((start (save-excursion
-                   (condition-case nil
-                       (progn
-                         (search-backward ";")
-                         (forward-char 1)
-                         (point))
-                     (error
-                      (point-min)))))
-          (end (save-excursion
-                 (condition-case nil
-                     (progn
-                       (search-forward ";")
-                       (point))
-                   (error
-                    (point-max))))))
-      (sql-send-region start end)))
+    (let ((paragraph (jez-sql-paragraph-at-point)))
+      (jez-sql-send-string paragraph)))
 
   (defun jez-sql-send-paragraph-move-forward ()
     (interactive)

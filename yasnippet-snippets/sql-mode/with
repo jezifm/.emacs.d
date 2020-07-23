@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: with
+# key: with
+# --
+with
+    tmp_`(jez-buffer-abbreviate)`_$1
+as (
+    $0
+)

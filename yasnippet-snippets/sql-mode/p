@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: partition-by
+# key: p
+# --
+partition by
+    $0

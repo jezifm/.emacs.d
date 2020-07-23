@@ -24,3 +24,6 @@ eshell
 /.cache
 /.emacs.desktop
 data
+/elpy/
+/history
+/transient/

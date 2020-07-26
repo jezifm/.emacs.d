@@ -1479,6 +1479,26 @@ using the specified hippie-expand function."
     (interactive)
     (sql-send-string "\\x"))
 
+  (defun jez-sql-format-multiline-comma (arg)
+    "Converts values between parenthesis to multiline"
+    (interactive "P")
+    (save-excursion
+      (goto-char (point-min))
+      (ignore-errors
+        (while t
+          (search-forward "(")
+          (when (looking-at "[^)]*,.*)")
+            (save-excursion
+              (call-interactively 'newline)
+              (insert "    ")
+              (while (looking-at "[^)]*,.*)")
+                (search-forward ",")
+                (call-interactively 'newline))
+              (search-forward ")")
+              (backward-char)
+              (call-interactively 'newline)
+              (delete-backward-char tab-width)))))))
+
   (defun jez-sqlformat-buffer (&optional DISPLAY-ERRORS)
     (interactive)
     (sqlformat-buffer 'DISPLAY-ERRORS)

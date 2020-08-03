@@ -1561,6 +1561,35 @@ using the specified hippie-expand function."
           (next-line)
           (back-to-indentation))))
 
+  (defun jez-replace-regexp (from-string to-string)
+    "Replace all occurence of FROM-STRING in current buffer with TO-STRING"
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward from-string nil t)
+        (replace-match to-string nil nil))))
+
+  (defun jez-sql-get-tables (arg)
+    (interactive "P")
+    (error "Not fully implemented yet")
+    (let ((sql-buffer-process (with-current-buffer "test-long-query.sql" (sql-find-sqli-buffer)))
+          (sql-command "\\dt *.*")
+          (buffer-out "*sql-result*"))
+      (set-window-buffer (nth 1 (window-list)) buffer-out)
+      (sql-redirect  sql-buffer-process sql-command buffer-out)
+      (with-current-buffer buffer-out
+        (flush-lines "^pg_catalog")
+        (flush-lines "^information_schema")
+        (save-excursion
+          (goto-char (point-min))
+          (kill-line 2))
+        (jez-replace-regexp "|table|.*" "")
+        (jez-replace-regexp "(.* rows)" "")
+        (jez-replace-regexp "[[:space:]]+$" "")
+        (jez-replace-regexp "|" ".")
+        (let* ((buffer-string (buffer-substring-no-properties 1 (point-max)))
+               (table-list (s-split "[[:space:]]" buffer-string)))
+          (helm-comp-read "table: " table-list)))))
+
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
     (interactive

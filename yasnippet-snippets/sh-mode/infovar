@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: infovar
+# key: infovar
+# --
+info "  - $1: $$1"

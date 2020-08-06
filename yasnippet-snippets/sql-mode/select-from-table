@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: select-from-table
+# key: sft
+# --
+select
+    *
+from
+    `(helm-comp-read "test" (jez-sql-list-tables))`
+;

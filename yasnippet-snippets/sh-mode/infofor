@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: infofor
+# key: infofor
+# --
+for parameter in ${1:object partition start until interval source}; do
+    info "  - $parameter: \${!parameter}"
+done

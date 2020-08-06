@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: distinct
+# key: d
+# --
+distinct $0

@@ -490,6 +490,7 @@ Version 2017-09-01"
   (interactive)
   (if (buffer-file-name)
       (save-buffer))
+  (set-window-buffer (nth 1 (window-list)) jez-shell-command-buffer)
   (with-current-buffer jez-shell-command-buffer
     (comint-clear-buffer)
     (goto-char (point-max))
@@ -1424,6 +1425,7 @@ using the specified hippie-expand function."
   (defun jez-sql-send-string (sql)
     "Send string to sql-buffer and ensures semicolon"
     (interactive)
+    (set-window-buffer (nth 1 (window-list)) (sql-find-sqli-buffer))
     (let ((sql-trimmed (s-replace-regexp ";+$" "" sql)))
       (sql-send-string (format "%s;" sql-trimmed))))
 
@@ -1568,27 +1570,22 @@ using the specified hippie-expand function."
       (while (re-search-forward from-string nil t)
         (replace-match to-string nil nil))))
 
-  (defun jez-sql-get-tables (arg)
+  (defun jez-sql-list-tables (&optional arg)
+    "List tables available in current SQL process"
     (interactive "P")
-    (error "Not fully implemented yet")
-    (let ((sql-buffer-process (with-current-buffer "test-long-query.sql" (sql-find-sqli-buffer)))
+    (let ((sql-buffer-process (sql-find-sqli-buffer))
           (sql-command "\\dt *.*")
           (buffer-out "*sql-result*"))
-      (set-window-buffer (nth 1 (window-list)) buffer-out)
+      (get-buffer-create buffer-out)
       (sql-redirect  sql-buffer-process sql-command buffer-out)
       (with-current-buffer buffer-out
-        (flush-lines "^pg_catalog")
-        (flush-lines "^information_schema")
+        (keep-lines ".*|.*|.*|.*")
         (save-excursion
           (goto-char (point-min))
-          (kill-line 2))
-        (jez-replace-regexp "|table|.*" "")
-        (jez-replace-regexp "(.* rows)" "")
-        (jez-replace-regexp "[[:space:]]+$" "")
-        (jez-replace-regexp "|" ".")
-        (let* ((buffer-string (buffer-substring-no-properties 1 (point-max)))
-               (table-list (s-split "[[:space:]]" buffer-string)))
-          (helm-comp-read "table: " table-list)))))
+          (kill-line 1))
+        (jez-replace-regexp " " "")
+        (jez-replace-regexp "^\\(.*\\)|\\(.*\\)|.*|.*" "\\1.\\2")
+        (s-split "[[:space:]]" (buffer-substring-no-properties 1 (point-max))))))
 
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"

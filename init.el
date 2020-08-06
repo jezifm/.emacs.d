@@ -440,6 +440,13 @@ Version 2017-09-01"
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
 
+(defun jez-replace-regexp (from-string to-string)
+    "Replace all occurence of FROM-STRING in current buffer with TO-STRING"
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward from-string nil t)
+        (replace-match to-string nil nil))))
+
 (defun jez-outline-mode-adhoc (regex)
   "Enable outline-mode using REGEX as pattern"
   (interactive "sRegex: ")
@@ -1316,6 +1323,27 @@ using the specified hippie-expand function."
   (setq python-shell-interpreter "python3")
   (setq elpy-rpc-python-command "python3")
   (define-key python-mode-map (kbd "C-c C-p") nil)
+
+  ;; django factory boy
+  (defun jez-django-model-to-factory ()
+    "Convert Django Data Model to factory"
+    (interactive)
+    (let ((regex-configs
+           '(
+             ("= models.*bool.*" . "= factory.fuzzy.FuzzyChoice([True, False])")
+             ("= models.*integer.*" . "= factory.Sequence(lambda n: n)")
+             ("= models.*text.*" . "= factory.fuzzy.FuzzyText(length=10)")
+             ("= models.*char.*" . "= factory.fuzzy.FuzzyText(length=10)")
+             ("= models.*decimal.*" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00,precision=4)")
+             ("= models.*float.*" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00,precision=4)")
+             ("= models.*json.*" . "= None")
+             ("= models..*datetime.*" . "= factory.Sequence(lambda n: datetime.date.today() + datetime.timedelta(days=n))")
+             )))
+      (save-excursion
+        (loop for i in regex-configs
+              do (jez-replace-regexp (car i) (cdr i)))))
+    (flush-lines "AutoSlugField")
+    (flush-lines "#"))
   :hook ((python-mode . outshine-python-mode-hook)
          (python-mode . jez-python-mode-hook)))
 

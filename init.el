@@ -1,4 +1,3 @@
-
 ;;; Initialize Variable
 (setq save-abbrevs 'silently)                                         ; abbrev warning
 (setq inhibit-startup-message t)                                      ; disable splash
@@ -462,6 +461,22 @@ Version 2017-09-01"
       (while (re-search-forward from-string nil t)
         (replace-match to-string nil nil))))
 
+(defun jez-copy-lines-matching-re (re)
+  "find all lines matching the regexp RE in the current buffer
+putting the matching lines in a buffer named *matching*"
+  (interactive "sRegexp to match: ")
+  (let ((result-buffer (get-buffer-create "*matching*")))
+    (with-current-buffer result-buffer
+      (erase-buffer))
+    (save-match-data
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward re nil t)
+          (princ (buffer-substring-no-properties (line-beginning-position)
+                                                 (line-beginning-position 2))
+                 result-buffer))))
+    pop-to-buffer result-buffer))
+
 (defun jez-outline-mode-adhoc (regex)
   "Enable outline-mode using REGEX as pattern"
   (interactive "sRegex: ")
@@ -512,6 +527,7 @@ Version 2017-09-01"
   (interactive)
   (if (buffer-file-name)
       (save-buffer))
+  ;; (pop-to-buffer jez-shell-command-buffer)
   (set-window-buffer (nth 1 (window-list)) jez-shell-command-buffer)
   (with-current-buffer jez-shell-command-buffer
     (comint-clear-buffer)
@@ -529,6 +545,20 @@ Version 2017-09-01"
                                        (prompt-message (format "shell command (%s): " last-shell-command)))
                                   (read-string prompt-message nil nil last-shell-command))))))
     (setq jez-shell-command-buffer buffer)
+    (setq jez-shell-command-command command)
+    (global-set-key (kbd "C-r") 'jez-shell-command)
+    (condition-case nil
+        (message (format "C-r binded to %s: %s" buffer command))
+      (error
+       (message "C-r binded to %s" buffer)))
+    ))
+
+(defun jez-shell-command-bind-noargs ()
+  (interactive)
+  (let* ((buffer (jez-guess-shell-buffer-name))
+         (command (with-current-buffer buffer (ring-ref comint-input-ring 0))))
+    (setq jez-shell-command-buffer buffer)
+    (set-text-properties 0 (length command) nil command)
     (setq jez-shell-command-command command)
     (global-set-key (kbd "C-r") 'jez-shell-command)
     (condition-case nil
@@ -1349,10 +1379,13 @@ using the specified hippie-expand function."
              ("= models.*integer.*" . "= factory.Sequence(lambda n: n)")
              ("= models.*text.*" . "= factory.fuzzy.FuzzyText(length=10)")
              ("= models.*char.*" . "= factory.fuzzy.FuzzyText(length=10)")
-             ("= models.*decimal.*" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00,precision=4)")
-             ("= models.*float.*" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00,precision=4)")
+             ("= models.*decimal.*" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00, precision=4)")
+             ("= models.*float.*" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00, precision=4)")
              ("= models.*json.*" . "= None")
-             ("= models..*datetime.*" . "= factory.Sequence(lambda n: datetime.date.today() + datetime.timedelta(days=n))")
+             ("= models..*datetime.*" . "= factory.Sequence(lambda n: timezone.now() + datetime.timedelta(days=n))")
+             ("= models.ForeignKey(\\([^,]*\\),.*" . "= factory.SubFactory(\\1Factory)")
+             ("= models.TimeField.*" . "= factory.LazyFunction(timezone.now().time)")
+             ("= models.UUID.*" . "= factory.LazyFunction(uuid.uuid4)")
              )))
       (save-excursion
         (loop for i in regex-configs

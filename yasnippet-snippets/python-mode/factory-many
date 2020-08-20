@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: factory-many
+# key: factory-many
+# --
+@factory.post_generation
+def ${1:groups}(self, create, extracted, **kwargs):
+    if not create:
+        # Simple build, do nothing.
+        return
+
+    if extracted:
+        # A list of $1 were passed in, use them
+        for i in extracted:
+            self.$1.add(i)

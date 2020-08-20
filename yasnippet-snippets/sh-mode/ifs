@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: if-status
+# key: ifs
+# --
+status=$?
+if [ "0" = "$status" ]; then
+    info "PASSED"
+else
+    error "FAILED"
+fi

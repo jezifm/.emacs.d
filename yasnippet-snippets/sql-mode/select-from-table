@@ -5,5 +5,5 @@
 select
     *
 from
-    `(helm-comp-read "test" (jez-sql-list-tables))`
+    `(helm-comp-read "Table: " (jez-sql-list-tables))`
 ;

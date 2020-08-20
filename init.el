@@ -201,6 +201,21 @@
   (let ((inhibit-read-only t))
     (set-text-properties (point-min) (point-max) nil)))
 
+(defun jez-pad-region ()
+  "Add `=` to highlighted region''"
+  (interactive)
+  (let* ((beg (region-beginning))
+         (end (region-end))
+         (length (- end beg))
+         (pad (- (/ (- 72 length) 2) 1)))
+    (save-excursion
+      (goto-char end)
+      (insert " ")
+      (insert-char (string-to-char "=") pad)
+      (goto-char beg)
+      (insert-char (string-to-char "=") pad)
+      (insert " "))))
+
 (defun jez-shell-shortcut ()
   "Create shell buffer based on current buffer name"
   (interactive)
@@ -1605,6 +1620,7 @@ using the specified hippie-expand function."
           (sql-command "\\dt *.*")
           (buffer-out "*sql-result*"))
       (get-buffer-create buffer-out)
+      (sql-redirect  sql-buffer-process "\\x off" buffer-out)
       (sql-redirect  sql-buffer-process sql-command buffer-out)
       (with-current-buffer buffer-out
         (keep-lines ".*|.*|.*|.*")

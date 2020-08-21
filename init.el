@@ -461,6 +461,15 @@ Version 2017-09-01"
       (while (re-search-forward from-string nil t)
         (replace-match to-string nil nil))))
 
+(defun jez-replace-regexp-multiple (&rest body)
+    "Replace multiple regex"
+    (let* ((length (length body))
+           (indexes (number-sequence 0 (1- length) 2)))
+      (dolist (index indexes nil)
+        (let ((from (nth index body))
+              (to (nth (1+ index) body)))
+          (jez-replace-regexp from to)))))
+
 (defun jez-copy-lines-matching-re (re)
   "find all lines matching the regexp RE in the current buffer
 putting the matching lines in a buffer named *matching*"
@@ -1639,13 +1648,6 @@ using the specified hippie-expand function."
         (progn
           (next-line)
           (back-to-indentation))))
-
-  (defun jez-replace-regexp (from-string to-string)
-    "Replace all occurence of FROM-STRING in current buffer with TO-STRING"
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward from-string nil t)
-        (replace-match to-string nil nil))))
 
   (defun jez-sql-list-tables (&optional arg)
     "List tables available in current SQL process"

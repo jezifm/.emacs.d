@@ -1395,6 +1395,7 @@ using the specified hippie-expand function."
              ("= models.ForeignKey(\\([^,]*\\),[^)]*)" . "= factory.SubFactory(\\1Factory)")
              ("= models.TimeField[^)]*)" . "= factory.LazyFunction(timezone.now().time)")
              ("= models.UUID[^)]*)" . "= factory.LazyFunction(uuid.uuid4)")
+             ("^class \\(.*\\)(.*):" . "class \\1(factory.django.DjangoModelFactory):")
              )))
       (save-excursion
         (loop for i in regex-configs

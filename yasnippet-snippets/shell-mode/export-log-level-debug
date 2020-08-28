@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: export-log-level-debug
+# key: eld
+# --
+export LOG_LEVEL=DEBUG

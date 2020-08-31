@@ -2200,6 +2200,18 @@ using the specified hippie-expand function."
          ("\\.jinja2\\'"  . jinja2-mode)))
 
 
+;;; Move Dup
+(use-package move-dup
+  :ensure t
+  :defer t
+  :bind (("M-<up>" . md-move-lines-up)
+         ("M-<up>" . md-move-lines-up)
+         ("M-<down>" . md-move-lines-down)
+         ("M-S-<up>" . md-move-lines-up)
+         ("M-S-<down>" . md-move-lines-down)
+         ("C-c d" . md-duplicate-down)
+         ("C-c u" . md-duplicate-up)))
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

@@ -1392,10 +1392,12 @@ using the specified hippie-expand function."
              ("= models.*float[^)]*)" . "= factory.fuzzy.FuzzyDecimal(low=0.01, high=100000.00, precision=4)")
              ("= models.*json[^)]*)" . "= None")
              ("= models..*datetime[^)]*)" . "= factory.Sequence(lambda n: timezone.now() + datetime.timedelta(days=n))")
-             ("= models.ForeignKey(\\([^,]*\\),[^)]*)" . "= factory.SubFactory(\\1Factory)")
              ("= models.TimeField[^)]*)" . "= factory.LazyFunction(timezone.now().time)")
              ("= models.UUID[^)]*)" . "= factory.LazyFunction(uuid.uuid4)")
-             ("^class \\(.*\\)(.*):" . "class \\1(factory.django.DjangoModelFactory):")
+             ("= models.ForeignKey(\\([^,]*\\),[^)]*)" . "= factory.SubFactory(\\1Factory)")
+             ("= models.OneToOneField(\\([^,]*\\),[^)]*)" . "= factory.SubFactory(\\1Factory)")
+             ("^class \\(.*\\)(.*):" . "class \\1Factory(factory.django.DjangoModelFactory):")
+             ("FactoryFactory" . "Factory")
              )))
       (save-excursion
         (loop for i in regex-configs

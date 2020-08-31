@@ -2069,6 +2069,7 @@ using the specified hippie-expand function."
   :ensure t
   :defer t
   :bind* (("M-/" . avy-goto-char-timer)
+          ("C-;" . avy-goto-char-timer)
           ("M-g f" . avy-goto-line)
           ("M-g y" . avy-copy-line))
   :config

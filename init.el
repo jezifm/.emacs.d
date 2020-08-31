@@ -610,6 +610,19 @@ putting the matching lines in a buffer named *matching*"
        (package-refresh-contents)
        (package-install pkg dont-select)))))
 
+(defun jez-kill-back-to-indentation ()
+  "Kill from point back to the first non-whitespace character on the line."
+  (interactive)
+  (let ((prev-pos (point)))
+    (back-to-indentation)
+    (kill-region (point) prev-pos)))
+
+(defun sanityinc/newline-at-end-of-line ()
+  "Move to end of line, enter a newline, and reindent."
+  (interactive)
+  (move-end-of-line 1)
+  (newline-and-indent))
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
@@ -624,7 +637,6 @@ to the current point of the cursor (default is above)."
     (setq s (buffer-substring (point) (+ (point) 1)))
     (goto-char p)
     (insert s)))
-
 
 ;;; Emacs Global Keys
 ;; makes it easier to see conflicting keys
@@ -643,29 +655,31 @@ to the current point of the cursor (default is above)."
   (global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
 
   (bind-keys
-   ("<f12>"          . line-copy-char)
-   ("<f5>"           . sort-lines)
+   ("<f12>" . line-copy-char)
+   ("<f5>" . sort-lines)
    ("C-c C-<return>" . delete-trailing-whitespace)
-   ("C-c j d"        . jez-insert-date)
-   ("C-c j t"        . jez-insert-time)
-   ("C-c j z"        . jez-create-shell-buffer)
-   ("C-c t"          . toggle-truncate-lines)
-   ("C-x <left>"     . jez-hydra-window/previous-buffer)
-   ("C-x <right>"    . jez-hydra-window/next-buffer)
-   ("C-x C-<left>"   . jez-hydra-window/previous-buffer)
-   ("C-x C-<right>"  . jez-hydra-window/next-buffer)
-   ("C-x C-j"        . (lambda () (interactive) (dired default-directory)))
-   ("C-x r q"        . save-buffers-kill-terminal) ; remap quit-key
-   ("C-x |"          . toggle-window-split)
-   ("C-z"            . jez-shell-shortcut)
-   ("M-J"            . jez-simplify)
-   ("M-SPC"          . cycle-spacing)
-   ("M-i"            . back-to-indentation)
-   ("M-j"            . jez-join-line)
-   ("M-n"            . (lambda (arg) (interactive "p") (next-line (* arg 5))))
-   ("M-p"            . (lambda (arg) (interactive "p") (previous-line (* arg 5))))
-   ("s-r"            . isearch-backward-regexp)
-   ("s-s"            . isearch-forward-regexp)
+   ("C-c j d" . jez-insert-date)
+   ("C-c j t" . jez-insert-time)
+   ("C-c j z" . jez-create-shell-buffer)
+   ("C-c t" . toggle-truncate-lines)
+   ("C-x <left>" . jez-hydra-window/previous-buffer)
+   ("C-x <right>" . jez-hydra-window/next-buffer)
+   ("C-x C-<left>" . jez-hydra-window/previous-buffer)
+   ("C-x C-<right>" . jez-hydra-window/next-buffer)
+   ("C-x C-j" . (lambda () (interactive) (dired default-directory)))
+   ("C-x r q" . save-buffers-kill-terminal) ; remap quit-key
+   ("C-x |" . toggle-window-split)
+   ("C-z" . jez-shell-shortcut)
+   ("M-J" . jez-simplify)
+   ("M-SPC" . cycle-spacing)
+   ("M-i" . back-to-indentation)
+   ("M-j" . jez-join-line)
+   ("M-n" . (lambda (args) (interactive "p") (next-line (* arg 5))))
+   ("M-p" . (lambda (arg) (interactive "p") (previous-line (* arg 5))))
+   ("s-r" . isearch-backward-regexp)
+   ("s-s" . isearch-forward-regexp)
+   ("C-M-<backspace>" . jez-kill-back-to-indentation)
+   ("S-<return>" . sanityinc/newline-at-end-of-line)
    ))
 
 

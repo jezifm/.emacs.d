@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: python-manage-test
+# key: pmt
+# --
+python manage.py test --keepdb -v2

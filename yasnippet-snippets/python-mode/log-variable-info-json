@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-variable-info-json
+# key: lvij
+# --
+logger.info('$1: %s', json.dumps($1, indent=2, default=str))$0

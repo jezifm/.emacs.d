@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: export-log-info
+# key: eli
+# --
+export LOG_LEVEL=INFO

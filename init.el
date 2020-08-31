@@ -679,7 +679,7 @@ to the current point of the cursor (default is above)."
    ("M-SPC" . cycle-spacing)
    ("M-i" . back-to-indentation)
    ("M-j" . jez-join-line)
-   ("M-n" . (lambda (args) (interactive "p") (next-line (* arg 5))))
+   ("M-n" . (lambda (arg) (interactive "p") (next-line (* arg 5))))
    ("M-p" . (lambda (arg) (interactive "p") (previous-line (* arg 5))))
    ("s-r" . isearch-backward-regexp)
    ("s-s" . isearch-forward-regexp)

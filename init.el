@@ -542,7 +542,8 @@ putting the matching lines in a buffer named *matching*"
   (if (buffer-file-name)
       (save-buffer))
   ;; (pop-to-buffer jez-shell-command-buffer)
-  (set-window-buffer (nth 1 (window-list)) jez-shell-command-buffer)
+  (when (not (equal jez-shell-command-buffer (buffer-name (current-buffer))))
+    (set-window-buffer (nth 1 (window-list)) jez-shell-command-buffer))
   (with-current-buffer jez-shell-command-buffer
     (comint-clear-buffer)
     (goto-char (point-max))

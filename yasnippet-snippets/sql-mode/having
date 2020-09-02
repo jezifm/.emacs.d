@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: having
+# key: h
+# --
+having
+    $0

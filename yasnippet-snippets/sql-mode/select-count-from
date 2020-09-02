@@ -5,4 +5,5 @@
 select
     count(*)
 from
-    $1;
+    $0
+;

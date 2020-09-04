@@ -703,6 +703,7 @@ to the current point of the cursor (default is above)."
 
 (use-package zenburn-theme :ensure t :defer t)
 (use-package blackboard-theme :ensure t :defer t)
+(use-package color-theme-sanityinc-tomorrow :ensure t :defer t)
 (use-package smart-mode-line :ensure t :defer t)
 (use-package smart-mode-line-powerline-theme :ensure t :defer 2)
 (add-to-list 'custom-theme-load-path (expand-file-name "custom-themes/emacs-darkane-theme/" user-emacs-directory))
@@ -710,7 +711,7 @@ to the current point of the cursor (default is above)."
   :defer 2
   :config
   ;; main-theme
-  (jez-change-theme 'blackboard)
+  (jez-change-theme 'sanityinc-tomorrow-bright)
   ;; mode-line
   (require 'smart-mode-line)
   (require 'smart-mode-line-powerline-theme)
@@ -2232,6 +2233,14 @@ using the specified hippie-expand function."
          ("M-S-<down>" . md-move-lines-down)
          ("C-c d" . md-duplicate-down)
          ("C-c u" . md-duplicate-up)))
+
+
+;;; Rainbow Delimiters
+(use-package rainbow-delimiters
+  :ensure t
+  :defer t
+  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
+         (python-mode . rainbow-delimiters-mode)))
 
 ;;; Startup
 

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: minmax
+# key: minmax
+# --
+min($1) $1_min,
+max($1) $1_max

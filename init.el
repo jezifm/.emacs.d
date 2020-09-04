@@ -1438,6 +1438,8 @@ using the specified hippie-expand function."
   :bind (
          :map elpy-mode-map
          ("C-c C-l f" . elpy-autopep8-fix-code))
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
   :config
   (setq elpy-rpc-timeout 10)
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
@@ -1455,9 +1457,8 @@ using the specified hippie-expand function."
       (message "aggressive pep8 enabled")))
   :hook ((org-mode . jez-disable-elpy)
          (shell-mode . jez-disable-elpy)
-         (python-mode . elpy-mode)
          (python-mode . flymake-mode)
-         (elpy-mode . jez-python-disable-company-mode)))
+         (python-mode . jez-python-disable-company-mode)))
 
 
 ;;; Email - GNUS

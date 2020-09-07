@@ -2243,6 +2243,10 @@ using the specified hippie-expand function."
   :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
          (python-mode . rainbow-delimiters-mode)))
 
+;TODO: add sessions
+;TODO: add desktops
+;TODO: https://github.com/wolray/symbol-overlay
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

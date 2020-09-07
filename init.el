@@ -1016,7 +1016,7 @@ of `org-babel-temporary-directory'."
   :config
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'always)
-  (setq dired-dwim-target nil)            ; default dest to other window
+  (setq dired-dwim-target t)            ; default dest to other window
   (setq truncate-lines t)
   (setq dired-listing-switches "-lah"))
 

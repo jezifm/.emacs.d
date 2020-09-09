@@ -2244,8 +2244,27 @@ using the specified hippie-expand function."
          (python-mode . rainbow-delimiters-mode)))
 
 ;TODO: add sessions
-;TODO: add desktops
-;TODO: https://github.com/wolray/symbol-overlay
+
+(use-package desktop
+  :ensure t
+  :config
+  (setq desktop-path (list user-emacs-directory)
+        desktop-auto-save-timeout 600)
+  (setq desktop-path '("~/.emacs.d/"))
+  (setq desktop-dirname "~/.emacs.d/")
+  (setq desktop-base-file-name "emacs-desktop")
+  (desktop-save-mode 1))
+
+(use-package symbol-overlay
+  :ensure t
+  :config
+  :bind (
+         ;; TODO: decide which key
+         ;; ("C-M-i" . symbol-overlay-put)
+         ;; ("C-M-I" . symbol-overlay-remove-all)
+         ("s-n" . symbol-overlay-jump-next)
+         ("s-p" . symbol-overlay-jump-prev)
+         ))
 
 ;;; Startup
 
@@ -2259,7 +2278,6 @@ using the specified hippie-expand function."
 
 (defun jez-startup ()
   "Run after emacs init"
-  (jez-show-bookmarks)
   (jez-display-init-time))
 
 (add-hook 'after-init-hook 'jez-startup)

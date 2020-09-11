@@ -2271,6 +2271,9 @@ using the specified hippie-expand function."
          ("s-p" . symbol-overlay-jump-prev)
          ))
 
+(use-package copy-as-format
+  :ensure t)
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

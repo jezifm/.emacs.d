@@ -839,6 +839,7 @@ to the current point of the cursor (default is above)."
           (shell . t)
           (sql . t)
           ))
+  (setq org-src-preserve-indentation t)
   (when (string-equal system-type "windows-nt")
     (assq-delete-all 'sh org-babel-languages))
   (when (file-exists-p "~/.emacs.d/publish-settings.el")

@@ -20,13 +20,16 @@ LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 
 function info \{
-    echo -e "$\{GREEN\}$@$\{NOCOLOR\}"
+    timestamp=\`date "+%Y-%m-%d %H:%M:%S"\`
+    echo -e "$\{GREEN\}$\{timestamp\} $@$\{NOCOLOR\}"
 \}
 
 function warn \{
-    echo -e "$\{YELLOW\}$@$\{NOCOLOR\}"
+    timestamp=\`date "+%Y-%m-%d %H:%M:%S"\`
+    echo -e "$\{YELLOW\}$\{timestamp\} $@$\{NOCOLOR\}"
 \}
 
 function error \{
-    echo -e "$\{RED\}$@$\{NOCOLOR\}"
+    timestamp=\`date "+%Y-%m-%d %H:%M:%S"\`    
+    echo -e "$\{RED\}$\{timestamp\} $@$\{NOCOLOR\}"
 \}

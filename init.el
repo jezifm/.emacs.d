@@ -2253,8 +2253,6 @@ using the specified hippie-expand function."
 (use-package desktop
   :ensure t
   :config
-  (setq desktop-path (list user-emacs-directory)
-        desktop-auto-save-timeout 600)
   (setq desktop-path '("~/.emacs.d/"))
   (setq desktop-dirname "~/.emacs.d/")
   (setq desktop-base-file-name "emacs-desktop")

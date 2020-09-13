@@ -2262,9 +2262,8 @@ using the specified hippie-expand function."
   :ensure t
   :config
   :bind (
-         ;; TODO: decide which key
-         ;; ("C-M-i" . symbol-overlay-put)
-         ;; ("C-M-I" . symbol-overlay-remove-all)
+         ("s-m" . symbol-overlay-put)
+         ("s-M" . symbol-overlay-remove-all)
          ("s-n" . symbol-overlay-jump-next)
          ("s-p" . symbol-overlay-jump-prev)
          ))

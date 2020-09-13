@@ -1710,7 +1710,21 @@ using the specified hippie-expand function."
       (sql-connect connection new-name)
       (rename-buffer buffer-name)))
   (defun jez-sql-mode-hook ()
-     (setq-default tab-width 4))
+    (setq-default tab-width 4))
+
+  (defun jez-sql-fk-to-cascade ()
+    "Convert foreign key description from \d+ `table' to cascade"
+    (interactive)
+    (jez-replace-regexp " *\"\\(.*\\)\" FOREIGN KEY (\\(.*\\)) REFERENCES \\(.*\\)(\\(.*\\)) DEFERRABLE INITIALLY DEFERRED"
+                        "alter table {{table}}
+drop constraint \\1,
+add constraint \\3
+foreign key (\\2)
+references \\3(\\4)
+on delete cascade;"
+))
+
+  
   (define-key sql-interactive-mode-map (kbd "RET") nil)
   (toggle-truncate-lines t)
   :hook ((sql-mode . jez-sql-mode-hook)))

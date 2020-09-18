@@ -2270,7 +2270,8 @@ on delete cascade;"
   (setq desktop-path '("~/.emacs.d/"))
   (setq desktop-dirname "~/.emacs.d/")
   (setq desktop-base-file-name "emacs-desktop")
-  (desktop-save-mode 1))
+  ;; disable unable to recover from crash
+  (desktop-save-mode -1))
 
 (use-package symbol-overlay
   :ensure t
@@ -2297,6 +2298,7 @@ on delete cascade;"
 
 (defun jez-startup ()
   "Run after emacs init"
-  (jez-display-init-time))
+  (jez-display-init-time)
+  (jez-show-bookmarks))
 
 (add-hook 'after-init-hook 'jez-startup)

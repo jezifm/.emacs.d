@@ -319,6 +319,10 @@ Note: just like `align-regexp' but better"
                         #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
 
+(defun jez-titleize-from-snake (s)
+  "Convert under_score string S to CamelCase string."
+  (s-titleize (s-replace-regexp "_" " " s)))
+
 (defun jez-slugify (text)
   "Slufigy TEXT"
   (let ((case-fold-search nil)

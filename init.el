@@ -1424,6 +1424,7 @@ using the specified hippie-expand function."
              ("= models..*datetime[^)]*)" . "= factory.Sequence(lambda n: timezone.now() + datetime.timedelta(days=n))")
              ("= models.TimeField[^)]*)" . "= factory.LazyFunction(timezone.now().time)")
              ("= models.UUID[^)]*)" . "= factory.LazyFunction(uuid.uuid4)")
+             ("= models.Email[^)]*)" . "= factory.LazyFunction(lambda: '{faker.word()}@{faker.word()}.com')")
              ("= models.ForeignKey(\\([^,]*\\),[^)]*)" . "= factory.SubFactory(\\1Factory)")
              ("= models.OneToOneField(\\([^,]*\\),[^)]*)" . "= factory.SubFactory(\\1Factory)")
              ("^class \\(.*\\)(.*):" . "class \\1Factory(factory.django.DjangoModelFactory):")

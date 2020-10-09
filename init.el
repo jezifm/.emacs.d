@@ -2291,6 +2291,10 @@ on delete cascade;"
 (use-package copy-as-format
   :ensure t)
 
+;;; Scratch
+(use-package scratch
+  :ensure t)
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

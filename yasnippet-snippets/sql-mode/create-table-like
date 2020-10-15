@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: create-table-like
+# key: ctl
+# --
+create table 
+    $1_copy
+ (
+    like $1 including DEFAULTS including CONSTRAINTS including INDEXES
+);

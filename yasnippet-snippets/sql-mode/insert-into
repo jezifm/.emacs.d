@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: insert-into
-# key: in
+# key: ii
 # --
 insert into
     ${1:bi_exports.netcore_users}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: copy
+# key: copy
+# --
+\COPY (select * from public.tmp_jez_linkid_sfid_all order by venture_id, id) TO '/tmp/linkid_sfid_all.csv' WITH (FORMAT CSV, HEADER);

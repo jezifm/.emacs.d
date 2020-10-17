@@ -847,6 +847,7 @@ to the current point of the cursor (default is above)."
           (python . t)
           (shell . t)
           (sql . t)
+          (plantuml . t)
           ))
   (setq org-src-preserve-indentation t)
   (when (string-equal system-type "windows-nt")
@@ -1767,7 +1768,8 @@ on delete cascade;"
   :commands plantuml-mode
   :config
   (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
-  (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar"))
+  (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+  (setq plantuml-default-exec-mode 'jar))
 
 
 ;;; Nyan Mode

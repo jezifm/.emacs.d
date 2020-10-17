@@ -205,19 +205,20 @@
   (let ((inhibit-read-only t))
     (set-text-properties (point-min) (point-max) nil)))
 
-(defun jez-pad-region ()
+(defun jez-pad-region (arg)
   "Add `=` to highlighted region''"
-  (interactive)
+  (interactive "P")
   (let* ((beg (region-beginning))
          (end (region-end))
          (length (- end beg))
-         (pad (- (/ (- 72 length) 2) 1)))
+         (pad (- (/ (- 72 length) 2) 1))
+         (char (if arg (read-string "Pad character: ") comment-start)))
     (save-excursion
       (goto-char end)
       (insert " ")
-      (insert-char (string-to-char "=") pad)
+      (insert-char (string-to-char char) pad)
       (goto-char beg)
-      (insert-char (string-to-char "=") pad)
+      (insert-char (string-to-char char) pad)
       (insert " "))))
 
 (defun jez-shell-shortcut ()

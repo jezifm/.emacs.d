@@ -6,7 +6,9 @@ logger = logging.getLogger(${1:__name__})
 logger.setLevel(os.environ.get('LOG_LEVEL', 'INFO'))
 handler = logging.StreamHandler()
 handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-                              "%Y-%m-%d %H:%M:%S")
+formatter = logging.Formatter(
+    '%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+    "%Y-%m-%d %H:%M:%S"
+)
 handler.setFormatter(formatter)
 logger.addHandler(handler)

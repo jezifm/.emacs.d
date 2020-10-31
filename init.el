@@ -1079,8 +1079,7 @@ of `org-babel-temporary-directory'."
   (defun jez-mc-add-cmds-all (func)
     "Add FUNC to `mc--default-cmds-to-run-for-all'. Prevent duplicate entry"
     (push func mc--default-cmds-to-run-for-all)
-    (remove-duplicates mc--default-cmds-to-run-all))
-
+    (remove-duplicates mc--default-cmds-to-run-for-all))
   ;; run once
   (jez-mc-add-cmds-once 'jez-mark-multiple)
   (jez-mc-add-cmds-once 'vr/mc-mark)

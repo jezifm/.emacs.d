@@ -1640,9 +1640,11 @@ using the specified hippie-expand function."
              ("\\(.*\\)    left join \\(.*\\) on \\(.*\\)" . "\\1left join\n\\1    \\2\n\\1on\n\\1    \\3")
              ("\\(.*\\)on\n\\(.*\\)\n +and \\(.*\\)" . "\\1on\n\\2\n\\1    and \\3")
              ("create index on \\(.*\\) (\\(.*\\));" . "create index on\n    \\1 (\n        \\2\n    )\n;")
+             ("create index \\(.*\\) on \\(.*\\) (\\(.*\\));" . "create index\n    \\1\non\n    \\2\n(\n    \\3\n);")
              ("create index \\(.*\\) on \\(.*\\) using \\(.*\\)" . "create index\n    \\1\non\n    \\2\nusing\n    \\3")
              ("alter table \\(.*\\) rename to \\(.*\\);" . "alter table\n    \\1\nrename to\n    \\2\n;")
              ("alter index \\(.*\\) rename to \\(.*\\);" . "alter index\n    \\1\nrename to\n    \\2\n;")
+             ("    add constraint \\(.*\\) foreign key \\(.*\\) references \\(.*\\) \\(deferrable.*\\)" . "add constraint\n    \\1\nforeign key\n    \\2\nreferences\n    \\3\n\\4")
              ("\\(.*\\)limit \\(.*\\)" . "\\1limit\n\\1    \\2")
              ;; ("begin\n;" . "begin;")
              (" -> " . "->")
@@ -1663,6 +1665,10 @@ using the specified hippie-expand function."
              ("delete from \\(.*\\)" . "delete from\n    \\1")
              ("insert into \\(.*\\)" . "insert into\n    \\1")
              ("where \\(.*\\)" . "where\n    \\1")
+             ("\\(.*\\)    alter column \\(.*\\)" . "\\1alter column\n\\1    \\2")
+             ("\\(.*\\)    using \\(.*\\)" . "\\1using\n\\1    \\2")
+             ("    \\(using.*\\\)" . "\\1")
+             ("    drop constraint \\(.*\\);" . "drop constraint\n    \\1\n;")
              )))
       (save-excursion
         (loop for i in regex-configs
@@ -1733,7 +1739,7 @@ references \\3(\\4)
 on delete cascade;"
 ))
 
-  
+
   (define-key sql-interactive-mode-map (kbd "RET") nil)
   (toggle-truncate-lines t)
   :hook ((sql-mode . jez-sql-mode-hook)))

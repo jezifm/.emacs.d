@@ -221,11 +221,37 @@
       (insert-char (string-to-char char) pad)
       (insert " "))))
 
+(defun jez-shell-clean-buffer-name (buffer-name)
+  "Return base name from BUFFER-NAME. 
+eg. *shell foo* -> foo"
+  (save-match-data
+    (if (string-match "^\\*shell \\(.*\\)\\*$" buffer-name)
+        (match-string 1 buffer-name)
+      buffer-name)))
+
+(defun jez-shell-build-name (name)
+  "Return unique buffer-name based on NAME"
+  (interactive "MName: ")
+  (save-match-data
+    (cond ((string-match "\\*shell \\(.*\\) <\\(.*\\)>\\*" name)
+           (format "*shell %s <%s>*" (match-string 1 name) (1+ (string-to-number (match-string 2 name)))))
+          ((string-match "\\*shell \\(.*\\)\\*" name)
+           (format "*shell %s <1>*" (match-string 1 name)))
+          (t (format "*shell %s*" name)))))
+
+(defun jez-shell-get-count (buffer)
+  "Check how many shells have we created for BUFFER-NAME"
+  (save-match-data
+    (if (string-match "\\*shell.*<\\(.*\\)>\\*" buffer)
+        (string-to-number (match-string 1 buffer))
+      1)))
+
 (defun jez-shell-shortcut ()
   "Create shell buffer based on current buffer name"
   (interactive)
   (let* ((buffer-name-current (buffer-name (current-buffer)))
-         (buffer-name-shell (format "*shell %s*" buffer-name-current)))
+         (counter (jez-shell-get-count buffer-name-current))
+         (buffer-name-shell (jez-shell-build-name buffer-name-current)))
     (save-current-buffer
       (shell buffer-name-shell))
     (when (equal (count-windows) 1)

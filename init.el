@@ -1494,7 +1494,7 @@ using the specified hippie-expand function."
       (message "aggressive pep8 enabled")))
   :hook ((org-mode . jez-disable-elpy)
          (shell-mode . jez-disable-elpy)
-         (python-mode . flymake-mode)
+         ;; (python-mode . flymake-mode)
          (python-mode . jez-python-disable-company-mode)))
 
 

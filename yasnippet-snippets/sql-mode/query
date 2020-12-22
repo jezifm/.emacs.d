@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: query
+# key: query
+# --
+select
+    query
+from
+    pg_stat_activity
+where
+    pid = $1
+;

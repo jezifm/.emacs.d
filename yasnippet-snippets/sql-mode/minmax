@@ -2,5 +2,5 @@
 # name: minmax
 # key: minmax
 # --
-min($1) $1_min,
+min(${1:date_updated}) $1_min,
 max($1) $1_max

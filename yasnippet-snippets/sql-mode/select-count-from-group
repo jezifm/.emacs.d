@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: select-count-from-group
+# key: scfg
+# --
+select
+    '$1' tablename,
+    $3::date,
+    count(*)
+from
+    $1
+where
+    ${3:date_updated} >= '${2:`(s-trim (shell-command-to-string "date -d '10 days ago' '+%Y-%m-%d'"))`}'
+group by
+    1, 2
+order by
+    1, 2
+;

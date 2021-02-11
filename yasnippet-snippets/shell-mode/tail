@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tail
+# key: tail
+# --
+tail -f -n 5 $1

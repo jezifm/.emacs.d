@@ -2,4 +2,4 @@
 # name: date
 # key: date
 # --
-date_trunc('${2:day}', ${1:date_column}) $1_$2
+date_trunc('${2:day}', ${1:date_column}) $1

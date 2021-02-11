@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: count-distinct
+# key: cd
+# --
+count(distinct ${(venture_id, id)})

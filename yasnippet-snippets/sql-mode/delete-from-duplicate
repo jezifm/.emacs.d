@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: delete-from-duplicate
+# key: dfd
+# --
+delete from
+    ${1:dwh_aggregate.message_threads}
+where ctid in (
+    select
+        ctid
+    from (
+        select
+            ctid,
+            row_number() over w as rnum
+        from
+            $1
+        where
+            date_updated >= '${2:2021-01-01}'
+        window w as (
+            partition by
+                venture_id,
+                id
+        )
+    ) t
+    where t.rnum > 1
+);

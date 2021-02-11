@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: logger-warning
+# key: lvw
+# --
+logger.warning('$1: %s', $1)

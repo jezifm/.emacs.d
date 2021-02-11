@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: export-log-level-warning
+# key: elw
+# --
+export LOG_LEVEL=WARNING

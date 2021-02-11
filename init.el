@@ -1738,6 +1738,37 @@ using the specified hippie-expand function."
         (jez-replace-regexp "^\\(.*\\)|\\(.*\\)|.*|.*" "\\1.\\2")
         (s-split "[[:space:]]" (buffer-substring-no-properties 1 (point-max))))))
 
+  (defun print-to-file (filename data)
+    (with-temp-file filename
+      (prin1 data (current-buffer))))
+
+  (defun read-from-file (filename)
+    (with-temp-buffer
+      (insert-file-contents filename)
+      (cl-assert (eq (point) (point-min)))
+      (read (current-buffer))))
+
+  (defun jez-sql-list-tables-cached (&optional arg)
+    "Cached version of `jez-sql-list-tables`''"
+    (interactive "P")
+    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s.el" sql-server sql-database))
+           (file-name-full (expand-file-name file-name temporary-file-directory))
+           tables)
+      (when (file-exists-p file-name-full)
+        (let* ((data (read-from-file file-name-full))
+               (candidate-time (cdr (assoc 'time data)))
+               (candidate-tables (cdr (assoc 'tables data)))
+               (secs-passed (- (string-to-number (format-time-string "%s" (current-time))) candidate-time)))
+          (when (> 3600 secs-passed)
+            (setq tables candidate-tables))))
+      (if tables
+          tables
+        (setq tables (jez-sql-list-tables arg))
+        (print-to-file file-name-full
+                       `((tables . ,tables)
+                         (time . ,(string-to-number (format-time-string "%s" (current-time))))))
+        tables)))
+
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
     (interactive

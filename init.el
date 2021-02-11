@@ -1751,7 +1751,7 @@ using the specified hippie-expand function."
   (defun jez-sql-list-tables-cached (&optional arg)
     "Cached version of `jez-sql-list-tables`''"
     (interactive "P")
-    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s.el" sql-server sql-database))
+    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s-%s.el" sql-server sql-database sql-port))
            (file-name-full (expand-file-name file-name temporary-file-directory))
            tables)
       (when (file-exists-p file-name-full)

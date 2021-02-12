@@ -1740,6 +1740,7 @@ using the specified hippie-expand function."
       (sql-redirect  sql-buffer-process "\\x off" buffer-out)
       (sql-redirect  sql-buffer-process sql-command buffer-out)
       (with-current-buffer buffer-out
+        (buffer-disable-undo)
         (keep-lines ".*|.*|.*|.*")
         (save-excursion
           (goto-char (point-min))

@@ -1701,6 +1701,16 @@ using the specified hippie-expand function."
               do (replace-regexp (car i) (cdr i) nil (point-min) (point-max)))))
     )
 
+  (defun print-to-file (filename data)
+    (with-temp-file filename
+      (prin1 data (current-buffer))))
+
+  (defun read-from-file (filename)
+    (with-temp-buffer
+      (insert-file-contents filename)
+      (cl-assert (eq (point) (point-min)))
+      (read (current-buffer))))
+
   (defun jez-sql-send-paragraph ()
     (interactive)
     (let ((paragraph (jez-sql-paragraph-at-point)))
@@ -1738,36 +1748,25 @@ using the specified hippie-expand function."
         (jez-replace-regexp "^\\(.*\\)|\\(.*\\)|.*|.*" "\\1.\\2")
         (s-split "[[:space:]]" (buffer-substring-no-properties 1 (point-max))))))
 
-  (defun print-to-file (filename data)
-    (with-temp-file filename
-      (prin1 data (current-buffer))))
-
-  (defun read-from-file (filename)
-    (with-temp-buffer
-      (insert-file-contents filename)
-      (cl-assert (eq (point) (point-min)))
-      (read (current-buffer))))
-
   (defun jez-sql-list-tables-cached (&optional arg)
     "Cached version of `jez-sql-list-tables`''"
     (interactive "P")
-    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s-%s.el" sql-server sql-database sql-port))
-           (file-name-full (expand-file-name file-name temporary-file-directory))
+    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s.el" sql-server sql-database))
+           (file-path (expand-file-name file-name temporary-file-directory))
+           (time-now (string-to-number (format-time-string "%s" (current-time))))
            tables)
-      (when (file-exists-p file-name-full)
-        (let* ((data (read-from-file file-name-full))
-               (candidate-time (cdr (assoc 'time data)))
-               (candidate-tables (cdr (assoc 'tables data)))
-               (secs-passed (- (string-to-number (format-time-string "%s" (current-time))) candidate-time)))
+      (when (file-exists-p file-path)
+        (let* ((data (read-from-file file-path))
+               (time-cached (cdr (assoc 'time data)))
+               (secs-passed (-  time-now time-cached)))
           (when (> 3600 secs-passed)
-            (setq tables candidate-tables))))
-      (if tables
-          tables
+            (setq tables (cdr (assoc 'tables data))))))
+      (unless tables
         (setq tables (jez-sql-list-tables arg))
-        (print-to-file file-name-full
+        (print-to-file file-path
                        `((tables . ,tables)
-                         (time . ,(string-to-number (format-time-string "%s" (current-time))))))
-        tables)))
+                         (time . ,time-now))))
+      tables))
 
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"

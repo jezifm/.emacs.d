@@ -1571,6 +1571,13 @@ using the specified hippie-expand function."
                     (point-max))))))
       (buffer-substring-no-properties start end)))
 
+  (defun jez-sql-table-at-point ()
+    (interactive)
+    (let ((statement (jez-sql-paragraph-at-point)))
+      (s-replace-regexp "[[:ascii:]]*from[[:space:]\n]*\\([^[:space:]\n]*\\)[[:ascii:]]*"
+                        "\\1"
+                        statement)))
+
   (defun jez-sql-send-string (sql)
     "Send string to sql-buffer and ensures semicolon"
     (interactive)
@@ -1580,7 +1587,7 @@ using the specified hippie-expand function."
 
   (defun jez-sql-view-table-size ()
     (interactive)
-    (let* ((table (jez-sql-table-at-line)))
+    (let* ((table (jez-sql-table-at-point)))
       (sql-send-string (format "select '%s' tablename, pg_size_pretty(pg_total_relation_size('%s')) size;" table table))))
 
   (defun jez-sql-view-columns ()
@@ -1592,13 +1599,13 @@ using the specified hippie-expand function."
   (defun jez-sql-view-single-record ()
     "view a single record of table under cursor"
     (interactive)
-    (let ((table (jez-sql-table-at-line)))
+    (let ((table (jez-sql-table-at-point)))
       (sql-send-string (format "select * from  %s  limit 1;" table))))
 
   (defun jez-sql-count-table ()
     "view a single record of table under cursor"
     (interactive)
-    (let ((table (jez-sql-table-at-line)))
+    (let ((table (jez-sql-table-at-point)))
       (sql-send-string (format "select count(*) from  %s ;" table))))
 
   (defun jez-sql-explain-region (arg)
@@ -1756,7 +1763,7 @@ using the specified hippie-expand function."
            (file-path (expand-file-name file-name temporary-file-directory))
            (time-now (string-to-number (format-time-string "%s" (current-time))))
            tables)
-      (when (file-exists-p file-path)
+      (when (and (file-exists-p file-path) (not arg))
         (let* ((data (read-from-file file-path))
                (time-cached (cdr (assoc 'time data)))
                (secs-passed (-  time-now time-cached)))
@@ -1781,6 +1788,7 @@ using the specified hippie-expand function."
         (switch-to-buffer buffer-name))
       (sql-connect connection new-name)
       (rename-buffer buffer-name)))
+
   (defun jez-sql-mode-hook ()
     (setq-default tab-width 4))
 

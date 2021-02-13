@@ -1587,7 +1587,7 @@ using the specified hippie-expand function."
 
   (defun jez-sql-view-table-size ()
     (interactive)
-    (let* ((table (jez-sql-table-at-point)))
+    (let* ((table (jez-sql-table-at-line)))
       (sql-send-string (format "select '%s' tablename, pg_size_pretty(pg_total_relation_size('%s')) size;" table table))))
 
   (defun jez-sql-view-columns ()
@@ -1599,13 +1599,13 @@ using the specified hippie-expand function."
   (defun jez-sql-view-single-record ()
     "view a single record of table under cursor"
     (interactive)
-    (let ((table (jez-sql-table-at-point)))
+    (let ((table (jez-sql-table-at-line)))
       (sql-send-string (format "select * from  %s  limit 1;" table))))
 
   (defun jez-sql-count-table ()
     "view a single record of table under cursor"
     (interactive)
-    (let ((table (jez-sql-table-at-point)))
+    (let ((table (jez-sql-table-at-line)))
       (sql-send-string (format "select count(*) from  %s ;" table))))
 
   (defun jez-sql-explain-region (arg)

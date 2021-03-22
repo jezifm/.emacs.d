@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: python-manage-shell
+# key: pms
+# --
+python manage.py shell --interface python

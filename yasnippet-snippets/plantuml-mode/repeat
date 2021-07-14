@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: repeat
+# key: repeat
+# --
+if (Has $1s?) then (yes)
+    :Get first $1;
+    repeat
+        $0
+    backward:Get next $1;
+    repeat while (Has $1 remaining?) is (yes) not (no)
+else (no)
+endif

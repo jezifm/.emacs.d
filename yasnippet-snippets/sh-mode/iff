@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: iff
+# key: iff
+# --
+if [ -f $1]
+then
+    $0
+else
+    echo '$1 already exists'
+fi

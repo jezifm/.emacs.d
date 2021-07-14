@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: cat
+# key: cat
+# --
+cat > ${1:filename} << EOL
+$0
+EOL

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: !procedure
+# key: !procedure
+# --
+!procedure \$${1:function}(\$${2:arg})
+    $0
+!endprocedure

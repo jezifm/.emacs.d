@@ -1854,10 +1854,8 @@ on delete cascade;"
   :defer t
   :commands plantuml-mode
   :config
-  ;; (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
-  ;; (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
-  (setq org-plantuml-jar-path "/Users/jez/Downloads/plantuml (1).jar")
-  (setq plantuml-jar-path "/Users/jez/Downloads/plantuml (1).jar")
+  (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+  (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
   (setq plantuml-indent-regexp-start (list plantuml-indent-regexp-block-start
                                            plantuml-indent-regexp-group-start

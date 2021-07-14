@@ -881,6 +881,8 @@ to the current point of the cursor (default is above)."
           (plantuml . t)
           ))
   (setq org-src-preserve-indentation t)
+  (setq org-export-with-sub-superscripts '{})
+  (setq org-use-sub-superscripts '{})
   (when (string-equal system-type "windows-nt")
     (assq-delete-all 'sh org-babel-languages))
   (when (file-exists-p "~/.emacs.d/publish-settings.el")

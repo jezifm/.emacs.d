@@ -9,5 +9,17 @@ My personal emacs settings.
 ## Installation
 
 ```sh
+cd ~
 git clone --recursive git@github.com:jezifm/.emacs.d.git
+```
+
+
+## Extra
+
+### Enable Plantuml
+
+```sh
+PLANTUML_JAR_URL='https://udomain.dl.sourceforge.net/project/plantuml/plantuml.jar' \
+    curl -o ~/.emacs.d/elpa/contrib/scripts/plantuml.jar \
+    $PLANTUML_JAR_URL
 ```

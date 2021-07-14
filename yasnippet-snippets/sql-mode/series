@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: series
+# key: series
+# --
+generate_series('2018-01-01'::timestamp, '2021-06-01'::timestamp, '1 month') as series(date_updated)

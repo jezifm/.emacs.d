@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ifi
+# key: ifi
+# --
+{% if is_incremental() %}
+    $0
+{% endif %}

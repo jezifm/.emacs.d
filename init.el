@@ -29,6 +29,8 @@
 (set-register ?i '(file . "~/.emacs.d/init.el"))
 (set-register ?b '(file . "~/.bashrc"))
 
+;; environment
+(setenv "TERM" "xterm")
 
 ;;; Emacs Version
 
@@ -222,7 +224,7 @@
       (insert " "))))
 
 (defun jez-shell-clean-buffer-name (buffer-name)
-  "Return base name from BUFFER-NAME. 
+  "Return base name from BUFFER-NAME.
 eg. *shell foo* -> foo"
   (save-match-data
     (if (string-match "^\\*shell \\(.*\\)\\*$" buffer-name)
@@ -567,9 +569,11 @@ putting the matching lines in a buffer named *matching*"
 (defvar jez-shell-command-command nil "string command to run on `jez-shell-command-buffer'")
 (defvar jez-shell-command-buffer nil "buffer name to run `jez-shell-command-command'")
 
-(defun jez-shell-command ()
+(defun jez-shell-command (arg)
   "Run `jez-shell-command-command' on `jez-shell-command-buffer' buffer"
-  (interactive)
+  (interactive "P")
+  (when arg
+    (jez-shell-command-bind-noargs))
   (if (buffer-file-name)
       (save-buffer))
   (let* ((window (nth 0 (seq-filter (lambda (window)
@@ -583,6 +587,7 @@ putting the matching lines in a buffer named *matching*"
     (comint-clear-buffer)
     (goto-char (point-max))
     (insert jez-shell-command-command)
+    (comint-send-input)
     (comint-send-input)))
 
 (defun jez-shell-command-bind (&optional command buffer)
@@ -945,7 +950,7 @@ of `org-babel-temporary-directory'."
   (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages)
   :hook ((org-after-todo-statistics . org-summary-todo)
          (org-babel-after-execute . shk-fix-inline-images)
-         (org-mode . auto-fill-mode)
+         ;; (org-mode . auto-fill-mode)
          (org-mode . jez-org-disable-font-theme)))
 
 (use-package org-capture
@@ -1837,9 +1842,53 @@ on delete cascade;"
   :defer t
   :commands plantuml-mode
   :config
-  (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
-  (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
-  (setq plantuml-default-exec-mode 'jar))
+  ;; (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+  ;; (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+  (setq org-plantuml-jar-path "/Users/jez/Downloads/plantuml (1).jar")
+  (setq plantuml-jar-path "/Users/jez/Downloads/plantuml (1).jar")
+  (setq plantuml-default-exec-mode 'jar)
+  (setq plantuml-indent-regexp-start (list plantuml-indent-regexp-block-start
+                                           plantuml-indent-regexp-group-start
+                                           plantuml-indent-regexp-activate-start
+                                           plantuml-indent-regexp-box-start
+                                           plantuml-indent-regexp-ref-start
+                                           plantuml-indent-regexp-legend-start
+                                           plantuml-indent-regexp-note-start
+                                           plantuml-indent-regexp-newif-start
+                                           plantuml-indent-regexp-loop-start
+                                           plantuml-indent-regexp-fork-start
+                                           plantuml-indent-regexp-title-start
+                                           plantuml-indent-regexp-header-start
+                                           plantuml-indent-regexp-footer-start
+                                           plantuml-indent-regexp-macro-start
+                                           plantuml-indent-regexp-oldif-start
+                                           plantuml-indent-regexp-user-control-start
+                                           ".*!foreach.*$"
+                                           ".*!procedure.*$"
+                                           "^ *repeat *$"
+                                           ))
+  (setq plantuml-indent-regexp-end (list plantuml-indent-regexp-block-end
+                                         plantuml-indent-regexp-group-end
+                                         plantuml-indent-regexp-activate-end
+                                         plantuml-indent-regexp-box-end
+                                         plantuml-indent-regexp-ref-end
+                                         plantuml-indent-regexp-legend-end
+                                         plantuml-indent-regexp-note-end
+                                         plantuml-indent-regexp-newif-end
+                                         plantuml-indent-regexp-loop-end
+                                         plantuml-indent-regexp-fork-end
+                                         plantuml-indent-regexp-title-end
+                                         plantuml-indent-regexp-header-end
+                                         plantuml-indent-regexp-footer-end
+                                         plantuml-indent-regexp-macro-end
+                                         plantuml-indent-regexp-oldif-end
+                                         plantuml-indent-regexp-user-control-end
+                                         ".*!endfor.*$"
+                                         ".*!endprocedure.*$"
+                                         ".*repeat while.*"
+                                         ))
+  (setq plantuml-indent-level 4)
+  )
 
 
 ;;; Nyan Mode
@@ -1947,9 +1996,13 @@ on delete cascade;"
     (outline-minor-mode t)
     (setq-local outline-regexp "#")
     (setq-local outline-level 'sh-outline-level))
+  (defun jez-shell-mode-hook ()
+    (setenv "TERM" "xterm"))
   :bind (("s-k" . comint-clear-buffer)
          ("M-k" . comint-clear-buffer))
-  :hook (sh-mode . outshine-sh-mode-hook))
+  :hook ((sh-mode . outshine-sh-mode-hook)
+         (shell-mode . jez-shell-mode-hook))
+  )
 
 
 ;;; Web Mode

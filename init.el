@@ -1190,6 +1190,7 @@ of `org-babel-temporary-directory'."
   (setq helm-M-x-fuzzy-match t)
   (setq helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match    t)
+  (setq projectile-git-submodule-command nil)
 
 
   (defun jez-erase-minibuffer (arg)
@@ -1479,7 +1480,9 @@ using the specified hippie-expand function."
   :defer t
   :bind (
          :map elpy-mode-map
-         ("C-c C-l f" . elpy-autopep8-fix-code))
+              ("C-c C-l f" . elpy-autopep8-fix-code)
+              ;; ("C-c C-l f" . elpy-yapf-fix-code)
+              )
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   :config
@@ -1543,12 +1546,21 @@ using the specified hippie-expand function."
          ("C-c C-l 1" . jez-sql-view-single-record)
          ("C-c C-l l" . jez-sql-count-table)
          ("C-c C-l z" . jez-sql-view-table-size)
+         ("C-c t" . jinja2-insert-tag)
+         ("C-c v" . jez-jinja-insert-var)
          )
   ;; :hook (
   ;;        (sql-mode . sqlup-mode)
   ;;        (sql-interactive-mode  . sqlup-mode)
   ;;        )
   :config
+  (defun jez-jinja-insert-var ()
+    "Insert an empty tag"
+    (interactive)
+    (insert "{{ ")
+    (save-excursion
+      (insert " }}")))
+
   (defun jez-sql-table-at-line ()
     "Extract table name in current line"
     (interactive)
@@ -2445,3 +2457,4 @@ on delete cascade;"
   (jez-show-bookmarks))
 
 (add-hook 'after-init-hook 'jez-startup)
+(put 'scroll-left 'disabled nil)

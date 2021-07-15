@@ -3,7 +3,7 @@
 # key: html
 # --
 #+PROPERTY: header-args :eval never-export
-#+SETUPFILE: ~/.emacs.d/org-html-themes/setup/theme-readtheorg.setup
+#+SETUPFILE: ~/.emacs.d/org-html-themes/org/theme-readtheorg.setup
 #+OPTIONS: num:nil ^:nil
 #+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
 #+TITLE: ${1:`(s-titleize (s-replace "-" " "

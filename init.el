@@ -2009,7 +2009,7 @@ on delete cascade;"
     (setq-local outline-regexp "#")
     (setq-local outline-level 'sh-outline-level))
   (defun jez-shell-mode-hook ()
-    (setenv "TERM" "xterm"))
+    (comint-send-string (get-buffer-process (current-buffer)) "export TERM=xterm\n"))
   :bind (("s-k" . comint-clear-buffer)
          ("M-k" . comint-clear-buffer))
   :hook ((sh-mode . outshine-sh-mode-hook)

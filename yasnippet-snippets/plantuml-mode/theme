@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: theme
+# key: theme
+# --
+!theme aws-orange
+left to right direction
+skinparam backgroundcolor white

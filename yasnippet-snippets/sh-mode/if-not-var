@@ -2,10 +2,6 @@
 # name: if-not-variable
 # key: ifnvar
 # --
-if [[ -z "\${${1:variable}}" ]]
-then
-    echo 'Need to set environment variables'
-    echo '  - SCRAPY_HOST'
-    echo '  - SCRAPY_PORT'
-    exit 0
+if [[ -z "\$${1:variable}" ]]; then
+    echo 'Need to set environment variables "$1"'
 fi

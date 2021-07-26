@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: git
+# key: git
+# --
+git@github.com:${1:USERNAME}/${2:REPOSITORY}.git

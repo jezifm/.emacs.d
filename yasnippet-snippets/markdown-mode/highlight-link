@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: highlight-link
+# key: hl
+# --
+html header:	<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+	<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>

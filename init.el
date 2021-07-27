@@ -1,11 +1,12 @@
 ;;; Initialize Variable
-(setq save-abbrevs 'silently)                                         ; abbrev warning
-(setq inhibit-startup-message t)                                      ; disable splash
-(setq ns-function-modifier 'control)                                  ; map modifier (fn) to control (ctrl)
-(setq make-backup-files nil)                                          ; remove backup
 (setq auto-save-default nil)                                          ; remove backup
+(setq create-lockfiles nil)
+(setq inhibit-startup-message t)                                      ; disable splash
+(setq make-backup-files nil)                                          ; remove backup
 (setq mouse-wheel-progressive-speed nil)                              ; smooth scroll
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil))) ; smooth scroll
+(setq ns-function-modifier 'control)                                  ; map modifier (fn) to control (ctrl)
+(setq save-abbrevs 'silently)                                         ; abbrev warning
 (setq split-width-threshold 160)                                      ; default split to vertical
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))          ; maximize window
@@ -15,7 +16,6 @@
 (setq-default delete-selection-mode t)
 (setq-default save-interprogram-paste-before-kill t)
 (setq-default set-mark-command-repeat-pop t)
-(setq create-lockfiles nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 

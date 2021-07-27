@@ -2079,6 +2079,12 @@ on delete cascade;"
   (setq js-indent-level 4)
   :mode (("\\.js\\'" . js2-mode)))
 
+;;; Typescript Mode
+(use-package typescript-mode
+  :ensure t
+  :mode (("\\.ts\\'" . typescript-mode))
+  )
+
 
 ;;; CSS Mode
 

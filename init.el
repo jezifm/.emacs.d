@@ -2209,6 +2209,11 @@ on delete cascade;"
     (toggle-truncate-lines t)
     (jez-outline-mode-adhoc "#")
     (setq-local outshine-use-speed-commands t))
+  (setq markdown-command "multimarkdown")
+  (setq markdown-xhtml-header-content
+      "<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/default.min.css\">
+       <script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>
+       <script>hljs.initHighlightingOnLoad();</script>")
   :hook ((markdown-mode . jez-markdown-mode-hook)
          (markdown-mode . auto-fill-mode)))
 

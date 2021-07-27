@@ -15,6 +15,7 @@
 (setq-default delete-selection-mode t)
 (setq-default save-interprogram-paste-before-kill t)
 (setq-default set-mark-command-repeat-pop t)
+(setq create-lockfiles nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 

@@ -2184,7 +2184,8 @@ on delete cascade;"
 (use-package yaml-mode
   :ensure t
   :defer t
-  :mode ("\\.yml\\'" . yaml-mode)
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.template\\'" . yaml-mode))
   :config
   (defun yaml-outline-level ()
     (let (buffer-invisibility-spec)

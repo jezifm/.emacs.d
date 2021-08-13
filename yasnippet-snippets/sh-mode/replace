@@ -1,11 +1,19 @@
 # -*- mode: snippet -*-
-# name: replace_in_file
+# name: replace
 # key: replace
 # --
 function replace_in_file {
-    if [ "\$OS" = 'Darwin' ]; then
+    unameOut="\$(uname -s)"
+    case "\${unameOut}" in
+        Linux*)     machine=Linux;;
+        Darwin*)    machine=Mac;;
+        CYGWIN*)    machine=Cygwin;;
+        MINGW*)     machine=MinGw;;
+        *)          machine="UNKNOWN:\${unameOut}"
+    esac
+    if [ "\$machine" = 'Mac' ]; then
         # for MacOS
-        sed -i '' -e "\$1" "\$2"
+        sed -i '' -E "\$1" "\$2"
     else
         # for Linux and Windows
         sed -i'' -e "\$1" "\$2"

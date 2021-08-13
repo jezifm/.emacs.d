@@ -2077,6 +2077,7 @@ on delete cascade;"
               ("C-c n" . js2-next-error))
   :config
   (setq js-indent-level 4)
+  (setq js-switch-indent-offset 4)
   :mode (("\\.js\\'" . js2-mode)))
 
 ;;; Typescript Mode

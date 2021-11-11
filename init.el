@@ -1776,6 +1776,11 @@ using the specified hippie-expand function."
         (jez-replace-regexp "^\\(.*\\)|\\(.*\\)|.*|.*" "\\1.\\2")
         (s-split "[[:space:]]" (buffer-substring-no-properties 1 (point-max))))))
 
+  (defun jez-sql-insert-table (args)
+    "Insert table"
+    (interactive "P")
+    (insert (helm-comp-read "Table: " (jez-sql-list-tables-cached))))
+
   (defun jez-sql-list-tables-cached (&optional arg)
     "Cached version of `jez-sql-list-tables`''"
     (interactive "P")
@@ -1901,6 +1906,7 @@ on delete cascade;"
                                          ".*repeat while.*"
                                          ))
   (setq plantuml-indent-level 4)
+
   )
 
 
@@ -2093,7 +2099,7 @@ on delete cascade;"
   :ensure t
   :defer t
   :commands jez-css-minify
-  :bind (:map css-mode-map ("C-c m" . jez-css-minify))
+  :bind (:map css-mode-map ("C-c l f" . jez-css-minify))
   :config
   (defun jez-css-minify-uglify ()
     "CSS Minify current buffer using `uglify'"

@@ -3,6 +3,6 @@
 # key: while
 # --
 while ($1 available?) is (yes)
-      :Get $1;
-      $0
+    :Get $1;
+    $0
 endwhile (no)

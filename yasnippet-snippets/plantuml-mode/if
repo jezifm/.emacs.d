@@ -3,6 +3,6 @@
 # key: if
 # --
 if (${1:condition}) then (yes)
-      $0
+    $0
 else (no)
 endif

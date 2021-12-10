@@ -961,10 +961,14 @@ of `org-babel-temporary-directory'."
          ("C-c o" . (lambda () (interactive) (find-file "~/organizer.org"))))
   :config
   (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-  (setq org-default-notes-file "~/organizer.org")
+  (setq jez-org-file
+        ;; "~/organizer.org"
+        "~/Google Drive/org-mode/organizer.org"
+        )
+  (setq org-default-notes-file jez-org-file)
   (setq org-confirm-babel-evaluate nil)
   (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
-  (set-register ?o (cons 'file "~/organizer.org")))
+  (set-register ?o (cons 'file jez-org-file)))
 
 (use-package ox-md
   :after org)

@@ -948,7 +948,9 @@ of `org-babel-temporary-directory'."
                  "\\begin{center}"
                  (funcall orig link info)
                  "\\end{center}")))
-  (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages)
+  (with-eval-after-load 'org
+    (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages))
+  
   :hook ((org-after-todo-statistics . org-summary-todo)
          (org-babel-after-execute . shk-fix-inline-images)
          ;; (org-mode . auto-fill-mode)

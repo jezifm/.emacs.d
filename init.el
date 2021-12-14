@@ -1869,47 +1869,47 @@ on delete cascade;"
   (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
-  (setq plantuml-indent-regexp-start (list
-                                      ;; plantuml-indent-regexp-block-start
-                                      plantuml-indent-regexp-group-start
-                                      plantuml-indent-regexp-activate-start
-                                      plantuml-indent-regexp-box-start
-                                      plantuml-indent-regexp-ref-start
-                                      plantuml-indent-regexp-legend-start
-                                      plantuml-indent-regexp-note-start
-                                      plantuml-indent-regexp-newif-start
-                                      plantuml-indent-regexp-loop-start
-                                      plantuml-indent-regexp-fork-start
-                                      plantuml-indent-regexp-title-start
-                                      plantuml-indent-regexp-header-start
-                                      plantuml-indent-regexp-footer-start
-                                      plantuml-indent-regexp-macro-start
-                                      plantuml-indent-regexp-oldif-start
-                                      plantuml-indent-regexp-user-control-start
-                                      ".*!foreach.*$"
-                                      ".*!procedure.*$"
-                                      "^ *repeat *$"
-                                      ))
-  (setq plantuml-indent-regexp-end (list plantuml-indent-regexp-block-end
-                                         plantuml-indent-regexp-group-end
-                                         plantuml-indent-regexp-activate-end
-                                         plantuml-indent-regexp-box-end
-                                         plantuml-indent-regexp-ref-end
-                                         plantuml-indent-regexp-legend-end
-                                         plantuml-indent-regexp-note-end
-                                         plantuml-indent-regexp-newif-end
-                                         plantuml-indent-regexp-loop-end
-                                         plantuml-indent-regexp-fork-end
-                                         plantuml-indent-regexp-title-end
-                                         plantuml-indent-regexp-header-end
-                                         plantuml-indent-regexp-footer-end
-                                         plantuml-indent-regexp-macro-end
-                                         plantuml-indent-regexp-oldif-end
-                                         plantuml-indent-regexp-user-control-end
-                                         ".*!endfor.*$"
-                                         ".*!endprocedure.*$"
-                                         ".*repeat while.*"
-                                         ))
+  ;; (setq plantuml-indent-regexp-start (list
+  ;;                                     ;; plantuml-indent-regexp-block-start
+  ;;                                     ;; plantuml-indent-regexp-group-start
+  ;;                                     plantuml-indent-regexp-activate-start
+  ;;                                     plantuml-indent-regexp-box-start
+  ;;                                     plantuml-indent-regexp-ref-start
+  ;;                                     plantuml-indent-regexp-legend-start
+  ;;                                     plantuml-indent-regexp-note-start
+  ;;                                     plantuml-indent-regexp-newif-start
+  ;;                                     plantuml-indent-regexp-loop-start
+  ;;                                     plantuml-indent-regexp-fork-start
+  ;;                                     plantuml-indent-regexp-title-start
+  ;;                                     plantuml-indent-regexp-header-start
+  ;;                                     plantuml-indent-regexp-footer-start
+  ;;                                     plantuml-indent-regexp-macro-start
+  ;;                                     plantuml-indent-regexp-oldif-start
+  ;;                                     plantuml-indent-regexp-user-control-start
+  ;;                                     ".*!foreach.*$"
+  ;;                                     ".*!procedure.*$"
+  ;;                                     "^ *repeat *$"
+  ;;                                     ))
+  ;; (setq plantuml-indent-regexp-end (list plantuml-indent-regexp-block-end
+  ;;                                        plantuml-indent-regexp-group-end
+  ;;                                        plantuml-indent-regexp-activate-end
+  ;;                                        plantuml-indent-regexp-box-end
+  ;;                                        plantuml-indent-regexp-ref-end
+  ;;                                        plantuml-indent-regexp-legend-end
+  ;;                                        plantuml-indent-regexp-note-end
+  ;;                                        plantuml-indent-regexp-newif-end
+  ;;                                        plantuml-indent-regexp-loop-end
+  ;;                                        plantuml-indent-regexp-fork-end
+  ;;                                        plantuml-indent-regexp-title-end
+  ;;                                        plantuml-indent-regexp-header-end
+  ;;                                        plantuml-indent-regexp-footer-end
+  ;;                                        plantuml-indent-regexp-macro-end
+  ;;                                        plantuml-indent-regexp-oldif-end
+  ;;                                        plantuml-indent-regexp-user-control-end
+  ;;                                        ".*!endfor.*$"
+  ;;                                        ".*!endprocedure.*$"
+  ;;                                        ".*repeat while.*"
+  ;;                                        ))
   (setq plantuml-indent-level 4)
 
   )

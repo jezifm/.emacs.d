@@ -958,7 +958,7 @@ of `org-babel-temporary-directory'."
 
 (use-package org-capture
   :bind (("C-c c" . org-capture)
-         ("C-c o" . (lambda () (interactive) (find-file "~/organizer.org"))))
+         ("C-c o" . (lambda () (interactive) (find-file "~/Google Drive/org-mode/organizer.org"))))
   :config
   (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
   (setq jez-org-file

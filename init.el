@@ -95,7 +95,6 @@
      helm-projectile
      hydra
      impatient-mode
-     iy-go-to-char
      key-chord
      latex-preview-pane
      lorem-ipsum
@@ -140,7 +139,6 @@
 
 ;; load packages
 (autoload 'use-package "use-package-core")
-(use-package gitignore-mode :ensure t :defer t)
 (use-package help-fns+      :defer t  :commands describe-keymap)
 (use-package hydra          :ensure t :defer t :commands defhydra)
 (use-package which-key      :ensure t :defer t)
@@ -1282,11 +1280,6 @@ to the current branch. Uses Magit."
 
 
 ;;; Keychord
-
-(use-package iy-go-to-char
-  :ensure t
-  :defer t
-  :commands (iy-go-to-char iy-go-to-char-backward))
 
 (use-package key-chord
   :ensure t

@@ -33,6 +33,14 @@
 ;; environment
 (setenv "TERM" "xterm")
 
+;; delete built-in org-mode
+;; https://www.reddit.com/r/emacs/comments/r11nqd/how_to_install_orgmode_now_that_org_emacs_lisp/
+(condition-case error
+    (progn
+      (assq-delete-all 'org package--builtins)
+      (assq-delete-all 'org package--builtin-versions))
+  ('error (message (format "Caught exception: [%s]" error))))
+
 ;;; Emacs Version
 
 (when (version< emacs-version "26")

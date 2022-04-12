@@ -2,9 +2,9 @@
 # name: iff
 # key: iff
 # --
-if [ -f $1]
+if [[ -f $1 ]]
 then
-    $0
+    ${0:echo '$1 does not exists'}
 else
     echo '$1 already exists'
 fi

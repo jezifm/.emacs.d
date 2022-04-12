@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: getargs
+# key: getargs
+# --
+while [ "\$1" != "" ]; do
+    case \$1 in
+        -e | --env )            shift
+                                ENVIRONMENT=\${1}
+                                ;;
+        -s | --stack-name )     shift
+                                STACK_NAME=\${1}
+                                ;;
+        -r | --region )         shift
+                                REGION=\${1}
+                                ;;
+        -t | --image-tag )      shift
+                                IMAGE_TAG=\${1}
+                                ;;
+    esac
+    shift
+done

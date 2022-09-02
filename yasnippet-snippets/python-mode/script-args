@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: script-args
+# key: scripta
+# --
+#!/usr/bin/env python
+import argparse
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='')
+    return parser.parse_args()
+
+
+def main():
+    args = parse_arguments()
+    $0
+
+
+if __name__ == '__main__':
+    main()

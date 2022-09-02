@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: row-size
+# key: row-size
+# --
+select 
+    sum(pg_column_size(${1:table}.*))/count(*) as "bytes"
+from 
+    $1
+;

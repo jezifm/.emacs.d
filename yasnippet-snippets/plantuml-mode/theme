@@ -5,3 +5,4 @@
 !theme aws-orange
 left to right direction
 skinparam backgroundcolor white
+skinparam actorStyle awesome

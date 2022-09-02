@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: grant
+# key: grant
+# --
+grant select on table public.temp_ph_listing_score to analysts;

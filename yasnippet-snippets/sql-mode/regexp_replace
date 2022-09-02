@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: regexp_replace
+# key: regexp_replace
+# --
+regexp_replace(${1:source}, ${2:pattern}, ${3:replacement})

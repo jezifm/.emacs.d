@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ap
+# key: ap
+# --
+alter table
+    $1
+add primary key (
+    $2
+);
+$0

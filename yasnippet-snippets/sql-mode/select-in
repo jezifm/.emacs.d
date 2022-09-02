@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: select-in
+# key: sin
+# --
+(${1:venture_id, id}) in (
+    select
+        $1
+    from
+        $0
+)

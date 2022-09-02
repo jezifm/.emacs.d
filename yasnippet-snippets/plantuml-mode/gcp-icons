@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: gcp-icons
+# key: gcp-icons
+# --
+!define GCPPuml https://raw.githubusercontent.com/davidholsgrove/gcp-icons-for-plantuml/master/dist
+!includeurl GCPPuml/GCPCommon.puml
+!includeurl GCPPuml/DeveloperTools/all.puml
+!includeurl GCPPuml/Storage/CloudStorage.puml
+!includeurl GCPPuml/DataAnalytics/BigQuery.puml
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.0/sprites
+!includeurl SPRITESURL/google-data-studio.puml
+
+skinparam rectangleBackgroundColor white
+
+rectangle "<$google-data-studio,scale=1.5,color=royalblue>\nGoogle Data Studio" as data_studio
+BigQuery(bq, "Storage", "lamudi-global-web")

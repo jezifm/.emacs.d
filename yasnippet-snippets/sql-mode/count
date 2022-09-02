@@ -2,4 +2,4 @@
 # name: count
 # key: c
 # --
-count(*)
+count(*) as rowcount

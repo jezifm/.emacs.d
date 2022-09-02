@@ -2,4 +2,4 @@
 # name: org-file-property
 # key: orgp
 # --
-#+PROPERTY: header-args :eval never-export :results pp
+#+PROPERTY: header-args${1::bash}${2: :eval never-export :results pp}$0

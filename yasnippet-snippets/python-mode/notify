@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: notify
+# key: notify
+# --
+import os
+
+def notify(title, text):
+    # notify("Title", "Heres an alert")
+    os.system("""
+              osascript -e 'display notification "{}" with title "{}"'
+              """.format(text, title))

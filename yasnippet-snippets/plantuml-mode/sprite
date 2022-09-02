@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: sprite
+# key: sprite
+# --
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.0/sprites
+!includeurl SPRITESURL/airflow.puml
+!includeurl SPRITESURL/aws-kinesis.puml
+!includeurl SPRITESURL/google-data-studio.puml
+!includeurl SPRITESURL/jenkins.puml
+!includeurl SPRITESURL/postgresql.puml
+!includeurl SPRITESURL/salesforce.puml
+!define GCPPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-icons-GCP/master/dist
+!include GCPPuml/GCPCommon.puml
+!include GCPPuml/Data_Analytics/BigQuery.puml
+
+BigQuery(bq, "Warehouse", "BigQuery")
+rectangle "<$airflow,scale=2,color=#00C7D4>\nAirflow" as airflow
+rectangle "<$aws-kinesis>\nKinesis" as kinesis
+rectangle "<$jenkins>\nJenkins" as jenkins
+rectangle "<$postgresql>\nPostgresql" as postgresql
+rectangle "<$salesforce>\nSalesforce" as sf

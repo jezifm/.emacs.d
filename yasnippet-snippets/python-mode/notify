@@ -4,8 +4,8 @@
 # --
 import os
 
-def notify(title, text):
+def notify(text, title='Title', sound="/System/Library/Sounds.Purr.aiff"):
     # notify("Title", "Heres an alert")
     os.system("""
-              osascript -e 'display notification "{}" with title "{}"'
-              """.format(text, title))
+              osascript -e 'display notification "{}" with title "{}" sound name "{}"'
+              """.format(text, title, sound))

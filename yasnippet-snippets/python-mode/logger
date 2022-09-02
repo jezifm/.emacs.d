@@ -2,8 +2,6 @@
 # name: logger
 # key: logger
 # --
-logger = logging.getLogger(${1:__name__})
-logger.setLevel(os.environ.get('LOG_LEVEL', 'INFO'))
 handler = logging.StreamHandler()
 handler.setLevel(logging.DEBUG)
 formatter = logging.Formatter(
@@ -11,4 +9,6 @@ formatter = logging.Formatter(
     "%Y-%m-%d %H:%M:%S"
 )
 handler.setFormatter(formatter)
+logger = logging.getLogger(${1:__name__})
+logger.setLevel(os.environ.get('LOG_LEVEL', 'INFO'))
 logger.addHandler(handler)

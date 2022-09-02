@@ -4,9 +4,4 @@
 # --
 delete from
     ${1:dwh_aggregate.users_backload agg}
-using
-    ${2:tmp_aucf_staging stg}
-where
-    ${3:agg.id = stg.id
-    and agg.venture_id = stg.venture_id}
 ;

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: print-function
+# key: plf
+# --
+print("`(python-info-current-defun)` was called")

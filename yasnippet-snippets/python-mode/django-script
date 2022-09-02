@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: django-script
+# key: django-script
+# --
+#!/usr/bin/env python
+import os  # noqa
+import django  # noqa
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "${1:config.settings.local}")  # noqa
+django.setup()  # noqa

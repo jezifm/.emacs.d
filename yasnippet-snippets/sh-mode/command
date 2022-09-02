@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: command
+# key: command
+# --
+command -v ${1:docker} >/dev/null 2>&1 || { printf >&2 \${red}"I require $1. Aborting.\n"; exit 1; }

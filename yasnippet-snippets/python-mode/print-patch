@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: print-patch
+# key: print-patch
+# --
+def print(*args, **kwargs):
+    import sys
+    from inspect import getframeinfo, stack
+    caller = getframeinfo(stack()[1][0])
+    sys.stdout.write(f"[{caller.filename}:{caller.lineno}] {str(args[0])}\n")

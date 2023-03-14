@@ -6,4 +6,4 @@ select
     *
 from
     $1
-;
+$0;

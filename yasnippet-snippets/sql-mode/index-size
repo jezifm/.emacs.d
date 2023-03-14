@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: index-size
+# key: is
+# --
+select pg_size_pretty(pg_table_size('${1:index_name}'));

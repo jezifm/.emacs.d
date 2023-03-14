@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: c4
+# key: c4
+# --
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+' https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/samples/C4CoreDiagrams.md

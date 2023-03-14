@@ -25,6 +25,7 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(setq auto-window-vscroll nil)
 
 ;; registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
@@ -349,11 +350,17 @@ Note: just like `align-regexp' but better"
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
-(defun jez-camelize (s)
+(defun jez-camelize-string (s)
   "Convert under_score string S to CamelCase string."
   (mapconcat 'identity (mapcar
                         #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
+
+(defun jez-camelize-region ()
+  (interactive)
+  (let ((new-text (s-upper-camel-case (buffer-substring (region-beginning) (region-end)))))
+    (kill-region (region-beginning) (region-end))
+    (insert new-text)))
 
 (defun jez-titleize-from-snake (s)
   "Convert under_score string S to CamelCase string."
@@ -385,10 +392,15 @@ Note: just like `align-regexp' but better"
   (interactive)
   (save-excursion
     (save-restriction
-      (narrow-to-region (region-beginning) (region-end))
-      (downcase-region (point-min) (point-max))
-      (goto-char (point-min))
-      (replace-string " " "_"))))
+      (let ((text (buffer-substring (region-beginning) (region-end))))
+        (kill-region (region-beginning) (region-end))
+        (insert (s-snake-case text))
+        )
+      ;; (narrow-to-region (region-beginning) (region-end))
+      ;; (downcase-region (point-min) (point-max))
+      ;; (goto-char (point-min))
+      ;; (replace-string " " "_")
+      )))
 
 (defun jez-abbreviate (string &optional separator)
   "Return first letter on each word of STRING using SEPERATOR"
@@ -498,6 +510,11 @@ Version 2017-09-01"
        (progn
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
+
+(defun jez-copy-buffer-name (args)
+  "docstring"
+  (interactive "P")
+  (kill-new (buffer-name)))
 
 (defun jez-replace-regexp (from-string to-string)
     "Replace all occurence of FROM-STRING in current buffer with TO-STRING"
@@ -676,6 +693,7 @@ putting the matching lines in a buffer named *matching*"
   (move-end-of-line 1)
   (newline-and-indent))
 
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
@@ -758,7 +776,8 @@ to the current point of the cursor (default is above)."
   :defer 2
   :config
   ;; main-theme
-  (jez-change-theme 'sanityinc-tomorrow-bright)
+  ;; (jez-change-theme 'sanityinc-tomorrow-bright)
+  (jez-change-theme 'blackboard)
   ;; mode-line
   (require 'smart-mode-line)
   (require 'smart-mode-line-powerline-theme)
@@ -958,7 +977,7 @@ of `org-babel-temporary-directory'."
                  "\\end{center}")))
   (with-eval-after-load 'org
     (org-babel-do-load-languages 'org-babel-load-languages org-babel-languages))
-  
+
   :hook ((org-after-todo-statistics . org-summary-todo)
          (org-babel-after-execute . shk-fix-inline-images)
          ;; (org-mode . auto-fill-mode)
@@ -966,13 +985,19 @@ of `org-babel-temporary-directory'."
 
 (use-package org-capture
   :bind (("C-c c" . org-capture)
-         ("C-c o" . (lambda () (interactive) (find-file "~/Google Drive/org-mode/organizer.org"))))
+         ("C-c o" . jez-find-org-file))
   :config
   (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
   (setq jez-org-file
-        ;; "~/organizer.org"
-        "~/Google Drive/org-mode/organizer.org"
+        "~/organizer.org"
+        ;; "~/Google Drive/org-mode/organizer.org"
         )
+  (defun jez-find-org-file ()
+    "Go to orgfile"
+    (interactive)
+    (find-file jez-org-file))
+
+
   (setq org-default-notes-file jez-org-file)
   (setq org-confirm-babel-evaluate nil)
   (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
@@ -1263,6 +1288,18 @@ of `org-babel-temporary-directory'."
                       (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
   (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
   (defun jez-magit-visit-branch-url ()
+  "Build the URL or the pull requestion on GitHub corresponding
+to the current branch. Uses Magit."
+  (interactive)
+  (browse-url
+   (format "%s/branch/%s"
+           (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
+                                     "https://bitbucket.org/\\1"
+                                     (magit-get "remote" (magit-get-current-remote) "url"))
+           (magit-get-current-branch))))
+  (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
+
+  (defun jez-magit-visit-commit-url ()
   "Build the URL or the pull requestion on GitHub corresponding
 to the current branch. Uses Magit."
   (interactive)
@@ -1764,6 +1801,10 @@ using the specified hippie-expand function."
           (next-line)
           (back-to-indentation))))
 
+  (defun jez-delete-blank-lines ()
+    (interactive)
+    (flush-lines "^$"))
+
   (defun jez-sql-list-tables (&optional arg)
     "List tables available in current SQL process"
     (interactive "P")
@@ -1791,21 +1832,27 @@ using the specified hippie-expand function."
   (defun jez-sql-list-tables-cached (&optional arg)
     "Cached version of `jez-sql-list-tables`''"
     (interactive "P")
-    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s-%s.el" sql-server sql-database sql-port))
+    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s-%s.json" sql-server sql-database sql-port))
            (file-path (expand-file-name file-name temporary-file-directory))
            (time-now (string-to-number (format-time-string "%s" (current-time))))
            tables)
       (when (and (file-exists-p file-path) (not arg))
-        (let* ((data (read-from-file file-path))
+        (let* ((data
+                ;; (read-from-file file-path)
+                (json-read-file (format "%s" file-path))
+                     )
                (time-cached (cdr (assoc 'time data)))
                (secs-passed (-  time-now time-cached)))
-          (when (> 3600 secs-passed)
-            (setq tables (cdr (assoc 'tables data))))))
+          (when (> (* 60 60 24) secs-passed)
+            (setq tables (append (cdr (assoc 'tables data)) nil)))))
       (unless tables
         (setq tables (jez-sql-list-tables arg))
-        (print-to-file file-path
-                       `((tables . ,tables)
-                         (time . ,time-now))))
+        (let ((table-data `((tables . ,tables)
+                            (time . ,time-now))))
+          (with-temp-file (format file-path)
+            (insert (json-encode-alist table-data)))
+          (message "Written to: %s" file-path)
+          ))
       tables))
 
   (defun jez-sql-connect (connection &optional new-name)
@@ -1869,6 +1916,8 @@ on delete cascade;"
   :defer t
   :commands plantuml-mode
   :config
+  (setenv "PLANTUML_LIMIT_SIZE" "8192")
+  (setenv "PLANTUML_LIMIT_SIZE" (number-to-string (* 2 8192)))
   (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
@@ -2224,7 +2273,7 @@ on delete cascade;"
     (toggle-truncate-lines t)
     (jez-outline-mode-adhoc "#")
     (setq-local outshine-use-speed-commands t))
-  (setq markdown-command "multimarkdown")
+  (setq markdown-command "markdown")
   (setq markdown-xhtml-header-content
       "<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/default.min.css\">
        <script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>
@@ -2342,7 +2391,14 @@ on delete cascade;"
     "Open browser trend for current job"
     (interactive)
     (let ((jobname (tabulated-list-get-id)))
-      (browse-url (format "%sjob/%s/configure" (get-jenkins-url) jobname)))))
+      (browse-url (format "%sjob/%s/configure" (get-jenkins-url) jobname))))
+  (defun jez-jenkins-mode-hook ()
+    (setq tabulated-list-format [("#" 3 f :pad-right 2 :right-align t :col-source jenkins--render-indicator)
+                                 ("Name" 72 t :col-source jenkins--render-name)
+                                 ("Last success" 20 f :col-source :last-success)
+                                 ("Last failed" 20 f :col-source :last-failed)]))
+  :hook (jenkins-mode . jez-jenkins-mode-hook)
+  )
 
 
 

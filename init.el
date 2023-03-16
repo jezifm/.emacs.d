@@ -42,6 +42,17 @@
       (assq-delete-all 'org package--builtin-versions))
   ('error (message (format "Caught exception: [%s]" error))))
 
+;; fix dired
+;; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
+;; (when (string= system-type "darwin")
+;;   (setq dired-use-ls-dired nil))
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired t
+        insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches "-aBhl --group-directories-first"))
+
+
+
 ;;; Emacs Version
 
 (when (version< emacs-version "26")
@@ -66,8 +77,21 @@
 
 ;;; Package Manager - melpa
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+;; (add-to-list 'package-archives '("nongu" . "https://elpa.nongnu.org/nongnu/") t)
+;; (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
+(setq
+ package-archives
+ '(
+  ("nongu" . "https://elpa.nongnu.org/nongnu/")
+  ("gnu" . "https://elpa.gnu.org/packages/")
+  ("melpa" . "https://melpa.org/packages/")
+  ;; ("org" . "http://orgmode.org/elpa/")
+  ("tromey" . "http://tromey.com/elpa/")
+  ("melpa" . "http://melpa.milkbox.net/packages/")
+  ("melpa-stable" . "http://stable.melpa.org/packages/"))
+ )
 
 
 ;;; Local Dependencies
@@ -114,7 +138,8 @@
      ob-go
      ob-http
      ob-ipython
-     org-plus-contrib
+     ;; org-plus-contrib
+     org-contrib
      paredit
      plantuml-mode
      prodigy
@@ -356,11 +381,11 @@ Note: just like `align-regexp' but better"
                         #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
 
-(defun jez-camelize-region ()
-  (interactive)
-  (let ((new-text (s-upper-camel-case (buffer-substring (region-beginning) (region-end)))))
-    (kill-region (region-beginning) (region-end))
-    (insert new-text)))
+(defun jez-camelize-region (start end)
+  (interactive "r")
+  (let ((s (buffer-substring start end)))
+    (kill-region start end)
+    (insert (jez-camelize s))))
 
 (defun jez-titleize-from-snake (s)
   "Convert under_score string S to CamelCase string."
@@ -687,6 +712,21 @@ putting the matching lines in a buffer named *matching*"
     (back-to-indentation)
     (kill-region (point) prev-pos)))
 
+(defun jez-ensure-google-drive-directory ()
+  "Ensure Google Drive directory exists, creates link if not found"
+  (interactive)
+  (let* (
+         ;; (google-dir "/Volumes/GoogleDrive/My Drive")
+         (google-dir "/Volumes/GoogleDrive-115002109561865749831/My Drive")
+         (home-google-dir (expand-file-name "Google Drive" (getenv "HOME")))
+         command)
+    (when (and (not (file-exists-p "~/Google Drive/org-mode/organizer.org"))
+               (file-exists-p google-dir))
+      (setq command (format "ln -snf \"%s\" \"%s\"" google-dir home-google-dir))
+      (shell-command-to-string command)
+      (message "Google Drive link created")
+      )))
+
 (defun sanityinc/newline-at-end-of-line ()
   "Move to end of line, enter a newline, and reindent."
   (interactive)
@@ -872,7 +912,10 @@ to the current point of the cursor (default is above)."
 ;;; Org Mode
 
 (use-package org
+  ;; Fix for "IMPORTANT: please install Org from GNU ELPA as Org ELPA will close before Org 9.6"
+  ;; https://emacs.stackexchange.com/questions/70081/how-to-deal-with-this-message-important-please-install-org-from-gnu-elpa-as-o
   :ensure t
+  :pin gnu
   :defer t
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
@@ -885,7 +928,7 @@ to the current point of the cursor (default is above)."
   (setq org-export-coding-system 'utf-8)
   (setq org-log-done 'time)
   (setq org-src-fontify-natively t)
-  (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE")))
+  (setq org-todo-keywords '((sequence "TODO" "|" "DONE")))
   (setq org-todo-keyword-faces
         '(("TODO" . "red")
           ("WAITING" . "yellow")
@@ -985,9 +1028,8 @@ of `org-babel-temporary-directory'."
 
 (use-package org-capture
   :bind (("C-c c" . org-capture)
-         ("C-c o" . jez-find-org-file))
-  :config
-  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+         ("C-c o" . (lambda () (interactive) (find-file jez-org-file))))
+  :init
   (setq jez-org-file
         "~/organizer.org"
         ;; "~/Google Drive/org-mode/organizer.org"
@@ -996,7 +1038,6 @@ of `org-babel-temporary-directory'."
     "Go to orgfile"
     (interactive)
     (find-file jez-org-file))
-
 
   (setq org-default-notes-file jez-org-file)
   (setq org-confirm-babel-evaluate nil)
@@ -1160,6 +1201,7 @@ of `org-babel-temporary-directory'."
   (jez-mc-add-cmds-all 'paredit-backward-kill-word)
   (jez-mc-add-cmds-all 'paredit-open-parenthesis)
   (jez-mc-add-cmds-all 'paredit-open-round)
+  (jez-mc-add-cmds-all 'outshine-self-insert-command)
 
   :bind (("C-<" . mc/mark-previous-like-this)
          ("C->" . mc/mark-next-like-this)
@@ -1920,7 +1962,9 @@ on delete cascade;"
   (setenv "PLANTUML_LIMIT_SIZE" (number-to-string (* 2 8192)))
   (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
+  (setq plantuml-output-type "png")
   (setq plantuml-default-exec-mode 'jar)
+  (setenv "PLANTUML_LIMIT_SIZE" "8192")
   ;; (setq plantuml-indent-regexp-start (list
   ;;                                     ;; plantuml-indent-regexp-block-start
   ;;                                     ;; plantuml-indent-regexp-group-start
@@ -2481,7 +2525,8 @@ on delete cascade;"
          ("M-<down>" . md-move-lines-down)
          ("M-S-<up>" . md-move-lines-up)
          ("M-S-<down>" . md-move-lines-down)
-         ("C-c d" . md-duplicate-down)
+         ;; ("C-c d" . md-duplicate-down)
+         ("C-c d" . move-dup-duplicate-down)
          ("C-c u" . md-duplicate-up)))
 
 

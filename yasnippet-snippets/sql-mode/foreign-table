@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: foreign-table
+# key: ft
+# --
+create foreign table ${1:local_table_name} (
+    ${5:column_name data_type}
+) server ${2:foreign_server} options (
+    schema_name '${3:public}',
+    table_name '${4:foreign_table_name}'
+);

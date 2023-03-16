@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: join-table
+# key: jt
+# --
+join
+    `(helm-comp-read "Table: " (jez-sql-list-tables-cached))` as $1
+on
+    $2 = $1.id

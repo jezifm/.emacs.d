@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: uuid
+# key: uuid
+# --
+uuid_generate_v4()

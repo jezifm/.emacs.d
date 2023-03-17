@@ -733,6 +733,10 @@ putting the matching lines in a buffer named *matching*"
   (move-end-of-line 1)
   (newline-and-indent))
 
+(defun jez-rename-buffer ()
+  (interactive)
+  (rename-buffer (read-string "New name of buffer: " (buffer-name))))
+
 
 ;;; Emacs - Nifty Tricks
 

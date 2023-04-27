@@ -2,7 +2,7 @@
 # name: docker-compose-new
 # key: dcnew
 # --
-version: '2'
+version: '3.9'
 
 services:
 

@@ -1349,12 +1349,12 @@ to the current branch. Uses Magit."
   "Build the URL or the pull requestion on GitHub corresponding
 to the current branch. Uses Magit."
   (interactive)
-  (browse-url
-   (format "%s/branch/%s"
-           (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
-                                     "https://bitbucket.org/\\1"
-                                     (magit-get "remote" (magit-get-current-remote) "url"))
-           (magit-get-current-branch))))
+  (let* ((commit (magit-commit-at-point))
+         (url (magit-get "remote" (magit-get-current-remote) "url"))
+         (project-repository (replace-regexp-in-string ".*:\\(.*\\)\\.git$" "\\1" url))
+         (commit-url (format "https://bitbucket.org/%s/commits/%s" project-repository commit)))
+    (browse-url commit-url)))
+
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 
 

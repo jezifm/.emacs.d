@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ps1
+# key: ps1
+# --
+export PS1='\[\e]0;\u@\h: \W$$ '

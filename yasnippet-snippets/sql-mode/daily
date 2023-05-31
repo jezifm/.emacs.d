@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: daily
+# key: daily
+# --
+select
+    date_trunc('day', ${1:date_updated}) as $1,
+    count(*)
+from
+    ${2:dwh_aggregate}.${3:message_threads}
+where
+    true
+    and $1 >= '`(format-time-string "%Y-%m-01")`'
+group by
+    1
+order by
+    1
+;

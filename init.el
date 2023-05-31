@@ -536,6 +536,11 @@ Version 2017-09-01"
          (message "File path copied: 「%s」" $fpath)
          $fpath )))))
 
+(defun jez-copy-relative-file-path (args)
+  "Copy current buffer relative path from git root directory"
+  (interactive "P")
+  (kill-new (magit-file-relative-name)))
+
 (defun jez-copy-buffer-name (args)
   "docstring"
   (interactive "P")
@@ -1402,7 +1407,20 @@ to the current branch. Uses Magit."
   :defer t
   :config
   (add-to-list 'tramp-default-proxies-alist '(nil "\\`root\\'" "/ssh:%h:"))
-  (add-to-list 'tramp-default-proxies-alist '((regexp-quote (system-name)) nil nil)))
+  (add-to-list 'tramp-default-proxies-alist '((regexp-quote (system-name)) nil nil))
+  (defun jez-cleanup-tramp (args)
+    "Delete tramp related connections and buffers"
+    (interactive "P")
+    (tramp-cleanup-all-connections)
+    (tramp-cleanup-all-buffers))
+
+  (setq remote-file-name-inhibit-cache nil)
+  (setq vc-ignore-dir-regexp
+        (format "%s\\|%s"
+                vc-ignore-dir-regexp
+                tramp-file-name-regexp))
+  (setq tramp-verbose 1)
+  )
 
 
 ;;; Yasnippet
@@ -1867,6 +1885,7 @@ using the specified hippie-expand function."
   (defun jez-sql-list-tables (&optional arg)
     "List tables available in current SQL process"
     (interactive "P")
+
     (let ((sql-buffer-process (sql-find-sqli-buffer))
           (sql-command "\\dt *.*")
           (buffer-out "*sql-result*"))
@@ -1875,13 +1894,14 @@ using the specified hippie-expand function."
       (sql-redirect  sql-buffer-process sql-command buffer-out)
       (with-current-buffer buffer-out
         (buffer-disable-undo)
-        (keep-lines ".*|.*|.*|.*")
+        (keep-lines ".*[|│].*[|│].*[|│].*")
         (save-excursion
           (goto-char (point-min))
           (kill-line 1))
         (jez-replace-regexp " " "")
-        (jez-replace-regexp "^\\(.*\\)|\\(.*\\)|.*|.*" "\\1.\\2")
-        (s-split "[[:space:]]" (buffer-substring-no-properties 1 (point-max))))))
+        (jez-replace-regexp "^\\(.*\\)[|│]\\(.*\\)[|│].*[|│].*" "\\1.\\2")
+        (s-split "[[:space:]]" (buffer-substring-no-properties 1 (point-max))))
+      ))
 
   (defun jez-sql-insert-table (args)
     "Insert table"
@@ -2329,6 +2349,9 @@ on delete cascade;"
 (use-package markdown-mode
   :ensure t
   :defer t
+  :bind (:map markdown-mode-map
+         ("M-n" . (lambda (arg) (interactive "p") (next-line (* arg 5))))
+         ("M-p" . (lambda (arg) (interactive "p") (previous-line (* arg 5)))))
   :config
   (defun jez-markdown-mode-hook ()
     (toggle-truncate-lines t)

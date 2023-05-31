@@ -8,6 +8,8 @@
 (setq ns-function-modifier 'control)                                  ; map modifier (fn) to control (ctrl)
 (setq save-abbrevs 'silently)                                         ; abbrev warning
 (setq split-width-threshold 160)                                      ; default split to vertical
+(if (not (boundp 'browse-url-mosaic-program))
+    (setq browse-url-mosaic-program "xmosaic"))
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))          ; maximize window
 (setq-default truncate-lines t)

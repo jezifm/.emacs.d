@@ -624,7 +624,9 @@ putting the matching lines in a buffer named *matching*"
   (when arg
     (jez-shell-command-bind-noargs))
   (if (buffer-file-name)
-      (save-buffer))
+      (progn
+        (save-buffer)
+        (sleep-for 1)))
   (let* ((window (nth 0 (seq-filter (lambda (window)
                                       (s-equals-p (buffer-name (window-buffer window))
                                                   jez-shell-command-buffer))
@@ -932,7 +934,7 @@ to the current point of the cursor (default is above)."
   (setq org-export-coding-system 'utf-8)
   (setq org-log-done 'time)
   (setq org-src-fontify-natively t)
-  (setq org-todo-keywords '((sequence "TODO" "|" "DONE")))
+  (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE")))
   (setq org-todo-keyword-faces
         '(("TODO" . "red")
           ("WAITING" . "yellow")
@@ -986,7 +988,7 @@ of `org-babel-temporary-directory'."
   (defun org-summary-todo (n-done n-not-done)
     "Switch entry to DONE when all subentries are done, to TODO otherwise."
     (let (org-log-done org-log-states)   ; turn off logging
-      (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+      (org-todo (if (= n-not-done 0) "DONE" "WAITING" "|" "TODO"))))
 
   (defun shk-fix-inline-images ()
     "Render images after executing org code"
@@ -1339,6 +1341,17 @@ to the current branch. Uses Magit."
   (interactive)
   (browse-url
    (format "%s/branch/%s"
+           (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
+                                     "https://bitbucket.org/\\1"
+                                     (magit-get "remote" (magit-get-current-remote) "url"))
+           (magit-get-current-branch))))
+
+  (defun jez-magit-visit-branch-pr ()
+  "Build the URL or the pull requestion on GitHub corresponding
+to the current branch. Uses Magit."
+  (interactive)
+  (browse-url
+   (format "%s/branch/%s?dest=qa"
            (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
                                      "https://bitbucket.org/\\1"
                                      (magit-get "remote" (magit-get-current-remote) "url"))

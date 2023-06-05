@@ -1,5 +1,8 @@
 # -*- mode: snippet -*-
 # name: for
 # key: for
+# expand-env: ((yas-indent-line 'fixed))
 # --
-for i in ${1: 1 2 3 4 5}; do ${2:echo \$i} && break; done
+for i in ${1: 1 2 3 4 5}; do 
+    ${2:echo \$i} && break; 
+done

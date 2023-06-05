@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: stage
+# key: stage
+# --
+stage($1) {
+    $0
+}

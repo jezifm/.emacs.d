@@ -1335,6 +1335,8 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind ("C-x g" . magit-status)
   :config
+  (defvar jez-magit-default-branch "qa" "Default magit branch for pr requests")
+
   (defun ediff-copy-both-to-C ()
     (interactive)
     (ediff-copy-diff ediff-current-difference nil 'C nil
@@ -1358,11 +1360,12 @@ to the current branch. Uses Magit."
 to the current branch. Uses Magit."
   (interactive)
   (browse-url
-   (format "%s/branch/%s?dest=qa"
+   (format "%s/branch/%s?dest=%s"
            (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
                                      "https://bitbucket.org/\\1"
                                      (magit-get "remote" (magit-get-current-remote) "url"))
-           (magit-get-current-branch))))
+           (magit-get-current-branch)
+           jez-magit-default-branch)))
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
   (defun jez-magit-visit-commit-url ()
@@ -1913,7 +1916,7 @@ using the specified hippie-expand function."
   (defun jez-sql-list-tables-cached (&optional arg)
     "Cached version of `jez-sql-list-tables`''"
     (interactive "P")
-    (let* ((file-name (format "jez-sql-list-tables-cached-%s-%s-%s.json" sql-server sql-database sql-port))
+    (let* ((file-name (md5 (format "%s-%s-%s.json" sql-server sql-database sql-port)))
            (file-path (expand-file-name file-name temporary-file-directory))
            (time-now (string-to-number (format-time-string "%s" (current-time))))
            tables)

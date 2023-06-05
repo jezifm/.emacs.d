@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: git
+# key: git
+# --
+git branch: 'master',
+    url: 'git@bitbucket.org:lamuditech/${1:bi_tools}.git',
+    credentialsId: 'c3e30171-7fa2-431c-9306-86c7046f1713'

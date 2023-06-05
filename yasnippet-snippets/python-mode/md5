@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: md5
+# key: md5
+# --
+hashlib.md5("${1:whatever your string is}".encode('utf-8')).hexdigest()

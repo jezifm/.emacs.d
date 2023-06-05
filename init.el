@@ -2615,6 +2615,9 @@ on delete cascade;"
   :config
   (smartparens-global-mode -1))
 
+(use-package jenkinsfile-mode
+  :ensure t)
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

@@ -2570,9 +2570,9 @@ on delete cascade;"
          ("M-<down>" . md-move-lines-down)
          ("M-S-<up>" . md-move-lines-up)
          ("M-S-<down>" . md-move-lines-down)
-         ("C-c d" . md-duplicate-down)
-         ;; ("C-c d" . move-dup-duplicate-down)
-         ("C-c u" . md-duplicate-up)))
+         ("C-c d" . move-dup-duplicate-down)
+         ("C-c u" . move-dup-duplicate-up)
+         ))
 
 
 ;;; Rainbow Delimiters

@@ -2004,8 +2004,6 @@ on delete cascade;"
   :defer t
   :commands plantuml-mode
   :config
-  (setenv "PLANTUML_LIMIT_SIZE" "8192")
-  (setenv "PLANTUML_LIMIT_SIZE" (number-to-string (* 2 8192)))
   (setq org-plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-jar-path "~/.emacs.d/elpa/contrib/scripts/plantuml.jar")
   (setq plantuml-output-type "png")

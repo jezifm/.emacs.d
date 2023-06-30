@@ -1970,6 +1970,10 @@ on delete cascade;"
 
   (define-key sql-interactive-mode-map (kbd "RET") nil)
   (toggle-truncate-lines t)
+
+  ;; env vars is overriding `sql-connection-alist'
+  (setenv "PGPASSWORD" nil)
+  (setenv "PGDATABASE" nil)
   :hook ((sql-mode . jez-sql-mode-hook)))
 
 (use-package sqlformat

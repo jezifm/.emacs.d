@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: ss
 # key: ss
+# expand-env: ((yas-indent-line 'auto))
 # --
 '$1': $1,

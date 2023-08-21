@@ -161,7 +161,6 @@
      )))
 
 ;; prepare installer
-(package-initialize)
 (when (not (package-installed-p 'dash))
   (package-refresh-contents)
   (package-install 'dash))
@@ -1297,7 +1296,6 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind (:map helm-bookmark-map ("C-j" . helm-maybe-exit-minibuffer))
   :after helm)
-(use-package helm-config :after helm)
 (use-package helm-dash :ensure t :after helm)
 (use-package helm-describe-modes :ensure t :after helm)
 (use-package helm-descbinds :ensure t :after helm)

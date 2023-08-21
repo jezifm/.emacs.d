@@ -1667,7 +1667,7 @@ using the specified hippie-expand function."
          ("C-c C-c" . jez-sql-send-paragraph)
          ("C-c C-n" . jez-sql-send-paragraph-move-forward)
          ("C-<return>" . jez-sql-send-paragraph-move-forward)
-         ("C-c C-l c" . sql-connect)
+         ("C-c C-l c" . jez-sql-connect)
          ("C-c C-l d" . jez-sql-view-columns)
          ("C-c C-l e" . jez-sql-explain-region)
          ("C-c C-l a" . jez-sql-explain-analyze-region)
@@ -1942,15 +1942,17 @@ using the specified hippie-expand function."
   (defun jez-sql-connect (connection &optional new-name)
     "Modify sql-connect to use CONNECTION name as buffer name"
     (interactive
-     (if sql-connection-alist
-         (list (sql-read-connection "Connection: " nil '(nil))
-               current-prefix-arg)
-       (user-error "No SQL Connections defined")))
-    (let ((buffer-name (format "*sql-%s*" connection)))
-      (when (get-buffer buffer-name)
-        (switch-to-buffer buffer-name))
-      (sql-connect connection new-name)
-      (rename-buffer buffer-name)))
+       (if sql-connection-alist
+           (list (sql-read-connection "Connection: " nil '(nil))
+                 current-prefix-arg)
+         (user-error "No SQL Connections defined")))
+    (save-selected-window
+      (let* ((sql-response (sql-connect connection))
+             (sql-buffer-new (if (typep sql-response 'window)
+                                 (with-selected-window sql-response (current-buffer))
+                               sql-response)))
+        (setq sql-buffer (buffer-name sql-buffer-new))
+        (run-hooks 'sql-set-sqli-hook))))
 
   (defun jez-sql-mode-hook ()
     (setq-default tab-width 4))

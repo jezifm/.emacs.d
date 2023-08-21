@@ -1953,6 +1953,7 @@ using the specified hippie-expand function."
         (run-hooks 'sql-set-sqli-hook))))
 
   (defun jez-sql-create-buffer ()
+    "Create sql file using connection name"
     (interactive)
     (let* ((sql-home "/Users/jezraelarciaga/workspace/sql")
            (connection-name (sql-read-connection "Connection" nil '(nil)))
@@ -1961,7 +1962,7 @@ using the specified hippie-expand function."
                              (file-name-as-directory connection-name)
                              sql-file-name)))
       (find-file sql-path)
-      (jez-sql-connect connection-name)))
+      (save-excursion (jez-sql-connect connection-name))))
 
   (defun jez-sql-mode-hook ()
     (setq-default tab-width 4))

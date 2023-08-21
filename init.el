@@ -1952,6 +1952,17 @@ using the specified hippie-expand function."
         (setq sql-buffer (buffer-name sql-buffer-new))
         (run-hooks 'sql-set-sqli-hook))))
 
+  (defun jez-sql-create-buffer ()
+    (interactive)
+    (let* ((sql-home "/Users/jezraelarciaga/workspace/sql")
+           (connection-name (sql-read-connection "Connection" nil '(nil)))
+           (sql-file-name (format-time-string "%Y-%m-%d.sql" (current-time)))
+           (sql-path (concat (file-name-as-directory sql-home)
+                             (file-name-as-directory connection-name)
+                             sql-file-name)))
+      (find-file sql-path)
+      (jez-sql-connect connection-name)))
+
   (defun jez-sql-mode-hook ()
     (setq-default tab-width 4))
 

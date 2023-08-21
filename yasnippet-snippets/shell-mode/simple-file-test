@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: simple-file-test
+# key: sft
+# --
+time for i in {0..1000}; do echo 'test' > "test\${i}.txt"; done

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: sql-query
+# key: sql-query
+# --
+select
+    query
+from
+    pg_stat_activity
+where
+    true
+    and pid=${1:pid}
+;

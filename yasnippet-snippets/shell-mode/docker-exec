@@ -2,4 +2,4 @@
 # name: docker-exec
 # key: de
 # --
-docker exec -it ${1:\$(docker ps -q)} /bin/bash $0
+docker exec -it ${1:\$(docker ps -q | tail -n 1)} /bin/bash $0

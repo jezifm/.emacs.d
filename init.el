@@ -288,11 +288,12 @@ eg. *shell foo* -> foo"
   (let* ((buffer-name-current (buffer-name (current-buffer)))
          (counter (jez-shell-get-count buffer-name-current))
          (buffer-name-shell (jez-shell-build-name buffer-name-current)))
+    (when (equal (count-windows) 1)
+      (split-window-right))
     (save-current-buffer
       (shell buffer-name-shell))
-    (when (equal (count-windows) 1)
-      (split-window-right)
-      (other-window 1))
+    (switch-to-buffer buffer-name-current)
+    (select-window-2)
     (switch-to-buffer buffer-name-shell)))
 
 (defun jez-guess-shell-buffer-name ()
@@ -1955,7 +1956,7 @@ using the specified hippie-expand function."
   (defun jez-sql-create-buffer ()
     "Create sql file using connection name"
     (interactive)
-    (let* ((sql-home "/Users/jezraelarciaga/workspace/sql")
+    (let* ((sql-home "~/workspace/sql")
            (connection-name (sql-read-connection "Connection" nil '(nil)))
            (sql-file-name (format-time-string "%Y-%m-%d.sql" (current-time)))
            (sql-path (concat (file-name-as-directory sql-home)

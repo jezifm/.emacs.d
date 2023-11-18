@@ -28,3 +28,6 @@ data
 /history
 /transient/
 /network-security.data
+/anaconda-mode/
+/helm-curl.log
+/src/

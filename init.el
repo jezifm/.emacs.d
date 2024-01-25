@@ -62,34 +62,14 @@
                  emacs-version)))
 
 
-;;; Package Manager - el-get
-
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
-
-
 ;;; Package Manager - melpa
 
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-;; (add-to-list 'package-archives '("nongu" . "https://elpa.nongnu.org/nongnu/") t)
-;; (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
 (setq
  package-archives
  '(
   ("nongu" . "https://elpa.nongnu.org/nongnu/")
   ("gnu" . "https://elpa.gnu.org/packages/")
   ("melpa" . "https://melpa.org/packages/")
-  ;; ("org" . "http://orgmode.org/elpa/")
   ("tromey" . "http://tromey.com/elpa/")
   ("melpa" . "http://melpa.milkbox.net/packages/")
   ("melpa-stable" . "http://stable.melpa.org/packages/"))

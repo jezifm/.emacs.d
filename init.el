@@ -727,6 +727,23 @@ putting the matching lines in a buffer named *matching*"
   (interactive)
   (rename-buffer (read-string "New name of buffer: " (buffer-name))))
 
+(defun jez-insert-from-pgpass-as-sql-alist ()
+  "Insert sql-connection-alist item from .pgpass"
+  (interactive)
+  (let* ((content (with-temp-buffer
+                    (insert-file-contents (expand-file-name "~/.pgpass"))
+                    (buffer-substring (point-min) (point-max))))
+         (lines (string-split content "\n"))
+         (line (helm-comp-read "Choose line: " lines))
+         (data (string-split line ":")))
+    (insert (s-format "(\"${host}\"
+         (sql-product 'postgres)
+         (sql-user \"${user}\")
+         (sql-port ${port})
+         (sql-server \"${host}\")
+         (sql-database \"${db}\")
+         )" 'aget (pairlis '(host port db user pass) data)))
+    ))
 
 ;;; Emacs - Nifty Tricks
 

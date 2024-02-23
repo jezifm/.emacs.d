@@ -728,21 +728,73 @@ putting the matching lines in a buffer named *matching*"
   (rename-buffer (read-string "New name of buffer: " (buffer-name))))
 
 (defun jez-insert-from-pgpass-as-sql-alist ()
-  "Insert sql-connection-alist item from .pgpass"
+  "Insert from .pgpass"
   (interactive)
   (let* ((content (with-temp-buffer
                     (insert-file-contents (expand-file-name "~/.pgpass"))
                     (buffer-substring (point-min) (point-max))))
          (lines (string-split content "\n"))
          (line (helm-comp-read "Choose line: " lines))
-         (data (string-split line ":")))
+         (data (string-split line ":"))
+         (data-alist (pairlis '(host port db user pass) data)))
     (insert (s-format "(\"${host}\"
          (sql-product 'postgres)
          (sql-user \"${user}\")
          (sql-port ${port})
          (sql-server \"${host}\")
          (sql-database \"${db}\")
-         )" 'aget (pairlis '(host port db user pass) data)))
+         )" 'aget data-alist))
+    ))
+
+(defun jez-insert-from-pgpass-as-url ()
+  "Insert from .pgpass"
+  (interactive)
+  (let* ((content (with-temp-buffer
+                    (insert-file-contents (expand-file-name "~/.pgpass"))
+                    (buffer-substring (point-min) (point-max))))
+         (lines (string-split content "\n"))
+         (line (helm-comp-read "Choose line: " lines))
+         (data (string-split line ":"))
+         (data-alist (pairlis '(host port db user pass) data)))
+    (insert (s-format "postgis://${user}:${pass}@${host}:${port}/${db}" 'aget data-alist))
+    ))
+
+(defun jez-insert-from-pgpass-as-env ()
+  "Insert from .pgpass"
+  (interactive)
+  (let* ((content (with-temp-buffer
+                    (insert-file-contents (expand-file-name "~/.pgpass"))
+                    (buffer-substring (point-min) (point-max))))
+         (lines (string-split content "\n"))
+         (line (helm-comp-read "Choose line: " lines))
+         (data (string-split line ":"))
+         (data-alist (pairlis '(host port db user pass) data)))
+    (insert (s-format "
+export PGHOST=${host}
+export PGPORT=${port}
+export PGDATABASE=${db}
+export PGUSER=${user}
+export PGPASSWORD=${pass}
+" 'aget data-alist))
+    ))
+
+(defun jez-insert-from-pgpass-as-dict ()
+  "Insert from .pgpass"
+  (interactive)
+  (let* ((content (with-temp-buffer
+                    (insert-file-contents (expand-file-name "~/.pgpass"))
+                    (buffer-substring (point-min) (point-max))))
+         (lines (string-split content "\n"))
+         (line (helm-comp-read "Choose line: " lines))
+         (data (string-split line ":"))
+         (data-alist (pairlis '(host port db user pass) data)))
+    (insert (s-format "{
+    \"host\": \"${host}\",
+    \"port\": \"${port}\",
+    \"database\": \"${db}\",
+    \"user\": \"${user}\",
+    \"password\": \"${pass}\",
+}" 'aget data-alist))
     ))
 
 ;;; Emacs - Nifty Tricks

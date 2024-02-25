@@ -778,24 +778,22 @@ export PGPASSWORD=${pass}
 " 'aget data-alist))
     ))
 
-(defun jez-insert-from-pgpass-as-python ()
-  "Insert from .pgpass"
-  (interactive)
+(defun jez-pgpass-as-python-dict ()
   (let* ((content (with-temp-buffer
                     (insert-file-contents (expand-file-name "~/.pgpass"))
                     (buffer-substring (point-min) (point-max))))
          (lines (string-split content "\n"))
          (line (helm-comp-read "Choose line: " lines))
          (data (string-split line ":"))
-         (data-alist (pairlis '(host port db user pass) data)))
-    (insert (s-format "{
+         (data-alist (pairlis '(host port db user pass) data))
+         (data-str (s-format "{
     \"host\": \"${host}\",
     \"port\": \"${port}\",
     \"database\": \"${db}\",
     \"user\": \"${user}\",
     \"password\": \"${pass}\",
-}" 'aget data-alist))
-    ))
+}" 'aget data-alist)))
+    data-str))
 
 ;;; Emacs - Nifty Tricks
 
@@ -1608,9 +1606,6 @@ using the specified hippie-expand function."
   :defer t
   :mode (("\\.py\\'" . python-mode)
          ("\\.tac\\'" . python-mode))
-  :bind (
-         :map python-mode-map
-         ("<tab>" . indent-for-tab-command))
 
   :config
   (defun jez-python-mode-hook ()
@@ -1661,8 +1656,12 @@ using the specified hippie-expand function."
     (flush-lines "AutoSlugField")
     (flush-lines "#")
     (flush-lines "^ +id = "))
-  :hook ((python-mode . outshine-python-mode-hook)
-         (python-mode . jez-python-mode-hook)))
+  :hook (
+         ;; conflict with yasnippet
+         ;; tab expansion not working
+         ;; (python-mode . outshine-python-mode-hook)
+         (python-mode . jez-python-mode-hook))
+  )
 
 
 ;;; Elpy

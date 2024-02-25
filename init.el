@@ -2406,7 +2406,6 @@ on delete cascade;"
 ;;; Docker
 
 (use-package docker :ensure t :defer t)
-(use-package docker-tramp :ensure t :defer t)
 
 
 ;;; YAML Mode

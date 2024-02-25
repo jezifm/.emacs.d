@@ -778,7 +778,7 @@ export PGPASSWORD=${pass}
 " 'aget data-alist))
     ))
 
-(defun jez-insert-from-pgpass-as-dict ()
+(defun jez-insert-from-pgpass-as-python ()
   "Insert from .pgpass"
   (interactive)
   (let* ((content (with-temp-buffer
@@ -1417,15 +1417,29 @@ to the current branch. Uses Magit."
            jez-magit-default-branch)))
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
+
+  (defun jez-magit-visit-src-url ()
+    "Browse url of current file"
+    (interactive)
+    (browse-url
+     (format "%s/src/%s/%s?at=%s#lines-%s"
+             (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
+                                       "https://bitbucket.org/\\1"
+                                       (magit-get "remote" (magit-get-current-remote) "url"))
+             (s-trim (shell-command-to-string "git rev-parse --verify HEAD"))
+             (magit-file-relative-name)
+             (magit-get-current-branch)
+             (line-number-at-pos))))
+
   (defun jez-magit-visit-commit-url ()
-  "Build the URL or the pull requestion on GitHub corresponding
+    "Build the URL or the pull requestion on GitHub corresponding
 to the current branch. Uses Magit."
-  (interactive)
-  (let* ((commit (magit-commit-at-point))
-         (url (magit-get "remote" (magit-get-current-remote) "url"))
-         (project-repository (replace-regexp-in-string ".*:\\(.*\\)\\.git$" "\\1" url))
-         (commit-url (format "https://bitbucket.org/%s/commits/%s" project-repository commit)))
-    (browse-url commit-url)))
+    (interactive)
+    (let* ((commit (magit-commit-at-point))
+           (url (magit-get "remote" (magit-get-current-remote) "url"))
+           (project-repository (replace-regexp-in-string ".*:\\(.*\\)\\.git$" "\\1" url))
+           (commit-url (format "https://bitbucket.org/%s/commits/%s" project-repository commit)))
+      (browse-url commit-url)))
 
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 

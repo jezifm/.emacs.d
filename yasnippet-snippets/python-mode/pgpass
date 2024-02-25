@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pgpass
+# key: pgpass
+# type: command
+# --
+(jez-insert-from-pgpass-as-python)

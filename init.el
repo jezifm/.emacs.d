@@ -1669,12 +1669,7 @@ using the specified hippie-expand function."
 (use-package elpy
   :ensure t
   :defer t
-  :bind (
-         :map elpy-mode-map
-              ("C-c C-l f" . elpy-black-fix-code)
-              ;; ("C-c C-l f" . elpy-autopep8-fix-code)
-              ;; ("C-c C-l f" . elpy-yapf-fix-code)
-              )
+  :bind (:map elpy-mode-map ("C-c C-l f" . elpy-black-fix-code))
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   :config

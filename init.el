@@ -1725,7 +1725,7 @@ using the specified hippie-expand function."
          ("C-c C-c" . jez-sql-send-paragraph)
          ("C-c C-n" . jez-sql-send-paragraph-move-forward)
          ("C-<return>" . jez-sql-send-paragraph-move-forward)
-         ("C-c C-l c" . jez-sql-connect)
+         ("C-c C-l c" . jez-sql-create-buffer)
          ("C-c C-l d" . jez-sql-view-columns)
          ("C-c C-l e" . jez-sql-explain-region)
          ("C-c C-l a" . jez-sql-explain-analyze-region)

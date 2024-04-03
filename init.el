@@ -1619,6 +1619,7 @@ using the specified hippie-expand function."
         (current-column))))
 
   (defun outshine-python-mode-hook ()
+    (interactive)
     (outline-minor-mode t)
     (setq-local outline-regexp "[ \t]*### \\|[ \t]*\\b\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
     (setq-local outline-level 'py-outline-level)

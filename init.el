@@ -368,7 +368,7 @@ Note: just like `align-regexp' but better"
   (interactive "r")
   (let ((s (buffer-substring start end)))
     (kill-region start end)
-    (insert (jez-camelize s))))
+    (insert (jez-camelize-string s))))
 
 (defun jez-titleize-from-snake (s)
   "Convert under_score string S to CamelCase string."
@@ -614,7 +614,8 @@ putting the matching lines in a buffer named *matching*"
   (if (buffer-file-name)
       (progn
         (save-buffer)
-        (sleep-for 1)))
+        ;; (sleep-for 0.1)
+        ))
   (let* ((window (nth 0 (seq-filter (lambda (window)
                                       (s-equals-p (buffer-name (window-buffer window))
                                                   jez-shell-command-buffer))
@@ -2691,6 +2692,12 @@ on delete cascade;"
 
 (use-package jenkinsfile-mode
   :ensure t)
+
+(use-package json-mode
+  :ensure t
+  :bind (:map
+         json-mode-map
+         ("C-c C-l f" . json-pretty-print-buffer)))
 
 ;;; Startup
 

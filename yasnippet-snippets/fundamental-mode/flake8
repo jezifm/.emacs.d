@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: flake8
+# key: flake8
+# --
+[flake8]
+per-file-ignores =
+    # line too long
+    E501,

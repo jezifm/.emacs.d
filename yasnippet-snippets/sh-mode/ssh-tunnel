@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ssh-tunnel
+# key: ssh-tunnel
+# --
+if [ ! -S $4-$1 ]; then
+    ssh -M -S $4-$1 -fNT -L ${1:localport}:${2:remotehost}:${3:remoteport} ${4:bastion}
+fi
+ssh -S $4-$1 -O check $4
+ssh -S $4-$1 -O exit $4

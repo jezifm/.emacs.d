@@ -1104,6 +1104,7 @@ of `org-babel-temporary-directory'."
   (setq org-default-notes-file jez-org-file)
   (setq org-confirm-babel-evaluate nil)
   (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)
+  (add-hook 'org-mode-hook 'org-indent-mode)
   (set-register ?o (cons 'file jez-org-file)))
 
 (use-package ox-md

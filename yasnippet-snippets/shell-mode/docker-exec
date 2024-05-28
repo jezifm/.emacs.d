@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: docker-exec
+# type: command
 # key: de
 # --
-docker exec -it $0 /bin/bash
+(insert (format "docker exec -it %s /bin/bash" (jez-read-docker)))

@@ -32,6 +32,7 @@
 ;; registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
 (set-register ?b '(file . "~/.bashrc"))
+(set-register ?e "jezarciaga@gmail.com")
 
 ;; environment
 (setenv "TERM" "xterm")
@@ -634,7 +635,8 @@ putting the matching lines in a buffer named *matching*"
   "Bind wrapper for `jez-shell-command' to `C-r''"
   (interactive)
   (let* ((default-buffer-name (jez-guess-shell-buffer-name))
-         (buffer (or buffer (helm-comp-read (format "shell buffer (%s): " default-buffer-name) (mapcar 'buffer-name (buffer-list)) :default default-buffer-name)))
+         (buffer-list (mapcar 'buffer-name (seq-filter (lambda (buffer) (with-current-buffer buffer (eq major-mode 'shell-mode))) (buffer-list))))
+         (buffer (or buffer (helm-comp-read (format "shell buffer (%s): " default-buffer-name) buffer-list :default default-buffer-name)))
          (command (or command (with-current-buffer buffer
                                 (let* ((last-shell-command (ring-ref comint-input-ring 0))
                                        (prompt-message (format "shell command (%s): " last-shell-command)))
@@ -795,6 +797,12 @@ export PGPASSWORD=${pass}
     \"password\": \"${pass}\",
 }" 'aget data-alist)))
     data-str))
+
+(defun jez-read-docker ()
+  "Get the container id from the user"
+  (let* ((names (s-split "\n" (s-trim (shell-command-to-string "docker ps --format '{{.Names}}'"))))
+         (name (helm-comp-read "Service: " names)))
+    (s-trim (shell-command-to-string (format "docker ps -aqf \"name=%s\"" name)))))
 
 ;;; Emacs - Nifty Tricks
 
@@ -1522,6 +1530,8 @@ to the current branch. Uses Magit."
   (setq yas-indent-line 'fixed)
   (setq yas-buffer-local-condition `always)
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
+  (require 'warnings)
+  (add-to-list 'warning-suppress-types '(yasnippet backquote-change))
   (yas-global-mode 1))
 
 (use-package auto-yasnippet
@@ -1620,7 +1630,7 @@ using the specified hippie-expand function."
         (skip-chars-forward "    ")
         (current-column))))
 
-  (defun outshine-python-mode-hook ()
+  (defun jez-outshine-python-mode-hook ()
     (interactive)
     (outline-minor-mode t)
     (setq-local outline-regexp "[ \t]*### \\|[ \t]*\\b\\(class\\|def\\|if\\|elif\\|else\\|while\\|for\\|try\\|except\\|with\\) ")
@@ -1662,8 +1672,8 @@ using the specified hippie-expand function."
   :hook (
          ;; conflict with yasnippet
          ;; tab expansion not working
-         ;; (python-mode . outshine-python-mode-hook)
          (python-mode . jez-python-mode-hook))
+         (python-mode . jez-outshine-python-mode-hook)
   )
 
 
@@ -1690,6 +1700,7 @@ using the specified hippie-expand function."
           (message "aggressive pep8 disabled"))
       (add-hook 'before-save-hook 'elpy-autopep8-fix-code nil t)
       (message "aggressive pep8 enabled")))
+  (setq elpy-rpc-python-command "/usr/local/opt/python@3.12/bin/python3.12")
   :hook ((org-mode . jez-disable-elpy)
          (shell-mode . jez-disable-elpy)
          ;; (python-mode . flymake-mode)
@@ -2699,6 +2710,55 @@ on delete cascade;"
   :bind (:map
          json-mode-map
          ("C-c C-l f" . json-pretty-print-buffer)))
+
+;;; Emacs LSP
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         ;; (XXX-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+;; if you are helm user
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+;; if you are ivy user
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; optionally if you want to use debugger
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+;; optional if you want which-key integration
+(use-package which-key
+    :config
+    (which-key-mode))
+
+
+
+;; (use-package yasnippet :ensure t)
+(use-package lsp-treemacs :ensure t :after lsp-mode)
+(use-package helm-lsp :ensure t :after (helm lsp-mode))
+;; (use-package projectile :ensure t)
+;; (use-package hydra :ensure t)
+(use-package flycheck :ensure t)
+;; (use-package company :ensure t)
+(use-package avy :ensure t)
+;; (use-package which-key :ensure t)
+(use-package helm-xref :ensure t)
+(use-package dap-mode :ensure t)
+(use-package zenburn-theme :ensure t)
+;; (use-package json-mode :ensure t)
+
+
+
+
+
 
 ;;; Startup
 

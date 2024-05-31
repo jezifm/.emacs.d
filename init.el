@@ -804,6 +804,23 @@ export PGPASSWORD=${pass}
          (name (helm-comp-read "Service: " names)))
     (s-trim (shell-command-to-string (format "docker ps -aqf \"name=%s\"" name)))))
 
+(defun jez-pgpass-as-alist ()
+  "Convert ~/.pgpass to alist can be consumed for sqll-mode"
+  (with-temp-buffer
+    (insert-file-contents "/Users/jez/.pgpass")
+    (let* ((content (buffer-string))
+           (lines (s-split "\n" (s-trim content))))
+      (mapcar (lambda (line)
+                (progn
+                  (let* ((db (pairlis '(host port name user pass) (s-split ":" line))))
+                    (list
+                     (format "db=%s user=%s host=%s" (cdr (assoc 'name db)) (cdr (assoc 'user db)) (cdr (assoc 'host db)))
+                     (list 'sql-product ''postgres)
+                     (list 'sql-user (cdr (assoc 'user db)))
+                     (list 'sql-port (string-to-number (cdr (assoc 'port db))))
+                     (list 'sql-server (cdr (assoc 'host db)))
+                     (list 'sql-database (cdr (assoc 'name db))))))) lines))))
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)

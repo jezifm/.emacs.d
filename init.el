@@ -814,7 +814,7 @@ export PGPASSWORD=${pass}
                 (progn
                   (let* ((db (pairlis '(host port name user pass) (s-split ":" line))))
                     (list
-                     (format "db=%s user=%s host=%s" (cdr (assoc 'name db)) (cdr (assoc 'user db)) (cdr (assoc 'host db)))
+                     (s-format "db=${name} user=${user} host=${host}" 'aget db)
                      (list 'sql-product ''postgres)
                      (list 'sql-user (cdr (assoc 'user db)))
                      (list 'sql-port (string-to-number (cdr (assoc 'port db))))

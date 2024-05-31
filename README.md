@@ -19,7 +19,7 @@ git clone --recursive git@github.com:jezifm/.emacs.d.git
 ### Enable Plantuml
 
 ```sh
-PLANTUML_JAR_URL='https://udomain.dl.sourceforge.net/project/plantuml/plantuml.jar'; \
+PLANTUML_JAR_URL='https://github.com/plantuml/plantuml/releases/download/v1.2024.5/plantuml-1.2024.5.jar'; \
     mkdir -p ~/.emacs.d/elpa/contrib/scripts; \
     curl -L -o ~/.emacs.d/elpa/contrib/scripts/plantuml.jar \
     $PLANTUML_JAR_URL

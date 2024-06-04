@@ -821,6 +821,28 @@ export PGPASSWORD=${pass}
                      (list 'sql-server (cdr (assoc 'host db)))
                      (list 'sql-database (cdr (assoc 'name db))))))) lines))))
 
+(defun jez-convert-and-replace-current-line-database-string ()
+  "Converts and replaces the database string on the current line.
+
+Takes input of the form 'user:pass@host:port/dbname?sslmode=...' and converts it to 'host:port:dbname:user:pass'.
+Ignores any query parameters.
+
+Replaces the current line with the converted string or does nothing if the line doesn't match the format."
+  (interactive)  ; Make it an interactive function
+
+  (let ((input-string (thing-at-point 'line t))) ; Get the current line
+
+    (if (string-match "\\([^:@]+\\):\\([^:@]+\\)@\\([^:/]+\\):\\([^:/]+\\)/\\([^/?]+\\)\\(?:\\?\\(.*\\)\\)?" input-string)
+        (progn
+          (delete-region (line-beginning-position) (line-end-position)) ; Delete current line
+          (insert (format "%s:%s:%s:%s:%s"
+                          (match-string 3 input-string)  ; host
+                          (match-string 4 input-string)  ; port
+                          (match-string 5 input-string)  ; dbname
+                          (match-string 1 input-string)  ; user
+                          (match-string 2 input-string)))) ; pass and insert new one
+      (message "Invalid format"))))
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)

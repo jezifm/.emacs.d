@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: uptime
+# key: uptime
+# --
+SELECT 
+    pg_postmaster_start_time(),
+    date_trunc('second', current_timestamp - pg_postmaster_start_time()) AS uptime
+;

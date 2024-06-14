@@ -297,11 +297,19 @@ eg. *shell foo* -> foo"
          (default-directory (format "%s%s" workspace directory-chosen)))
     (shell (format "*shell %s*" directory-chosen))))
 
+(defun jez-select-right-window ()
+  "Select window to the right if available"
+  (interactive)
+  (let* ((right-window (window-at (frame-width) (/ (frame-height) 2))))
+    (when right-window
+      (select-window right-window))))
+
 (defun jez-create-shell-buffer (&optional name)
   "Create shell buffer using NAME"
   (interactive)
   (unless name
     (setq name (helm-read-string "buffer name: ")))
+  (jez-select-right-window)
   (shell (format "*shell %s*" name)))
 
 (defun jez-join-line (count)
@@ -1338,7 +1346,19 @@ of `org-babel-temporary-directory'."
      ad-do-it))
  (setq projectile-mode-line "Projectile")
  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
- (projectile-mode))
+ (projectile-mode)
+ (defun jez-projectile-run-shell (args)
+   "Same with `projectile-run-shell' but executes on right most window"
+   (interactive "P")
+   (let* ((shell-buffer (save-window-excursion (progn
+                                                 (projectile-run-shell)
+                                                 (current-buffer))))
+          (right-window (window-at (frame-width) (/ (frame-height) 2))))
+     (when right-window
+       (select-window right-window))
+     (switch-to-buffer shell-buffer)))
+ :bind (:map projectile-mode-map
+        ("C-c C-p x s" . jez-projectile-run-shell)))
 
 (use-package helm
   :ensure t

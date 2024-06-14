@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ssm
+# key: ssm
+# --
+AWS::SSM::Parameter::Value<String>

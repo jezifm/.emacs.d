@@ -2,8 +2,6 @@
 # name: docker-compose-new
 # key: dcnew
 # --
-version: '3.9'
-
 services:
 
   ${1:app}:

@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: docker-compose-logs
-# key: dcl
+# name: docker logs
+# key: dl
 # --
-docker-compose logs --follow --tail=5 $0
+docker logs -n=5 -f $0

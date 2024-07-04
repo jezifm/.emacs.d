@@ -422,7 +422,7 @@ Note: just like `align-regexp' but better"
 (defun jez-abbreviate (string &optional separator)
   "Return first letter on each word of STRING using SEPERATOR"
   (interactive "s")
-  (let* ((separator (or separator "_")))
+  (let* ((separator (or separator "[_-]")))
     (s-join "" (--map (s-left 1 it) (s-split separator string)))))
 
 (defun jez-clear-buffers ()
@@ -1580,11 +1580,12 @@ to the current branch. Uses Magit."
   (defun jez-buffer-abbreviate ()
     "docstring"
     (interactive)
-    (let ((directory-name (file-name-nondirectory (directory-file-name (file-name-directory buffer-file-name))))
-          (buffer-abbrev (jez-abbreviate (buffer-name (current-buffer)))))
+    (let* ((directory-name (file-name-nondirectory (directory-file-name (file-name-directory buffer-file-name))))
+           (buffer-abbrev (jez-abbreviate (buffer-name (current-buffer))))
+           (directory-abbrev (jez-abbreviate directory-name)))
       (if (string-match "[[:alpha:]]" buffer-abbrev)
           buffer-abbrev
-        directory-name)))
+        directory-abbrev)))
 
   (setq yas-indent-line 'fixed)
   (setq yas-buffer-local-condition `always)

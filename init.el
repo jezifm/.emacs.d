@@ -776,7 +776,7 @@ putting the matching lines in a buffer named *matching*"
          (line (helm-comp-read "Choose line: " lines))
          (data (string-split line ":"))
          (data-alist (pairlis '(host port db user pass) data)))
-    (insert (s-format "postgis://${user}:${pass}@${host}:${port}/${db}" 'aget data-alist))
+    (insert (s-format "postgresql://${user}:${pass}@${host}:${port}/${db}" 'aget data-alist))
     ))
 
 (defun jez-insert-from-pgpass-as-env ()

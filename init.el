@@ -368,16 +368,25 @@ Note: just like `align-regexp' but better"
     (kill-this-buffer)))
 
 (defun jez-camelize-string (s)
-  "Convert under_score string S to CamelCase string."
+  "Convert under_score string S to CamelCase string. Deprecated. See `jez-camel-case'"
   (mapconcat 'identity (mapcar
                         #'(lambda (word) (capitalize (downcase word)))
                         (split-string s "_")) ""))
+
+(defun jez-camel-case (text)
+  "Converts snake_case text to camelCase."
+  (let ((words (split-string text "_")))
+    (concat
+     (capitalize (car words))       ; First word lowercase
+     (mapconcat 'capitalize (cdr words) "") ; Rest capitalized and joined
+     )))
 
 (defun jez-camelize-region (start end)
   (interactive "r")
   (let ((s (buffer-substring start end)))
     (kill-region start end)
     (insert (jez-camelize-string s))))
+
 
 (defun jez-titleize-from-snake (s)
   "Convert under_score string S to CamelCase string."

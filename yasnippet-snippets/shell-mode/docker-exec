@@ -2,4 +2,4 @@
 # name: docker-exec
 # key: de
 # --
-docker exec -it $0 /bin/bash
+docker exec -it $0 sh

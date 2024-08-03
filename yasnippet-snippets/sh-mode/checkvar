@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: checkvar
+# key: checkvar
+# --
+: "\${${1:AWS_ACCOUNT_ID}:?Error: $1 is required}"$0

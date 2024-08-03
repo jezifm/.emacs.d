@@ -5,4 +5,4 @@
 SELECT 
     pg_postmaster_start_time(),
     date_trunc('second', current_timestamp - pg_postmaster_start_time()) AS uptime
-;
+$0;

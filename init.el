@@ -1592,7 +1592,7 @@ to the current branch. Uses Magit."
     (let* ((directory-name (file-name-nondirectory (directory-file-name (file-name-directory buffer-file-name))))
            (buffer-abbrev (jez-abbreviate (buffer-name (current-buffer))))
            (directory-abbrev (jez-abbreviate directory-name)))
-      (if (string-match "[[:alpha:]]" buffer-abbrev)
+      (if (string-match "^[[:alpha:]].*$" buffer-abbrev)
           buffer-abbrev
         directory-abbrev)))
 

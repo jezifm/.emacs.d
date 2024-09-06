@@ -2054,10 +2054,17 @@ using the specified hippie-expand function."
     (interactive "P")
     (insert (helm-comp-read "Table: " (jez-sql-list-tables-cached))))
 
+  (defun jez-sql-visit-table-json-file (&optional arg)
+    "Visit file containing list of tables"
+    (interactive "P")
+    (let* ((file-name (format "%s.json" (md5 (format "%s-%s-%s" sql-server sql-database sql-port))))
+           (file-path (expand-file-name file-name temporary-file-directory)))
+      (find-file file-path)))
+
   (defun jez-sql-list-tables-cached (&optional arg)
     "Cached version of `jez-sql-list-tables`''"
     (interactive "P")
-    (let* ((file-name (md5 (format "%s-%s-%s.json" sql-server sql-database sql-port)))
+    (let* ((file-name (format "%s.json" (md5 (format "%s-%s-%s" sql-server sql-database sql-port))))
            (file-path (expand-file-name file-name temporary-file-directory))
            (time-now (string-to-number (format-time-string "%s" (current-time))))
            tables)
@@ -2073,7 +2080,11 @@ using the specified hippie-expand function."
       (unless tables
         (setq tables (jez-sql-list-tables arg))
         (let ((table-data `((tables . ,tables)
-                            (time . ,time-now))))
+                            (time . ,time-now)
+                            (sql-server . ,sql-server)
+                            (sql-database . ,sql-database)
+                            (sql-port . ,sql-port)
+                            )))
           (with-temp-file (format file-path)
             (insert (json-encode-alist table-data)))
           (message "Written to: %s" file-path)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: 5min
+# key: 5min
+# --
+date_trunc('minute', ${1:created_at}) - INTERVAL '1 minute' * MOD(EXTRACT(minute FROM $1)::int, 5)  AS $1,

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: percentile
+# key: percentile
+# --
+percentile_cont(0.25) WITHIN GROUP (ORDER BY $1) as $1

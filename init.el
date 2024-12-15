@@ -1989,6 +1989,7 @@ using the specified hippie-expand function."
              ("\\(.*\\)    using \\(.*\\)" . "\\1using\n\\1    \\2")
              ("    \\(using.*\\\)" . "\\1")
              ("    drop constraint \\(.*\\);" . "drop constraint\n    \\1\n;")
+             ("create materialized view \\(.*\\) as" . "create materialized view\n    \\1\nas")
              )))
       (save-excursion
         (loop for i in regex-configs

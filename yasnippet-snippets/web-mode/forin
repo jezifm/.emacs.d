@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: forin
+# key: forin
+# --
+for (let key in $1) {
+    if ($1.hasOwnProperty(key)) {
+        $0
+    }
+}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: median
+# key: median
+# --
+percentile_cont(0.5) WITHIN GROUP (ORDER BY $1) as $1$0

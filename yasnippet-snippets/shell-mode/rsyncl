@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: rsync-local
+# key: rsyncl
+# --
+rsync -aAXPv

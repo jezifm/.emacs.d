@@ -2,5 +2,5 @@
 # name: copy
 # key: copy
 # --
-\COPY (select * from public.$1) TO '/tmp/$1.csv' WITH (FORMAT CSV, HEADER);
+\COPY (select * from $1) TO '/tmp/$1.csv' WITH (FORMAT CSV, HEADER);
 

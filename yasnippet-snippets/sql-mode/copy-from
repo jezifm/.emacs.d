@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: copy-from
+# key: copy-from
+# --
+\COPY public.${1:table} from '/tmp/$1.csv' (FORMAT CSV, HEADER);

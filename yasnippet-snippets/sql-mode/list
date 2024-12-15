@@ -2,6 +2,7 @@
 # name: list
 # key: list
 # --
+-- list active queries
 select
     pid,
     usename,

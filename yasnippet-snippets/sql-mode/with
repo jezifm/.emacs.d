@@ -3,7 +3,13 @@
 # key: with
 # --
 with
-    tmp_`(jez-buffer-abbreviate)`_$1
-as (
+extracted as (
     $0
+),
+final as (
+    select
+        *
+    from
+        extracted
 )
+select * from final

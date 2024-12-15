@@ -2,9 +2,4 @@
 # name: over
 # key: over
 # --
-${1:row_number()} over (
-    partition by
-        $0
-    order by
-        
-)
+${1:row_number()} over (partition by $0 order by)

@@ -3,8 +3,4 @@
 # key: createindex
 # key: ci
 # --
-create index on
-    ${1:tablename} (
-        ${2:columns}
-    )
-;
+create index on ${1:tablename} (${2:columns});

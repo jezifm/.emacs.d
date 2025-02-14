@@ -47,12 +47,8 @@
 
 ;; fix dired
 ;; https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
-;; (when (string= system-type "darwin")
-;;   (setq dired-use-ls-dired nil))
 (when (string= system-type "darwin")
-  (setq dired-use-ls-dired t
-        insert-directory-program "/usr/local/bin/gls"
-        dired-listing-switches "-aBhl --group-directories-first"))
+  (setq dired-use-ls-dired nil))
 
 
 

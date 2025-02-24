@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: cloudformation
+# key: cloudformation
+# --
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 
+
+
+Parameters:
+  Environment:
+    Type: String
+    Description: "Environment. Use prod, qa, develop"
+
+
+Resources:
+    $0

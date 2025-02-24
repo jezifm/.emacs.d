@@ -1765,7 +1765,6 @@ using the specified hippie-expand function."
           (message "aggressive pep8 disabled"))
       (add-hook 'before-save-hook 'elpy-autopep8-fix-code nil t)
       (message "aggressive pep8 enabled")))
-  (setq elpy-rpc-python-command "/usr/local/opt/python@3.12/bin/python3.12")
   :hook ((org-mode . jez-disable-elpy)
          (shell-mode . jez-disable-elpy)
          ;; (python-mode . flymake-mode)

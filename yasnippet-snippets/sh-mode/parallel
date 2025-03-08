@@ -2,8 +2,7 @@
 # name: parallel
 # key: parallel
 # --
-# initialize a semaphore with a given number of tokens
-open_sem(){
+function open_sem {
     mkfifo pipe-\$\$
     exec 3<>pipe-\$\$
     rm pipe-\$\$
@@ -12,9 +11,7 @@ open_sem(){
         printf %s 000 >&3
     done
 }
-
-# run the given command asynchronously and pop/push tokens
-run_with_lock(){
+function run_with_lock {
     local x
     # this read waits until there is something to read
     read -u 3 -n 3 x && ((0==x)) || exit \$x

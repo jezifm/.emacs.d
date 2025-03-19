@@ -1165,6 +1165,35 @@ of `org-babel-temporary-directory'."
     (interactive)
     (find-file jez-org-file))
 
+  (defun jez-sort-org-file ()
+    "Sort org file with DONE first"
+    (interactive)
+    (with-current-buffer "organizer.org"
+      (save-excursion
+        (let* ((done-tasks '())
+               (current-point (point-min))
+               (starting-point 0)
+               (prev-point -1))
+          (goto-char (point-min))
+          (while (not (eq (org-current-level) 2))
+            (forward-line 1))
+          (setq starting-point (point))
+          (setq current-point (point))
+          (while (not (= prev-point current-point))
+            (when (org-entry-is-done-p)
+              (push (org-element-begin (org-element-at-point)) done-tasks))
+            (org-forward-heading-same-level 1)
+            (setq prev-point current-point)
+            (setq current-point (point)))
+          (setq done-tasks (reverse done-tasks))
+          (dolist (done-task done-tasks)
+            (goto-char done-task)
+            (when (> (line-number-at-pos) 2)
+              (while (not (save-excursion
+                            (org-backward-heading-same-level 1)
+                            (org-entry-is-done-p)))
+                (org-move-subtree-up))))))))
+
   (setq org-default-notes-file jez-org-file)
   (setq org-confirm-babel-evaluate nil)
   (add-hook 'org-babel-execute-hook 'org-display-inline-images 'append)

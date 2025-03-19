@@ -30,6 +30,6 @@ function warn \{
 \}
 
 function error \{
-    timestamp=\`date "+%Y-%m-%d %H:%M:%S"\`    
+    timestamp=\`date "+%Y-%m-%d %H:%M:%S"\`
     echo -e "$\{RED\}$\{timestamp\} $@$\{NOCOLOR\}"
 \}

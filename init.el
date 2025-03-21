@@ -943,7 +943,8 @@ to the current point of the cursor (default is above)."
   :config
   ;; main-theme
   ;; (jez-change-theme 'sanityinc-tomorrow-bright)
-  (jez-change-theme 'blackboard)
+  ;; (jez-change-theme 'blackboard)
+   (load-theme 'zenburn t)
   ;; mode-line
   (require 'smart-mode-line)
   (require 'smart-mode-line-powerline-theme)
@@ -952,7 +953,6 @@ to the current point of the cursor (default is above)."
   (sml/setup)
   (when (eq window-system 'w32)
     (set-face-attribute 'default nil :family "Consolas" :height 110)))
-
 
 ;;; Window Numbering
 

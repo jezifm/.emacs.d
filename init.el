@@ -1461,6 +1461,11 @@ of `org-babel-temporary-directory'."
   :bind ("C-c s" . helm-tramp)
   :config (setq tramp-default-method "ssh")
   :after helm)
+(use-package helm-lsp
+  :ensure t
+  :commands helm-lsp-workspace-symbol
+  :after (helm lsp-mode))
+(use-package helm-xref :ensure t)
 
 
 ;;; Swiper
@@ -2835,7 +2840,6 @@ on delete cascade;"
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
 ;; if you are helm user
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
@@ -2853,14 +2857,12 @@ on delete cascade;"
 
 ;; (use-package yasnippet :ensure t)
 (use-package lsp-treemacs :ensure t :after lsp-mode)
-(use-package helm-lsp :ensure t :after (helm lsp-mode))
 ;; (use-package projectile :ensure t)
 ;; (use-package hydra :ensure t)
 (use-package flycheck :ensure t)
 ;; (use-package company :ensure t)
 (use-package avy :ensure t)
 ;; (use-package which-key :ensure t)
-(use-package helm-xref :ensure t)
 (use-package dap-mode :ensure t)
 (use-package zenburn-theme :ensure t)
 ;; (use-package json-mode :ensure t)

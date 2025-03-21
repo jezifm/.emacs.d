@@ -1368,8 +1368,7 @@ of `org-babel-temporary-directory'."
          ("s-d" . jez-mark-multiple)))
 
 
-;;; Helm Mode
-
+;;; Projectile
 (use-package projectile
  :defer t
  :config
@@ -1398,6 +1397,7 @@ of `org-babel-temporary-directory'."
  :bind (:map projectile-mode-map
         ("C-c C-p x s" . jez-projectile-run-shell)))
 
+;;; Helm Mode
 (use-package helm
   :ensure t
   :defer t

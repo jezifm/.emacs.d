@@ -1397,77 +1397,65 @@ of `org-babel-temporary-directory'."
  :bind (:map projectile-mode-map
         ("C-c C-p x s" . jez-projectile-run-shell)))
 
-;;; Helm Mode
-(use-package helm
+;;; Ag
+(use-package ag
+  :ensure t)
+
+
+;;; Vertico
+(use-package vertico
   :ensure t
-  :defer t
-  :bind (
-         ("C-c h"   . helm-command-prefix)
-         ("C-h d"   . helm-dash)
-         ("C-h m"   . helm-describe-modes)
-         ("C-x C-b" . helm-mini)
-         ("C-x C-f" . helm-find-files)
-         ("C-x C-r" . helm-recentf)
-         ("C-x b"   . helm-mini)
-         ("C-x r b" . helm-bookmarks)
-         ("M-x"     . helm-M-x)
-         ("M-y"     . helm-show-kill-ring)
-         :map helm-map
-         ("<tab>"   . helm-execute-persistent-action)
-         ("C-i"     . helm-execute-persistent-action)
-         ("M-x"     . helm-select-action)
-         :map helm-projectile-projects-map
-         ("C-j"     . helm-maybe-exit-minibuffer)
-         ("C-l"     . jez-erase-minibuffer)
-         :map shell-mode-map
-         ("C-c C-l" . 'helm-comint-input-ring)
-         :map minibuffer-local-map
-         ("C-c C-l" . 'helm-minibuffer-history)
-         )
-  :config
-  (require 'shell)
-  (require 'projectile)
-  (helm-mode 1)
-  (helm-projectile-on)
-  (setq projectile-completion-system 'helm)
-  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-        helm-ff-file-name-history-use-recentf t)
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t))
-  (setq helm-M-x-fuzzy-match t)
-  (setq helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match    t)
-  (setq projectile-git-submodule-command nil)
+  :bind (:map
+         vertico-map
+         ("C-l" . vertico-directory-up)
+         ("C-j" . vertico-insert))
+  :custom
+  (vertico-scroll-margin 0) ;; Different scroll margin
+  (vertico-count 20)        ;; Show more candidates
+  (vertico-resize nil)        ;; Grow and shrink the Vertico minibuffer
+  (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+  :init
+  (vertico-mode))
 
-
-  (defun jez-erase-minibuffer (arg)
-    (interactive "p")
-    (move-beginning-of-line arg)
-    (delete-region (point) (point-max))))
-
-(use-package helm-bookmark
-  :defer t
-  :bind (:map helm-bookmark-map ("C-j" . helm-maybe-exit-minibuffer))
-  :after helm)
-(use-package helm-dash :ensure t :after helm)
-(use-package helm-describe-modes :ensure t :after helm)
-(use-package helm-descbinds :ensure t :after helm)
-(use-package helm-tramp
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
   :ensure t
-  :defer t
-  :bind ("C-c s" . helm-tramp)
-  :config (setq tramp-default-method "ssh")
-  :after helm)
-(use-package helm-lsp
+  :init
+  (savehist-mode))
+
+;; Emacs minibuffer configurations.
+(use-package emacs
   :ensure t
-  :commands helm-lsp-workspace-symbol
-  :after (helm lsp-mode))
-(use-package helm-xref :ensure t)
+  :custom
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (enable-recursive-minibuffers t)
+  ;; Hide commands in M-x which do not work in the current mode.  Vertico
+  ;; commands are hidden in normal buffers. This setting is useful beyond
+  ;; Vertico.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  ;; Do not allow the cursor in the minibuffer prompt
+  (minibuffer-prompt-properties
+   '(read-only t cursor-intangible t face minibuffer-prompt)))
 
 
+;;; Odorless
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :ensure t
+  :custom
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
+  ;; (orderless-component-separator #'orderless-escapable-split-on-space)
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+
+;;; Consult
+(use-package consult
+  :ensure t
+  :bind (:map projectile-mode-map
+              ("C-c C-p s s" . consult-ripgrep)))
 ;;; Swiper
 
 (use-package swiper

@@ -941,10 +941,7 @@ to the current point of the cursor (default is above)."
 (use-package custom
   :defer 2
   :config
-  ;; main-theme
-  ;; (jez-change-theme 'sanityinc-tomorrow-bright)
-  ;; (jez-change-theme 'blackboard)
-   (load-theme 'zenburn t)
+  (jez-change-theme 'blackboard)
   ;; mode-line
   (require 'smart-mode-line)
   (require 'smart-mode-line-powerline-theme)

@@ -917,6 +917,7 @@ to the current point of the cursor (default is above)."
    ("s-s" . isearch-forward-regexp)
    ("C-M-<backspace>" . jez-kill-back-to-indentation)
    ("S-<return>" . sanityinc/newline-at-end-of-line)
+   ("C-x C-b" . switch-to-buffer)
    ))
 
 

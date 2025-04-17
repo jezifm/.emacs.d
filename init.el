@@ -860,6 +860,16 @@ Replaces the current line with the converted string or does nothing if the line 
                           (match-string 2 input-string)))) ; pass and insert new one
       (message "Invalid format"))))
 
+(defun jez-find-file (prefix-arg)
+  "Similar to `find-file' but with prefix argument
+With no prefix argument, default behavior
+With any prefix, `find-file-at-point'"
+  (interactive "P")
+  (if prefix-arg
+      (call-interactively 'find-file)
+    (find-file-at-point)))
+
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
@@ -918,6 +928,7 @@ to the current point of the cursor (default is above)."
    ("C-M-<backspace>" . jez-kill-back-to-indentation)
    ("S-<return>" . sanityinc/newline-at-end-of-line)
    ("C-x C-b" . switch-to-buffer)
+   ("C-x C-f" . jez-find-file)
    ))
 
 

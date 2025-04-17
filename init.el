@@ -1452,8 +1452,11 @@ of `org-babel-temporary-directory'."
 ;;; Consult
 (use-package consult
   :ensure t
-  :bind (:map projectile-mode-map
-              ("C-c C-p s s" . consult-ripgrep)))
+  :bind (("C-c h i" . consult-imenu)
+         :map projectile-mode-map
+         ("C-c C-p s s" . consult-ripgrep)))
+
+
 ;;; Swiper
 
 (use-package swiper
@@ -2310,7 +2313,7 @@ on delete cascade;"
   :ensure t
   :defer t
   :bind (
-         ("M-z" . zap-to-char)
+         ("M-z" . zap-up-to-char)
          ("M-Z" . avy-zap-up-to-char-dwim)))
 
 
@@ -2830,10 +2833,6 @@ on delete cascade;"
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-;; optionally if you want to use debugger
-(use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-
 ;; optional if you want which-key integration
 (use-package which-key
     :config
@@ -2849,7 +2848,6 @@ on delete cascade;"
 ;; (use-package company :ensure t)
 (use-package avy :ensure t)
 ;; (use-package which-key :ensure t)
-(use-package dap-mode :ensure t)
 (use-package zenburn-theme :ensure t)
 ;; (use-package json-mode :ensure t)
 
@@ -2875,3 +2873,5 @@ on delete cascade;"
 
 (add-hook 'after-init-hook 'jez-startup)
 (put 'scroll-left 'disabled nil)
+(unless (daemonp)
+  (server-start))

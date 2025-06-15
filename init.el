@@ -869,7 +869,6 @@ With any prefix, `find-file-at-point'"
       (call-interactively 'find-file)
     (find-file-at-point)))
 
-
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
@@ -1494,7 +1493,7 @@ of `org-babel-temporary-directory'."
   :defer t
   :bind ("C-x g" . magit-status)
   :config
-  (defvar jez-magit-default-branch "qa" "Default magit branch for pr requests")
+  (defvar jez-magit-default-branch "topg-staging" "Default magit branch for pr requests")
 
   (defun ediff-copy-both-to-C ()
     (interactive)

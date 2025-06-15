@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: table-size
-# key: table-size
+# name: list-partitioned-table-size
+# key: list-partitioned-table-size
 # --
 SELECT
    pi.inhparent::regclass AS parent_table_name, 

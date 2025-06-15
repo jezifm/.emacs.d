@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: elapsed
+# key: elapsed
+# --
+start_time = time.time()
+print("--- %s seconds ---" % (time.time() - start_time))

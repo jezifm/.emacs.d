@@ -3,12 +3,12 @@
 # key: sfd
 # --
 select
-    ${2:venture_id, id},
+    ${2:id},
     count(*)
 from
     ${1:dwh_aggregate.users_pablo}
 group by
-    1, 2
+    1
 having
     count(*) > 1
 limit 

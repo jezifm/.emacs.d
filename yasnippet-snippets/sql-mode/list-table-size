@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: list-table-size
+# key: list-table-size
+# --
+SELECT
+    n.nspname AS table_schema,
+    c.relname AS table_name,
+    pg_size_pretty(pg_total_relation_size(c.oid)) AS total_size_pretty,
+    pg_total_relation_size(c.oid) AS total_size_bytes -- Included for ordering, can be removed from select if not needed
+FROM
+    pg_class c
+JOIN
+    pg_namespace n ON n.oid = c.relnamespace
+WHERE
+    n.nspname NOT IN ('pg_catalog', 'information_schema', '_timescaledb_internal') -- Excludes schemas for internal system tables
+    AND n.nspname NOT LIKE 'pg_toast%'                -- Excludes TOAST internal schemas
+    AND c.relkind = 'r'                               -- Filters for ordinary tables only (excludes views, indexes, sequences, parent partitioned tables, etc.)
+    AND c.relispartition = FALSE                      -- Excludes tables that are partitions of a partitioned table (PostgreSQL 10+)
+ORDER BY
+    total_size_bytes DESC;

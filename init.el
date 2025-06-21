@@ -160,7 +160,6 @@
 (use-package password-generator :ensure t :defer t)
 (use-package sqlup-mode     :ensure t :defer t)
 (use-package unfill :ensure t :defer t)
-(use-package which-key      :ensure t :defer t)
 
 
 ;;; Host Specific Customization
@@ -1740,7 +1739,6 @@ using the specified hippie-expand function."
     (setq-local outshine-use-speed-commands nil))
 
   (setq python-shell-interpreter "python3")
-  (setq elpy-rpc-python-command "python3")
   (define-key python-mode-map (kbd "C-c C-p") nil)
 
   ;; django factory boy
@@ -1781,32 +1779,95 @@ using the specified hippie-expand function."
 
 ;;; Elpy
 
-(use-package elpy
+;; (use-package elpy
+;;   :ensure t
+;;   :defer t
+;;   :bind (:map elpy-mode-map ("C-c C-l f" . elpy-black-fix-code))
+;;   :init
+;;   (advice-add 'python-mode :before 'elpy-enable)
+;;   :config
+;;   (setq elpy-rpc-python-command "python3")
+;;   (setq elpy-rpc-timeout 10)
+;;   (define-key elpy-mode-map (kbd "C-c C-p") nil)
+;;   (defun jez-python-disable-company-mode () (company-mode -1))
+;;   (defun jez-disable-elpy () (ignore-errors (elpy-mode -1)))
+;;   (setq elpy-shell-echo-output nil)
+;;   (defun jez-toggle-aggressive-pep8 (args)
+;;     "Toggle auto-pep8 on save"
+;;     (interactive "P")
+;;     (if (eq 'elpy-autopep8-fix-code (car before-save-hook))
+;;         (progn
+;;           (remove-hook 'before-save-hook 'elpy-autopep8-fix-code t)
+;;           (message "aggressive pep8 disabled"))
+;;       (add-hook 'before-save-hook 'elpy-autopep8-fix-code nil t)
+;;       (message "aggressive pep8 enabled")))
+;;   (setq elpy-rpc-python-command "/usr/local/opt/python@3.12/bin/python3.12")
+;;   :hook ((org-mode . jez-disable-elpy)
+;;          (shell-mode . jez-disable-elpy)
+;;          (python-mode . jez-python-disable-company-mode)))
+
+;;; Eglot
+
+;; (use-package envrc
+;;   :ensure t
+;;   :config
+;;   (envrc-global-mode))
+
+(use-package direnv
   :ensure t
-  :defer t
-  :bind (:map elpy-mode-map ("C-c C-l f" . elpy-black-fix-code))
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
   :config
-  (setq elpy-rpc-timeout 10)
-  (define-key elpy-mode-map (kbd "C-c C-p") nil)
-  (defun jez-python-disable-company-mode () (company-mode -1))
-  (defun jez-disable-elpy () (ignore-errors (elpy-mode -1)))
-  (setq elpy-shell-echo-output nil)
-  (defun jez-toggle-aggressive-pep8 (args)
-    "Toggle auto-pep8 on save"
-    (interactive "P")
-    (if (eq 'elpy-autopep8-fix-code (car before-save-hook))
-        (progn
-          (remove-hook 'before-save-hook 'elpy-autopep8-fix-code t)
-          (message "aggressive pep8 disabled"))
-      (add-hook 'before-save-hook 'elpy-autopep8-fix-code nil t)
-      (message "aggressive pep8 enabled")))
-  (setq elpy-rpc-python-command "/usr/local/opt/python@3.12/bin/python3.12")
-  :hook ((org-mode . jez-disable-elpy)
-         (shell-mode . jez-disable-elpy)
-         ;; (python-mode . flymake-mode)
-         (python-mode . jez-python-disable-company-mode)))
+  (direnv-mode))
+
+;; (use-package eglot
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
+;;   (setq-default eglot-workspace-configuration
+;;                 '((:pylsp . (:configurationSources ["flake8"] :plugins (:pycodestyle (:enabled nil) :mccabe (:enabled nil) :flake8 (:enabled t))))))
+;;   :hook
+;;   ((python-mode . eglot-ensure)))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(use-package eglot
+  :ensure t
+  :hook ((python-mode . eglot-ensure) ; Automatically start Eglot for Python
+         ;; (eglot-managed-mode . eglot-enable-which-key)
+         ) ; If you use which-key
+  :bind (:map eglot-mode-map
+              ("C-c l a" . eglot-code-actions)    ; Code actions
+              ("C-c l r" . eglot-rename)          ; Rename symbol
+              ("C-c l f" . eglot-format)          ; Format region
+              ("C-c l F" . eglot-format-buffer)   ; Format buffer
+              ("C-c l d" . xref-find-definitions) ; Go to definition
+              ("C-c l R" . xref-find-references)  ; Find references
+              ("C-c l h" . eldoc)                 ; Show documentation/type (Eldoc)
+              ("C-c l s" . eglot-reconnect))     ; Restart server if needed
+  :config
+  ;; You might want to configure pylsp specifics here
+  (setq eglot-workspace-configuration
+        '(:pylsp (:plugins (:jedi_completion (:include_params t :fuzzy t)
+                                             :pyflakes (:enabled t)
+                                             :yapf (:enabled nil) ; Example: disable yapf if you prefer black
+                                             :black (:enabled t :args ("--line-length=88"))))))
+  )
+
+;; (use-package corfu
+;;   :ensure t
+;;   :init (global-corfu-mode)
+;;   ;; Corfu's default keybinds are usually good, but you can customize here
+;;   )
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  (setq corfu-auto t) ; Explicitly set it to t, just in case
+  (setq corfu-auto-delay 0.1) ; Default is usually 0.1, you can adjust
+  )
+
 
 
 ;;; Email - GNUS
@@ -1818,7 +1879,7 @@ using the specified hippie-expand function."
   :config
   (setq gnus-select-method
         '(nnimap "gmail"
-	         (nnimap-address "imap.gmail.com")  ; it could also be imap.googlemail.com if that's your server.
+	         (nnimap-address "imap.gmail.com") ; it could also be imap.googlemail.com if that's your server.
 	         (nnimap-server-port "imaps")
 	         (nnimap-stream ssl)))
 
@@ -2330,7 +2391,6 @@ on delete cascade;"
 ;;; Bash - run bash init script
 
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
   :ensure t
   :config
   (exec-path-from-shell-initialize))
@@ -2826,15 +2886,30 @@ on delete cascade;"
          ("C-c C-l f" . json-pretty-print-buffer)))
 
 ;;; Emacs LSP
+;; (use-package lsp-mode
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          ;; (XXX-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
 (use-package lsp-mode
+  :ensure t
+  :defer t
+  :defines (lsp-keymap-prefix lsp-mode-map)
   :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         ;; (XXX-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :custom
+  ;; Read the documentation for those variable with `C-h v'.
+  ;; This reduces the visual bloat that LSP sometimes generate.
+  (lsp-eldoc-enable-hover nil)
+  (lsp-signature-auto-activate nil)
+  (lsp-completion-enable t)
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :commands (lsp lsp-deferred))
+
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)

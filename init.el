@@ -1848,24 +1848,10 @@ using the specified hippie-expand function."
 
 ;;; Eglot
 
-;; (use-package envrc
-;;   :ensure t
-;;   :config
-;;   (envrc-global-mode))
-
 (use-package direnv
   :ensure t
   :config
   (direnv-mode))
-
-;; (use-package eglot
-;;   :ensure t
-;;   :config
-;;   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
-;;   (setq-default eglot-workspace-configuration
-;;                 '((:pylsp . (:configurationSources ["flake8"] :plugins (:pycodestyle (:enabled nil) :mccabe (:enabled nil) :flake8 (:enabled t))))))
-;;   :hook
-;;   ((python-mode . eglot-ensure)))
 
 (use-package which-key
   :ensure t
@@ -1895,11 +1881,6 @@ using the specified hippie-expand function."
                                              :black (:enabled t :args ("--line-length=88"))))))
   )
 
-;; (use-package corfu
-;;   :ensure t
-;;   :init (global-corfu-mode)
-;;   ;; Corfu's default keybinds are usually good, but you can customize here
-;;   )
 (use-package corfu
   :ensure t
   :init
@@ -1907,8 +1888,6 @@ using the specified hippie-expand function."
   (setq corfu-auto t) ; Explicitly set it to t, just in case
   (setq corfu-auto-delay 0.1) ; Default is usually 0.1, you can adjust
   )
-
-
 
 ;;; Email - GNUS
 

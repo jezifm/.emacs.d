@@ -1463,26 +1463,66 @@ of `org-babel-temporary-directory'."
   :ensure t
   :bind (("C-c h i" . consult-imenu)
          :map projectile-mode-map
-         ("C-c C-p s s" . consult-ripgrep)))
+         ("C-c C-p s s" . consult-ripgrep)
+         ("C-s" . consult-line)
+         ("C-x b" . consult-buffer)))
 
 
-;;; Swiper
-
-(use-package swiper
+;;; Marginalia
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
   :ensure t
-  :defer t
-  :bind ("C-s" . jez-swiper)
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
+
+  ;; The :init section is always executed.
+  :init
+
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
+
+
+;;; Embark
+(use-package embark
+  :ensure t
+
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+  :init
+
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  ;; Show the Embark target at point via Eldoc. You may adjust the
+  ;; Eldoc strategy, if you want to see the documentation from
+  ;; multiple providers. Beware that using this can be a little
+  ;; jarring since the message shown in the minibuffer can be more
+  ;; than one line, causing the modeline to move up and down:
+
+  ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+  ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+
   :config
-  (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
-  (defun jez-swiper (arg)
-    "Custom `swiper' that default to symbol on point if prefix was provided"
-    (interactive "p")
-    (let* ((prefix (/= arg 1))
-           (symbol (symbol-at-point))
-           (symbol-name (symbol-name symbol)))
-      (if (and prefix symbol)
-          (swiper symbol-name)
-        (swiper)))))
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t ; only need to install it, embark loads it after consult if found
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 
 ;;; Magit Mode
@@ -1661,7 +1701,7 @@ to the current branch. Uses Magit."
 ;;; Auto Complete
 
 (use-package setup-hippie
-  :bind (("C-." . hippie-expand-no-case-fold)
+  :bind (("M-/" . hippie-expand-no-case-fold)
          ("C-:" . hippie-expand-lines)
          ("C-," . jez-helm-hippie-expand))
 
@@ -2668,13 +2708,10 @@ on delete cascade;"
 (use-package avy
   :ensure t
   :defer t
-  :bind* (("M-/" . avy-goto-char-timer)
-          ("C-;" . avy-goto-char-timer)
-          ("M-g f" . avy-goto-line)
+  :bind* (("M-g f" . avy-goto-line)
           ("M-g y" . avy-copy-line))
   :config
   (avy-setup-default))
-
 
 ;;; Transpose Mark
 

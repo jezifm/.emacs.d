@@ -1407,7 +1407,8 @@ of `org-babel-temporary-directory'."
 ;;; Ag
 (use-package ag
   :ensure t)
-
+(use-package wgrep-ag
+  :ensure t)
 
 ;;; Vertico
 (use-package vertico
@@ -1871,8 +1872,18 @@ using the specified hippie-expand function."
               ("C-c l d" . xref-find-definitions) ; Go to definition
               ("C-c l R" . xref-find-references)  ; Find references
               ("C-c l h" . eldoc)                 ; Show documentation/type (Eldoc)
-              ("C-c l s" . eglot-reconnect))     ; Restart server if needed
+              ("C-c l s" . eglot-reconnect)
+              ("C-c l n" . flymake-goto-next-error)
+              ("C-c l p" . flymake-goto-prev-error)
+              )     ; Restart server if needed
   :config
+  ;; Setup instructions
+  ;; touch .envrc
+  ;;   export COMPOSE_FILE=local.yml
+  ;;   export VIRTUAL_ENV="$PWD/.venv"
+  ;;   PATH_add "$VIRTUAL_ENV/bin"
+  ;; pip install python-lsp-server[all] pylsp-rope
+
   ;; You might want to configure pylsp specifics here
   (setq eglot-workspace-configuration
         '(:pylsp (:plugins (:jedi_completion (:include_params t :fuzzy t)
@@ -2900,6 +2911,16 @@ on delete cascade;"
   :bind (:map
          json-mode-map
          ("C-c C-l f" . json-pretty-print-buffer)))
+
+;;; CSV Mode
+(use-package csv-mode
+  :ensure t                 ;; Install csv-mode if it's not already installed
+  :hook (csv-mode . csv-align-mode) ;; Automatically enable csv-align-mode when csv-mode is active
+  ;; Optional: You can add other configurations here
+  ;; :custom
+  ;; (csv-comment-start "##") ;; Example: Set a custom comment prefix
+  ;; (csv-align-max-width 80) ;; Example: Set a maximum column width for alignment
+  )
 
 ;;; Emacs LSP
 ;; (use-package lsp-mode

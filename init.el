@@ -1553,17 +1553,21 @@ to the current branch. Uses Magit."
                                      (magit-get "remote" (magit-get-current-remote) "url"))
            (magit-get-current-branch))))
 
-  (defun jez-magit-visit-branch-pr ()
+  (defun jez-magit-visit-branch-pr (&optional arg)
   "Build the URL or the pull requestion on GitHub corresponding
 to the current branch. Uses Magit."
-  (interactive)
-  (browse-url
-   (format "%s/branch/%s?dest=%s"
-           (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
-                                     "https://bitbucket.org/\\1"
-                                     (magit-get "remote" (magit-get-current-remote) "url"))
-           (magit-get-current-branch)
-           jez-magit-default-branch)))
+  (interactive "P")
+  (let* ((dest-branch jez-magit-default-branch))
+    (if current-prefix-arg
+        (setq dest-branch (read-string "Destination branch: " dest-branch)))
+    (browse-url
+     (format "%s/branch/%s?dest=%s"
+             (replace-regexp-in-string ".*:\\(.*\\)\\.git$"
+                                       "https://bitbucket.org/\\1"
+                                       (magit-get "remote" (magit-get-current-remote) "url"))
+             (magit-get-current-branch)
+             dest-branch))
+    ))
   (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
 

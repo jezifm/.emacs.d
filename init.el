@@ -3003,13 +3003,15 @@ on delete cascade;"
 
 
 ;;; Gptel
+(use-package dash
+  :ensure t)
+
 (use-package gptel
- :config
- (setq
- gptel-model 'gemini-2.5-flash-lite
- gptel-backend (gptel-make-gemini "Gemini"
-                 :key gptel-api-key
-                 :stream t)))
+  :config
+  (setq gptel-model 'gemini-2.5-flash-lite
+        gptel-backend (gptel-make-gemini "Gemini"
+                        :key gptel-api-key
+                        :stream t)))
 
 (use-package gptel-magit
   :ensure t

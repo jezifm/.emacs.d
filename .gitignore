@@ -40,3 +40,4 @@ data
 .envrc
 /vertico.el
 /.dap-breakpoints
+/secrets.el

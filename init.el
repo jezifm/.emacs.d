@@ -2978,8 +2978,18 @@ on delete cascade;"
 ;; (use-package json-mode :ensure t)
 
 
+;;; Gptel
+(use-package gptel
+ :config
+ (setq
+ gptel-model 'gemini-2.5-flash-lite
+ gptel-backend (gptel-make-gemini "Gemini"
+                 :key gptel-api-key
+                 :stream t)))
 
-
+(use-package gptel-magit
+  :ensure t
+  :hook (magit-mode . gptel-magit-install))
 
 
 ;;; Startup

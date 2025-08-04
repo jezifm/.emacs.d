@@ -3075,7 +3075,6 @@ Returns the schema as a string once the query has completed."
         (kill-buffer temp-buffer)
         compressed-schema))))
 
-;;; This function prompts the user for a query and uses gptel to generate SQL.
 (defun jez-sql-generate-query ()
   "Prompts for a query and uses gptel to build SQL based on the PostgreSQL schema."
   (interactive)

@@ -1391,6 +1391,7 @@ of `org-babel-temporary-directory'."
                      dired-directory))
      ad-do-it))
  (setq projectile-mode-line "Projectile")
+ (setq projectile-enable-caching t)
  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
  (projectile-mode)
  (defun jez-projectile-run-shell (args)
@@ -1464,11 +1465,25 @@ of `org-babel-temporary-directory'."
 ;;; Consult
 (use-package consult
   :ensure t
+  :config
+  ;; ;TODO: validate if working
+  ;; ; https://www.reddit.com/r/emacs/comments/1jwk4dg/consultlinesymbolatpoint/
+  (consult-customize
+   consult-line
+   :add-history (seq-some #'thing-at-point '(region symbol)))
+  (defalias 'consult-line-thing-at-point 'consult-line)
+  (consult-customize
+   consult-line-thing-at-point
+   :initial (thing-at-point 'symbol))
+
   :bind (("C-c h i" . consult-imenu)
+         ("C-c h o" . consult-outline)
          :map projectile-mode-map
          ("C-c C-p s s" . consult-ripgrep)
          ("C-s" . consult-line)
-         ("C-x b" . consult-buffer)))
+         ("C-x b" . consult-buffer)
+         ("M-y" . consult-yank-pop)
+         ("M-g g" . consult-goto-line)))
 
 
 ;;; Marginalia
@@ -2685,8 +2700,13 @@ on delete cascade;"
 (use-package nginx-mode
   :ensure t
   :defer t
-  :mode ("Caddyfile\\'" . nginx-mode))
-
+  :mode ("Caddyfile\\'" . nginx-mode)
+  :config
+  (add-hook 'nginx-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode t)
+              (setq tab-width 4)
+              (setq nginx-indent-level 'tab))))
 
 ;;; Visual Regexp
 
@@ -2916,7 +2936,9 @@ on delete cascade;"
   :ensure t
   :bind (:map
          json-mode-map
-         ("C-c C-l f" . json-pretty-print-buffer)))
+         ("C-c C-l f" . json-pretty-print-buffer))
+  :config
+  (setq json-encoding-default-indentation "    "))
 
 ;;; CSV Mode
 (use-package csv-mode

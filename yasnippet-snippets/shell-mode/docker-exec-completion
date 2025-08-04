@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: docker-exec-completion
 # type: command
-# key: dec
+# key: decom
 # --
 (insert (format "docker exec -it %s sh" (jez-read-docker)))

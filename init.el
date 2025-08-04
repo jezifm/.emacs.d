@@ -3008,6 +3008,7 @@ on delete cascade;"
 
 (use-package gptel
   :config
+  (setq gptel-include-reasoning nil)
   (setq gptel-model 'gemini-2.5-flash-lite
         gptel-backend (gptel-make-gemini "Gemini"
                         :key gptel-api-key
@@ -3016,6 +3017,100 @@ on delete cascade;"
 (use-package gptel-magit
   :ensure t
   :hook (magit-mode . gptel-magit-install))
+
+;; Gptel Postgres
+(defun jez-sql-compress-schema (schema-string)
+  "Parses a raw psql table output and formats it into a concise schema representation.
+   Uses only built-in Emacs Lisp functions."
+  (let ((tables (make-hash-table :test 'equal))
+        (lines (cdr (cdr (split-string schema-string "\n" t)))) ;; Skip header/separator
+        (formatted-output-list ()))
+
+    ;; Group columns by table name in a hash table
+    (dolist (line lines)
+      (let* ((columns (split-string line "[|]" t))
+             (table-name (string-trim (or (nth 0 columns) "")))
+             (column-name (string-trim (or (nth 1 columns) "")))
+             (data-type (string-trim (or (nth 2 columns) "")))
+             (char-len (string-trim (or (nth 3 columns) ""))))
+
+        (when (not (string= "" table-name))
+          (let* ((full-type (if (string= "" char-len)
+                                data-type
+                              (concat data-type "(" char-len ")")))
+                 (column-def (concat column-name " " full-type))
+                 (existing-columns (gethash table-name tables)))
+            (puthash table-name (cons column-def existing-columns) tables)))))
+
+    ;; Format the output as "table (column1, column2, ...)"
+    (maphash (lambda (k v)
+               (push (concat k " (" (mapconcat 'identity (nreverse v) ", ") ")")
+                     formatted-output-list))
+             tables)
+
+    (mapconcat 'identity (nreverse formatted-output-list) "\n")))
+
+(defun jez-sql-get-schema (&optional (schema "public"))
+  "Sends a query to the current PostgreSQL process to get the public schema.
+Returns the schema as a string once the query has completed."
+  (interactive)
+  (if (not (eq major-mode 'sql-mode))
+      (error "This function is designed to work in sql-mode."))
+
+  (let* ((sql-buffer-process (sql-find-sqli-buffer))
+         (temp-buffer (get-buffer-create "*gptel-schema-result*"))
+         (schema-query "SELECT table_name, column_name, data_type, character_maximum_length FROM information_schema.columns WHERE table_schema = 'public' ORDER BY table_name, ordinal_position;"))
+
+    (if (null sql-buffer-process)
+        (error "No *SQL* buffer found. Please start a PostgreSQL process first."))
+
+    (message "Fetching schema from PostgreSQL... Please wait.")
+
+    (sql-redirect sql-buffer-process schema-query temp-buffer)
+
+    (with-current-buffer temp-buffer
+      (let* ((full-output (buffer-string))
+             (clean-schema (string-trim-left (replace-regexp-in-string "^psql=> " "" full-output)))
+             (compressed-schema (jez-sql-compress-schema clean-schema)))
+        (kill-buffer temp-buffer)
+        compressed-schema))))
+
+;;; This function prompts the user for a query and uses gptel to generate SQL.
+(defun jez-sql-generate-query ()
+  "Prompts for a query and uses gptel to build SQL based on the PostgreSQL schema."
+  (interactive)
+  ;; Check that the gptel library is loaded before proceeding.
+  (unless (featurep 'gptel)
+    (error "gptel is not loaded. Please ensure gptel is installed and configured."))
+
+  ;; Use a single let* block for all local variables to simplify scope management.
+  (let* ((user-prompt (read-string "Enter your query: "))
+         ;; jez-sql-get-schema is an external function not included here.
+         (schema (jez-sql-get-schema))
+         ;; Combine the system prompt, schema, and user query into a single prompt.
+         (full-prompt
+          (concat
+           "Generate an SQL query based on the following PostgreSQL public schema and natural language request. "
+           "The schema is provided in a compact format. "
+           "Provide only the SQL query itself, without any surrounding text, explanations, or markdown formatting like ```sql` ` `."
+           ;; "If you cannot generate a query, respond with 'Not enough information'.\n\n"
+           "Schema:\n"
+           "```sql\n"
+           schema
+           "\n```\n\n"
+           "Request:\n"
+           user-prompt))
+         ;; Create a temporary buffer to show progress and the final output.
+         )
+
+    (message "Schema fetched. Sending request to gptel...")
+
+    ;; This version uses a one-shot request, as shown in the provided documentation.
+    ;; It uses the :callback keyword, and the lambda function receives the full response.
+     ;; The :stream keyword is removed for a one-shot request.
+    (let* ((gptel-include-reasoning nil))
+      (gptel-request full-prompt))
+    ))
 
 
 ;;; Startup

@@ -3050,7 +3050,7 @@ on delete cascade;"
 
     (mapconcat 'identity (nreverse formatted-output-list) "\n")))
 
-(defun jez-sql-get-schema (&optional (schema "public"))
+(defun jez-sql-get-schema ()
   "Sends a query to the current PostgreSQL process to get the public schema.
 Returns the schema as a string once the query has completed."
   (interactive)
@@ -3091,8 +3091,7 @@ Returns the schema as a string once the query has completed."
           (concat
            "Generate an SQL query based on the following PostgreSQL public schema and natural language request. "
            "The schema is provided in a compact format. "
-           "Provide only the SQL query itself, without any surrounding text, explanations, or markdown formatting like ```sql` ` `."
-           ;; "If you cannot generate a query, respond with 'Not enough information'.\n\n"
+           "Provide only the SQL query itself, without any surrounding text, explanations, or markdown formatting like ```sql```."
            "Schema:\n"
            "```sql\n"
            schema
@@ -3101,9 +3100,7 @@ Returns the schema as a string once the query has completed."
            user-prompt))
          ;; Create a temporary buffer to show progress and the final output.
          )
-
     (message "Schema fetched. Sending request to gptel...")
-
     ;; This version uses a one-shot request, as shown in the provided documentation.
     ;; It uses the :callback keyword, and the lambda function receives the full response.
      ;; The :stream keyword is removed for a one-shot request.

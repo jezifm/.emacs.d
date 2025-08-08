@@ -1905,6 +1905,7 @@ using the specified hippie-expand function."
          ("C-c C-l e" . jez-sql-explain-region)
          ("C-c C-l a" . jez-sql-explain-analyze-region)
          ("C-c C-l x" . jez-sql-expand)
+         ("C-c C-l 1" . jez-sql-view-single-record)
          ("C-c C-l l" . jez-sql-count-table)
          ("C-c C-l z" . jez-sql-view-table-size)
          ("C-c t" . jinja2-insert-tag)

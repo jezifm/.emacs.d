@@ -3007,12 +3007,20 @@ on delete cascade;"
   :ensure t)
 
 (use-package gptel
+  :ensure t
   :config
   (setq gptel-include-reasoning nil)
   (setq gptel-model 'gemini-2.5-flash-lite
         gptel-backend (gptel-make-gemini "Gemini"
                         :key gptel-api-key
-                        :stream t)))
+                        :stream t))
+  ;; This is the added part for shell-mode hook
+  :hook ((shell-mode . (lambda ()
+                         (make-local-variable 'gptel--system-message)
+                         (setq gptel--system-message
+                               "You are a helpful assistant for shell commands.
+When asked to generate a shell command, you will provide only the command itself and nothing else.
+Do not include any explanations, comments, or backticks.")))))
 
 (use-package gptel-magit
   :ensure t

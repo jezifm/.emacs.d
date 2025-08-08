@@ -885,53 +885,6 @@ to the current point of the cursor (default is above)."
     (goto-char p)
     (insert s)))
 
-;;; Emacs Global Keys
-;; makes it easier to see conflicting keys
-
-(use-package bind-key
-  :ensure t
-  :bind ((:map isearch-mode-map
-               ("s-s" . isearch-repeat-forward)
-               ("s-r" . isearch-repeat-backward)))
-  :config
-  ;; key bindings unset
-  (global-unset-key (kbd "C-x C-c"))  ; disable quit
-  (global-unset-key (kbd "C-x c"))    ; disable quit
-  (global-unset-key (kbd "C-z"))      ; disable minimize
-  (global-unset-key (kbd "s-t"))      ; disable font-panel
-  (global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
-
-  (bind-keys
-   ("<f12>" . line-copy-char)
-   ("<f5>" . sort-lines)
-   ("C-c C-<return>" . delete-trailing-whitespace)
-   ("C-c j d" . jez-insert-date)
-   ("C-c j t" . jez-insert-time)
-   ("C-c j z" . jez-create-shell-buffer)
-   ("C-c t" . toggle-truncate-lines)
-   ("C-x <left>" . jez-hydra-window/previous-buffer)
-   ("C-x <right>" . jez-hydra-window/next-buffer)
-   ("C-x C-<left>" . jez-hydra-window/previous-buffer)
-   ("C-x C-<right>" . jez-hydra-window/next-buffer)
-   ("C-x C-j" . (lambda () (interactive) (dired default-directory)))
-   ("C-x r q" . save-buffers-kill-terminal) ; remap quit-key
-   ("C-x |" . toggle-window-split)
-   ("C-z" . jez-shell-shortcut)
-   ("M-J" . jez-simplify)
-   ("M-SPC" . cycle-spacing)
-   ("M-i" . back-to-indentation)
-   ("M-j" . jez-join-line)
-   ("M-n" . (lambda (arg) (interactive "p") (next-line (* arg 5))))
-   ("M-p" . (lambda (arg) (interactive "p") (previous-line (* arg 5))))
-   ("s-r" . isearch-backward-regexp)
-   ("s-s" . isearch-forward-regexp)
-   ("C-M-<backspace>" . jez-kill-back-to-indentation)
-   ("S-<return>" . sanityinc/newline-at-end-of-line)
-   ("C-x C-b" . switch-to-buffer)
-   ("C-x C-f" . jez-find-file)
-   ))
-
-
 ;;; Emacs Built-in Mode
 
 (use-package menu-bar   :defer 2 :config (menu-bar-mode -1))
@@ -1323,6 +1276,13 @@ of `org-babel-temporary-directory'."
 (use-package multiple-cursors
   :ensure t
   :defer t
+  :bind (("C-<" . mc/mark-previous-like-this)
+         ("C->" . mc/mark-next-like-this)
+         ("C-S-c C-S-a" . mc/edit-beginnings-of-lines)
+         ("C-S-c C-S-c" . mc/edit-lines)
+         ("C-S-c C-S-e" . mc/edit-ends-of-lines)
+         ("C-c C-<" . mc/mark-all-like-this)
+         ("s-d" . jez-mark-multiple))
   :config
   (defun jez-mark-word ()
     "Use to highlight a word"
@@ -1366,20 +1326,14 @@ of `org-babel-temporary-directory'."
   (jez-mc-add-cmds-all 'paredit-backward-kill-word)
   (jez-mc-add-cmds-all 'paredit-open-parenthesis)
   (jez-mc-add-cmds-all 'paredit-open-round)
-  (jez-mc-add-cmds-all 'outshine-self-insert-command)
-
-  :bind (("C-<" . mc/mark-previous-like-this)
-         ("C->" . mc/mark-next-like-this)
-         ("C-S-c C-S-a" . mc/edit-beginnings-of-lines)
-         ("C-S-c C-S-c" . mc/edit-lines)
-         ("C-S-c C-S-e" . mc/edit-ends-of-lines)
-         ("C-c C-<" . mc/mark-all-like-this)
-         ("s-d" . jez-mark-multiple)))
+  (jez-mc-add-cmds-all 'outshine-self-insert-command))
 
 
 ;;; Projectile
 (use-package projectile
  :defer t
+ :bind (:map projectile-mode-map
+        ("C-c C-p x s" . jez-projectile-run-shell))
  :config
  (defadvice projectile-on (around exlude-tramp activate)
    "This should disable projectile when visiting a remote file"
@@ -1403,9 +1357,7 @@ of `org-babel-temporary-directory'."
           (right-window (window-at (frame-width) (/ (frame-height) 2))))
      (when right-window
        (select-window right-window))
-     (switch-to-buffer shell-buffer)))
- :bind (:map projectile-mode-map
-        ("C-c C-p x s" . jez-projectile-run-shell)))
+     (switch-to-buffer shell-buffer))))
 
 ;;; Ag
 (use-package ag
@@ -1465,6 +1417,14 @@ of `org-babel-temporary-directory'."
 ;;; Consult
 (use-package consult
   :ensure t
+  :bind (("C-c h i" . consult-imenu)
+         ("C-c h o" . consult-outline)
+         :map projectile-mode-map
+         ("C-c C-p s s" . consult-ripgrep)
+         ("C-s" . consult-line)
+         ("C-x b" . consult-buffer)
+         ("M-y" . consult-yank-pop)
+         ("M-g g" . consult-goto-line))
   :config
   ;; ;TODO: validate if working
   ;; ; https://www.reddit.com/r/emacs/comments/1jwk4dg/consultlinesymbolatpoint/
@@ -1474,16 +1434,7 @@ of `org-babel-temporary-directory'."
   (defalias 'consult-line-thing-at-point 'consult-line)
   (consult-customize
    consult-line-thing-at-point
-   :initial (thing-at-point 'symbol))
-
-  :bind (("C-c h i" . consult-imenu)
-         ("C-c h o" . consult-outline)
-         :map projectile-mode-map
-         ("C-c C-p s s" . consult-ripgrep)
-         ("C-s" . consult-line)
-         ("C-x b" . consult-buffer)
-         ("M-y" . consult-yank-pop)
-         ("M-g g" . consult-goto-line)))
+   :initial (thing-at-point 'symbol)))
 
 
 ;;; Marginalia
@@ -1723,10 +1674,6 @@ to the current branch. Uses Magit."
 ;;; Auto Complete
 
 (use-package setup-hippie
-  :bind (("M-/" . hippie-expand-no-case-fold)
-         ("C-:" . hippie-expand-lines)
-         ("C-," . jez-helm-hippie-expand))
-
   :config
   ;; https://stackoverflow.com/questions/6515009/how-to-configure-emacs-to-have-it-complete-the-path-automatically-like-vim/6556788#6556788
 
@@ -1958,7 +1905,6 @@ using the specified hippie-expand function."
          ("C-c C-l e" . jez-sql-explain-region)
          ("C-c C-l a" . jez-sql-explain-analyze-region)
          ("C-c C-l x" . jez-sql-expand)
-         ("C-c C-l 1" . jez-sql-view-single-record)
          ("C-c C-l l" . jez-sql-count-table)
          ("C-c C-l z" . jez-sql-view-table-size)
          ("C-c t" . jinja2-insert-tag)
@@ -2290,14 +2236,14 @@ on delete cascade;"
 
 (use-package sqlformat
   :ensure t
+  :bind (:map sql-mode-map
+              ("C-c C-l f" . jez-sqlformat-buffer)
+              ("C-c C-l r" . sqlformat-region))
   :config
   (setq sqlformat-command 'pgformatter) ; brew install pgformatter
   (setq sqlformat-args '("-g"
                          "--keyword-case" "1"))
-  :after sql
-  :bind (:map sql-mode-map
-              ("C-c C-l f" . jez-sqlformat-buffer)
-              ("C-c C-l r" . sqlformat-region)))
+  :after sql)
 
 ;;; Undo Tree Mode
 
@@ -2461,6 +2407,8 @@ on delete cascade;"
 
 (use-package shell
   :defer t
+  :bind (("s-k" . comint-clear-buffer)
+         ("M-k" . comint-clear-buffer))
   :config
   (defun sh-outline-level ()
     (save-excursion
@@ -2473,8 +2421,6 @@ on delete cascade;"
     (setq-local outline-level 'sh-outline-level))
   (defun jez-shell-mode-hook ()
     (comint-send-string (get-buffer-process (current-buffer)) "export TERM=xterm\n"))
-  :bind (("s-k" . comint-clear-buffer)
-         ("M-k" . comint-clear-buffer))
   :hook ((sh-mode . outshine-sh-mode-hook)
          (shell-mode . jez-shell-mode-hook))
   )
@@ -2909,13 +2855,7 @@ on delete cascade;"
 
 (use-package symbol-overlay
   :ensure t
-  :config
-  :bind (
-         ("s-m" . symbol-overlay-put)
-         ("s-M" . symbol-overlay-remove-all)
-         ("s-n" . symbol-overlay-jump-next)
-         ("s-p" . symbol-overlay-jump-prev)
-         ))
+  :config)
 
 (use-package copy-as-format
   :ensure t)
@@ -3115,6 +3055,10 @@ Returns the schema as a string once the query has completed."
     (let* ((gptel-include-reasoning nil))
       (gptel-request full-prompt))
     ))
+
+;; Load keybindings at the end of the configuration to ensure all functions and
+;; packages are loaded.
+(load (expand-file-name "keybindings.el" settings-dir))
 
 
 ;;; Startup

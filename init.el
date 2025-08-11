@@ -3131,14 +3131,14 @@ Returns the schema as a string once the query has completed."
   (defvar gemini-api-key "")
   (defvar ollama-api-base "")
   (defvar ollama-model "")
+  (setenv "GEMINI_API_KEY" gemini-api-key)
+  (setenv "OLLAMA_API_BASE" ollama-api-base)
   ;; -- Gemini ---
   (setq aider-args '("--model" "gemini/gemini-2.5-flash-lite"))
-  (setenv "GEMINI_API_KEY" gemini-api-key)
 
   ;; --- Local LLM ---
   ;TODO: handle multiple models
-  ;; (setenv "OLLAMA_API_BASE" ollama-api-base)
-  ;; (setq aider-args '("--model" ollama-model))
+  ;; (setq aider-args `("--model" ,ollama-model))
 
   (global-set-key (kbd "C-c A") 'aider-transient-menu)
   (aider-magit-setup-transients)

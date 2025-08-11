@@ -3117,6 +3117,28 @@ Returns the schema as a string once the query has completed."
     ))
 
 
+
+;;; Aider
+(use-package aider
+  :ensure t
+  :config
+  (defvar gemini-api-key "")
+  (defvar ollama-api-base "")
+  (defvar ollama-model "")
+  ;; -- Gemini ---
+  (setq aider-args '("--model" "gemini/gemini-2.5-flash-lite"))
+  (setenv "GEMINI_API_KEY" gemini-api-key)
+
+  ;; --- Local LLM ---
+  ;TODO: handle multiple models
+  ;; (setenv "OLLAMA_API_BASE" ollama-api-base)
+  ;; (setq aider-args '("--model" ollama-model))
+
+  (global-set-key (kbd "C-c A") 'aider-transient-menu)
+  (aider-magit-setup-transients)
+  (global-auto-revert-mode 1)
+  (auto-revert-mode 1))
+
 ;;; Startup
 
 (defun jez-show-bookmarks ()

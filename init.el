@@ -901,14 +901,20 @@ to the current point of the cursor (default is above)."
   (global-unset-key (kbd "s-t"))      ; disable font-panel
   (global-unset-key (kbd "s-p"))      ; disable ns-print-buffer
 
+  (defvar jez-leader-keymap (make-sparse-keymap)
+    "Keymap for your personal commands, bound to C-c j.")
+  (bind-key "C-c j" jez-leader-keymap)
+
+  (bind-keys :map jez-leader-keymap
+             ("d" . jez-insert-date)
+             ("t" . jez-insert-time)
+             ("z" . jez-create-shell-buffer)
+             ("T" . toggle-truncate-lines))
+
   (bind-keys
    ("<f12>" . line-copy-char)
    ("<f5>" . sort-lines)
    ("C-c C-<return>" . delete-trailing-whitespace)
-   ("C-c j d" . jez-insert-date)
-   ("C-c j t" . jez-insert-time)
-   ("C-c j z" . jez-create-shell-buffer)
-   ("C-c t" . toggle-truncate-lines)
    ("C-x <left>" . jez-hydra-window/previous-buffer)
    ("C-x <right>" . jez-hydra-window/next-buffer)
    ("C-x C-<left>" . jez-hydra-window/previous-buffer)

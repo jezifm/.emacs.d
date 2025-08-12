@@ -3131,15 +3131,17 @@ Returns the schema as a string once the query has completed."
   (defvar gemini-api-key "")
   (defvar ollama-api-base "")
   (defvar ollama-model "")
+  (defvar aider-models nil "List of available aider models")
+  (defun aider-set-model-and-args ()
+    "Choose a model from `aider-models' and set `aider-args'."
+    (interactive)
+    (let* ((models aider-models)
+           (model (completing-read "Choose a model: " models)))
+      (when (and model (member model models))
+        (setq aider-args `("--model" ,model)))))
   (setenv "GEMINI_API_KEY" gemini-api-key)
   (setenv "OLLAMA_API_BASE" ollama-api-base)
-  ;; -- Gemini ---
   (setq aider-args '("--model" "gemini/gemini-2.5-flash-lite"))
-
-  ;; --- Local LLM ---
-  ;TODO: handle multiple models
-  ;; (setq aider-args `("--model" ,ollama-model))
-
   (global-set-key (kbd "C-c A") 'aider-transient-menu)
   (aider-magit-setup-transients)
   (global-auto-revert-mode 1)

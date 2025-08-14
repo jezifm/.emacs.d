@@ -3020,8 +3020,17 @@ on delete cascade;"
         gptel-backend (gptel-make-gemini "Gemini"
                         :key gptel-api-key
                         :stream t))
-  ;; This is the added part for shell-mode hook
-  :hook ((shell-mode . (lambda ()
+  (defvar jez-gptel-keymap (make-sparse-keymap)
+    "Keymap for your gptel commands, bound to C-c g.")
+  (bind-key "C-c g" jez-gptel-keymap)
+  (bind-keys :map jez-gptel-keymap
+             ("s" . gptel-send)
+             ("a" . gptel-add)
+             ("r" . gptel-rewrite)
+             ("c" . gptel-context-remove)
+             ("m" . gptel-menu))
+  :hook ((gptel-end-of-response . gptel-post-response-functions)
+         (shell-mode . (lambda ()
                          (make-local-variable 'gptel--system-message)
                          (setq gptel--system-message
                                "You are a helpful assistant for shell commands.

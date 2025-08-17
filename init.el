@@ -1226,16 +1226,18 @@ of `org-babel-temporary-directory'."
 (use-package outshine
   :ensure t
   :defer t
-  :bind (
-         :map outline-minor-mode-map
-         ("C-c n" . outline-next-visible-heading)
-         ("C-c p" . outline-previous-visible-heading)
-         ("C-<tab>" . outshine-cycle)
-         ("C-#" . hydra-outshine/body)
-         ("M-<up>" . jez-outline-move-subtree-up)
-         ("M-<down>" . jez-outline-move-subtree-down))
   :init (require 'helm)
   :config
+  (bind-keys
+   :map outline-minor-mode-map
+   ;; The prefix key is C-c o
+   ("C-c o" . (
+               ("n" . outline-next-visible-heading)
+               ("p" . outline-previous-visible-heading)
+               ("<tab>" . outshine-cycle)
+               ("#" . hydra-outshine/body)
+               ("<up>" . jez-outline-move-subtree-up)
+               ("<down>" . jez-outline-move-subtree-down))))
   (defun jez-outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
     (interactive "p")

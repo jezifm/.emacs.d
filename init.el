@@ -1228,16 +1228,15 @@ of `org-babel-temporary-directory'."
   :defer t
   :init (require 'helm)
   :config
-  (bind-keys
-   :map outline-minor-mode-map
-   ;; The prefix key is C-c o
-   ("C-c o" . (
-               ("n" . outline-next-visible-heading)
-               ("p" . outline-previous-visible-heading)
-               ("<tab>" . outshine-cycle)
-               ("#" . hydra-outshine/body)
-               ("<up>" . jez-outline-move-subtree-up)
-               ("<down>" . jez-outline-move-subtree-down))))
+  (defvar jez-outshine-keymap (make-sparse-keymap) "Keymap for outshine")
+  (define-key outline-minor-mode-map (kbd "C-c o") jez-outshine-keymap)
+  (bind-keys :map jez-outshine-keymap
+             ("n" . outline-next-visible-heading)
+             ("p" . outline-previous-visible-heading)
+             ("<tab>" . outshine-cycle)
+             ("#" . hydra-outshine/body)
+             ("<up>" . jez-outline-move-subtree-up)
+             ("<down>" . jez-outline-move-subtree-down)))
   (defun jez-outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
     (interactive "p")

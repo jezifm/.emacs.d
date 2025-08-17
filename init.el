@@ -904,7 +904,6 @@ to the current point of the cursor (default is above)."
   (defvar jez-leader-keymap (make-sparse-keymap)
     "Keymap for your personal commands, bound to C-c j.")
   (bind-key "C-c j" jez-leader-keymap)
-
   (bind-keys :map jez-leader-keymap
              ("d" . jez-insert-date)
              ("t" . jez-insert-time)
@@ -1229,14 +1228,14 @@ of `org-babel-temporary-directory'."
   :init (require 'helm)
   :config
   (defvar jez-outshine-keymap (make-sparse-keymap) "Keymap for outshine")
-  (define-key outline-minor-mode-map (kbd "C-c o") jez-outshine-keymap)
+  (bind-key "C-c o" jez-outshine-keymap)
   (bind-keys :map jez-outshine-keymap
              ("n" . outline-next-visible-heading)
              ("p" . outline-previous-visible-heading)
              ("<tab>" . outshine-cycle)
              ("#" . hydra-outshine/body)
              ("<up>" . jez-outline-move-subtree-up)
-             ("<down>" . jez-outline-move-subtree-down)))
+             ("<down>" . jez-outline-move-subtree-down))
   (defun jez-outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
     (interactive "p")
@@ -1279,7 +1278,8 @@ of `org-babel-temporary-directory'."
     ("^" outshine-sort-entries "outshine-sort-entries")
     ("m" outline-mark-subtree "outline-mark-subtree")
     ("q" nil "leave"))
-  :hook ((outline-minor-mode . outshine-mode)))
+    :hook ((outline-minor-mode . outshine-mode))
+)
 
 
 ;;; Boookmark

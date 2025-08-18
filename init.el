@@ -1398,7 +1398,7 @@ of `org-babel-temporary-directory'."
      ad-do-it))
  (setq projectile-mode-line "Projectile")
  (setq projectile-enable-caching t)
- (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map)
+ (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
  (projectile-mode)
  (defun jez-projectile-run-shell (args)
    "Same with `projectile-run-shell' but executes on right most window"

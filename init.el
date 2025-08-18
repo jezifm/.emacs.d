@@ -74,7 +74,6 @@
   ("gnu" . "https://elpa.gnu.org/packages/")
   ("melpa" . "https://melpa.org/packages/")
   ("tromey" . "http://tromey.com/elpa/")
-  ("melpa" . "http://melpa.milkbox.net/packages/")
   ("melpa-stable" . "http://stable.melpa.org/packages/"))
  )
 

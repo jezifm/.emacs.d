@@ -3173,7 +3173,12 @@ Returns the schema as a string once the query has completed."
       (gptel-request full-prompt))
     ))
 
-
+(defun jez-open-daily-tasks ()
+  "Open daily tasks org file for the current date."
+  (interactive)
+  (defvar jez-open-daily-tasks-dir "~/workspace/daily-tasks" "Default directory for daily tasks")
+  (let ((today (format-time-string (concat jez-open-daily-tasks-dir "/%Y-%m-%d.org"))))
+    (find-file today)))
 
 ;;; Aider
 (use-package aider

@@ -1056,10 +1056,6 @@ to the current point of the cursor (default is above)."
   :ensure t
   :pin gnu
   :defer t
-  :bind (("C-c l" . org-store-link)
-         ("C-c a" . org-agenda)
-         ("C-<right>" . org-todo)
-         ("C-<left>" . jez-org-todo-previous))
   :config
   (setq user-full-name "Jezrael Arciaga")
   (setq user-mail-address "jezarciaga@gmail.com")
@@ -1166,8 +1162,6 @@ of `org-babel-temporary-directory'."
          (org-mode . jez-org-disable-font-theme)))
 
 (use-package org-capture
-  :bind (("C-c c" . org-capture)
-         ("C-c o" . (lambda () (interactive) (find-file jez-org-file))))
   :init
   (setq jez-org-file
         "~/organizer.org"
@@ -1234,7 +1228,13 @@ of `org-babel-temporary-directory'."
              ("<tab>" . outshine-cycle)
              ("#" . hydra-outshine/body)
              ("<up>" . jez-outline-move-subtree-up)
-             ("<down>" . jez-outline-move-subtree-down))
+             ("<down>" . jez-outline-move-subtree-down)
+             ; org mode
+             ("l" . org-store-link)
+             ("a" . org-agenda)
+             ("<left>" . jez-org-todo-previous)
+             ("c" . org-capture)
+             ("o" . (lambda () (interactive) (find-file jez-org-file))))
   (defun jez-outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
     (interactive "p")

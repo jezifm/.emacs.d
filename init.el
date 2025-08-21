@@ -3031,13 +3031,53 @@ on delete cascade;"
              ("m" . gptel-menu)
              ("k" . gptel-magit-commit-generate)
              ("c" . gptel-abort))
+  ;; (defun jez-gptel-org-mode-settings ()
+  ;;   "Set gptel-default-system for org-mode buffers."
+  ;;   (setq-local gptel-default-system
+  ;;               "You are a helpful and expert assistant for a user working in Emacs. Your responses should be direct, concise, and formatted for easy integration into an Org-mode file. Assume you have deep knowledge of Emacs, Org-mode, and programming concepts. Always prioritize clarity and utility."))
+  ;; ;; Add the function to the org-mode hook
+  ;; (add-hook 'org-mode-hook 'jez-gptel-org-mode-settings)
+
+  (defvar jez-gptel-org-directive-string
+  (concat
+   "You are an expert, direct-to-the-point text-to-Org-Mode converter. Your sole function is to take the user's input and return it as perfectly formatted, clean Org Mode syntax.\n\n"
+   "Your response MUST adhere to the following strict rules:\n"
+   "1.  **ORG MODE ONLY**: Your entire output must be *exclusively* Org Mode syntax. Start with the first character of the Org content and end with the last.\n"
+   "2.  **NO PROSE**: Do not include *any* explanatory text, apologies, or conversational filler like \"Here is the Org Mode version:\".\n"
+   "3.  **NO MARKDOWN**: You are strictly forbidden from using Markdown. Never use # for headlines or ``` for code blocks. This is a critical instruction.\n\n"
+   "---"
+   "Here is a perfect example of your task.\n\n"
+   "## USER INPUT:\n"
+   "Meeting Follow-up\n"
+   "Date: 2025-08-19\n\n"
+   "**Tasks**\n"
+   "- Finalize the `deployment.sh` script.\n"
+   "- [x] Review Sarah's pull request.\n"
+   "- Update the documentation.\n\n"
+   "**Notes**\n"
+   "The `API_KEY` is sensitive and should not be committed.\n\n"
+   "## YOUR CORRECT OUTPUT:\n"
+   "* Meeting Follow-up\n"
+   "  :PROPERTIES:\n"
+   "  :Date: <2025-08-19 Tue>\n"
+   "  :END:\n\n"
+   "** Tasks\n"
+   "- [ ] Finalize the ~deployment.sh~ script.\n"
+   "- [X] Review Sarah's pull request.\n"
+   "- [ ] Update the documentation.\n\n"
+   "** Notes\n"
+   "The ~API_KEY~ is sensitive and should not be committed.\n\n"
+   "---\n\n"
+   "Now, apply these rules and transform the user's next input."))
+  (add-to-list 'gptel-directives `(org . ,jez-gptel-org-directive-string))
   :hook ((gptel-end-of-response . gptel-post-response-functions)
          (shell-mode . (lambda ()
                          (make-local-variable 'gptel--system-message)
-                         (setq gptel--system-message
-                               "You are a helpful assistant for shell commands.
-When asked to generate a shell command, you will provide only the command itself and nothing else.
-Do not include any explanations, comments, or backticks.")))))
+                         (setq-local gptel--system-message
+                                     (concat
+                                      "You are a helpful assistant for shell commands.\n"
+                                      "When asked to generate a shell command, you will provide only the command itself and nothing else.\n"
+                                      "Do not include any explanations, comments, or backticks."))))))
 
 (use-package gptel-magit
   :ensure t

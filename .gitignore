@@ -42,3 +42,5 @@ data
 /.dap-breakpoints
 /secrets.el
 .aider*
+*~undo-tree~*
+/.tutor/

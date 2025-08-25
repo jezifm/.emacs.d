@@ -869,6 +869,11 @@ With any prefix, `find-file-at-point'"
       (call-interactively 'find-file)
     (find-file-at-point)))
 
+(defun jez-browse-url-edge (url &optional new-window)
+  "Open URL in Microsoft Edge on macOS."
+  (interactive "sURL: ")
+  (call-process "open" nil 0 nil "-a" "Microsoft Edge" url))
+
 ;;; Emacs - Nifty Tricks
 
 (defun line-copy-char (&optional b)
@@ -1234,7 +1239,8 @@ of `org-babel-temporary-directory'."
              ("a" . org-agenda)
              ("<left>" . jez-org-todo-previous)
              ("c" . org-capture)
-             ("o" . (lambda () (interactive) (find-file jez-org-file))))
+             ("o" . (lambda () (interactive) (find-file jez-org-file)))
+             ("d" . jez-open-daily-tasks))
   (defun jez-outline-move-subtree-up (args)
     "Same `outline-move-subtree-up' but will not expand"
     (interactive "p")
@@ -3198,7 +3204,7 @@ Returns the schema as a string once the query has completed."
   (setenv "GEMINI_API_KEY" gemini-api-key)
   (setenv "OLLAMA_API_BASE" ollama-api-base)
   (setq aider-args '("--model" "gemini/gemini-2.5-flash-lite"))
-  (global-set-key (kbd "C-c A") 'aider-transient-menu)
+  (global-set-key (kbd "C-c a") 'aider-transient-menu)
   (aider-magit-setup-transients)
   (global-auto-revert-mode 1)
   (auto-revert-mode 1))

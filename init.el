@@ -790,11 +790,11 @@ putting the matching lines in a buffer named *matching*"
          (data (string-split line ":"))
          (data-alist (pairlis '(host port db user pass) data)))
     (insert (s-format "
-export PGHOST=${host}
-export PGPORT=${port}
-export PGDATABASE=${db}
-export PGUSER=${user}
-export PGPASSWORD=${pass}
+export PGHOST='${host}'
+export PGPORT='${port}'
+export PGDATABASE='${db}'
+export PGUSER='${user}'
+export PGPASSWORD='${pass}'
 " 'aget data-alist))
     ))
 

@@ -3179,12 +3179,28 @@ Returns the schema as a string once the query has completed."
       (gptel-request full-prompt))
     ))
 
+(defun jez-find-latest-file (dir)
+  "Find the most recently modified file in directory DIR."
+  (let* ((existing-files (directory-files dir nil "\\.org$")))
+    (message "%s" existing-files)
+    (when existing-files
+      (concat dir "/" (car (sort existing-files #'string>))))))
+
 (defun jez-open-daily-tasks ()
-  "Open daily tasks org file for the current date."
+  "Open daily tasks org file for the current date.
+If the file does not exist, it copies the most recently created file."
   (interactive)
-  (defvar jez-open-daily-tasks-dir "~/workspace/daily-tasks" "Default directory for daily tasks")
-  (let ((today (format-time-string (concat jez-open-daily-tasks-dir "/%Y-%m-%d.org"))))
-    (find-file today)))
+  (defvar jez-open-daily-tasks-dir "~/workspace/daily-tasks"
+    "Default directory for daily tasks")
+  (let* ((today-file (format-time-string (concat jez-open-daily-tasks-dir "/%Y-%m-%d.org")))
+         (latest-file (jez-find-latest-file jez-open-daily-tasks-dir)))
+    (unless (file-exists-p today-file)
+      (if latest-file
+          (copy-file latest-file today-file)
+        (message "No previous daily tasks file found to copy.")))
+    (find-file today-file)))
+
+
 
 ;;; Aider
 (use-package aider

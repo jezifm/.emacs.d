@@ -1226,7 +1226,14 @@ of `org-babel-temporary-directory'."
   :init (require 'helm)
   :config
   (defvar jez-outshine-keymap (make-sparse-keymap) "Keymap for outshine")
-  (bind-key "C-c o" jez-outshine-keymap outline-minor-mode-map)
+  (dolist (map '(outline-minor-mode-map
+                 sql-mode-map
+                 org-mode-map
+                 dired-mode-map
+                 shell-mode-map
+                 bookmark-bmenu-mode-map
+                 ))
+    (bind-key "C-c o" jez-outshine-keymap map))
   (bind-keys :map jez-outshine-keymap
              ("n" . outline-next-visible-heading)
              ("p" . outline-previous-visible-heading)

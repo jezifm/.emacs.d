@@ -1972,14 +1972,14 @@ using the specified hippie-expand function."
          ("C-c C-c" . jez-sql-send-paragraph)
          ("C-c C-n" . jez-sql-send-paragraph-move-forward)
          ("C-<return>" . jez-sql-send-paragraph-move-forward)
-         ("C-c C-l c" . jez-sql-create-buffer)
-         ("C-c C-l d" . jez-sql-view-columns)
-         ("C-c C-l e" . jez-sql-explain-region)
-         ("C-c C-l a" . jez-sql-explain-analyze-region)
-         ("C-c C-l x" . jez-sql-expand)
-         ("C-c C-l 1" . jez-sql-view-single-record)
-         ("C-c C-l l" . jez-sql-count-table)
-         ("C-c C-l z" . jez-sql-view-table-size)
+         ("C-c l c" . jez-sql-create-buffer)
+         ("C-c l d" . jez-sql-view-columns)
+         ("C-c l e" . jez-sql-explain-region)
+         ("C-c l a" . jez-sql-explain-analyze-region)
+         ("C-c l x" . jez-sql-expand)
+         ("C-c l 1" . jez-sql-view-single-record)
+         ("C-c l l" . jez-sql-count-table)
+         ("C-c l z" . jez-sql-view-table-size)
          ("C-c t" . jinja2-insert-tag)
          ("C-c v" . jez-jinja-insert-var)
          )
@@ -2315,8 +2315,8 @@ on delete cascade;"
                          "--keyword-case" "1"))
   :after sql
   :bind (:map sql-mode-map
-              ("C-c C-l f" . jez-sqlformat-buffer)
-              ("C-c C-l r" . sqlformat-region)))
+              ("C-c l f" . jez-sqlformat-buffer)
+              ("C-c l r" . sqlformat-region)))
 
 ;;; Undo Tree Mode
 

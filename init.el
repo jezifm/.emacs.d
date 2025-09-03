@@ -1232,6 +1232,7 @@ of `org-babel-temporary-directory'."
                  dired-mode-map
                  shell-mode-map
                  bookmark-bmenu-mode-map
+                 dockerfile-mode-map
                  ))
     (bind-key "C-c o" jez-outshine-keymap map))
   (bind-keys :map jez-outshine-keymap

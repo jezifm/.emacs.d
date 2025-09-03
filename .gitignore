@@ -44,3 +44,5 @@ data
 .aider*
 *~undo-tree~*
 /.tutor/
+/ellama-sessions/
+/ellama/
